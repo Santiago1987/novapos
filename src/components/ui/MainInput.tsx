@@ -10,7 +10,12 @@ const MainInput = () => {
     ev.preventDefault();
     setInputValue(ev.target.value);
   };
-  return <input type="text" onChange={handleOnChange} />;
+  return (
+    <label>
+      Main input
+      <input type="text" onChange={handleOnChange} />
+    </label>
+  );
 };
 
 export default MainInput;
