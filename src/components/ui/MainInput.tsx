@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-const MainInput = () => {
+
+type Props = {
+  textLabel?: string;
+};
+
+const MainInput = ({ textLabel }: Props) => {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -12,8 +17,8 @@ const MainInput = () => {
   };
   return (
     <label>
-      Main input
-      <input type="text" onChange={handleOnChange} />
+      {textLabel}
+      <input type="text" id="main-input" onChange={handleOnChange} />
     </label>
   );
 };
