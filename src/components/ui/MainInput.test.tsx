@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import MainInput from './MainInput.tsx';
 
 describe('MainInput Component', () => {
@@ -9,9 +9,8 @@ describe('MainInput Component', () => {
 
   it('rednders with a label', () => {
     render(<MainInput textLabel="pepito" />);
-    const labelElement = document.querySelector('label');
-    expect(labelElement).toBeDefined();
-    console.log('aaaaaa', labelElement);
-    expect(labelElement?.textContent).toContain('pepito');
+
+    const labelElement = screen.getByText('pepito');
+    expect(labelElement).toBeInTheDocument();
   });
 });
