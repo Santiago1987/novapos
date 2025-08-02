@@ -7,6 +7,7 @@ export default mergeConfig(
     test: {
       environment: 'happy-dom',
       exclude: ['**/node_modules/**', '**/dist/**'],
+      globals: true,
     },
   })
 );
