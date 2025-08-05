@@ -10,7 +10,7 @@ type Props = {
 
 const SalesTable = ({ selesData }: Props) => {
   return (
-    <div className="border border-green-950 7/10 rounded-sm mx-1 bg-green-100 overflow-y-auto">
+    <div className="border border-green-950 h-7/10 rounded-sm ml-1 bg-green-100 overflow-y-auto">
       <table className="min-w-full border-collapse border-0 table-fixed">
         <thead className="text-white font-bold text-xl">
           <tr className="sticky top-0 z-10 bg-green-950">
