@@ -19,7 +19,7 @@ const MainInput = ({ textLabel }: Props) => {
     <div className="flex flex-col gap-1 text-green-800">
       <div className="flex flex-col">
         <label
-          className="text-xm mx-1 font-bold p-0.5 text-xl"
+          className="text-xm ml-1 font-bold p-0.5 text-xl"
           htmlFor="main-input"
         >
           {textLabel}
@@ -30,7 +30,7 @@ const MainInput = ({ textLabel }: Props) => {
           id="main-input"
           onChange={handleOnChange}
           value={inputValue}
-          className="border-2 p-1 mx-1 
+          className="border-2 p-1 ml-1 
           border-blue-950 bg-green-100 
           rounded-md focus:outline-none focus:ring-2 
           focus:ring-blue-500 background-transparent 
