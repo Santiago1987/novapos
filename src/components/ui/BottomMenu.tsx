@@ -27,28 +27,34 @@ const items = [
   { id: 22, button: 'Twenty', isClicked: false },
   { id: 23, button: 'Twenty', isClicked: false },
   { id: 24, button: 'Twenty', isClicked: false },
+  { id: 25, button: 'Twenty', isClicked: false },
+  { id: 26, button: 'Twenty', isClicked: false },
+  { id: 27, button: 'Twenty', isClicked: false },
+  { id: 28, button: 'Twenty', isClicked: false },
 ];
 
 const BottomMenu = () => {
   const [buttonsList, setButtons] = useState(items);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const itemsPerPage = 12;
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const totalPages = Math.ceil(buttonsList.length / itemsPerPage);
 
   const currentItems = buttonsList.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
   );
 
   /*const nextPage = () => {
-    if (currentPage < totalPages) {
+    if (currentPage < totalPages-1) {
+    setDirection(1);
       setCurrentPage(currentPage + 1);
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
+    setDirection(-1);
       setCurrentPage(currentPage - 1);
     }
   };*/
@@ -56,14 +62,14 @@ const BottomMenu = () => {
   // SWIP
   const handleOnSwip = useSwipeable({
     onSwipedLeft: () => {
-      if (currentPage < totalPages) {
+      if (currentPage < totalPages - 1) {
         setDirection(1);
         setCurrentPage(currentPage + 1);
       }
     },
 
     onSwipedRight: () => {
-      if (currentPage > 1) {
+      if (currentPage > 0) {
         setDirection(-1);
         setCurrentPage(currentPage - 1);
       }
@@ -109,8 +115,8 @@ const BottomMenu = () => {
 
   return (
     <div {...handleOnSwip} className="flex flex-col w-full h-full">
-      <AnimatePresence initial={false} custom={direction} mode="popLayout">
-        <div className="relative h-96 w-full overflow-hidden">
+      <div className="relative h-96 w-full overflow-hidden">
+        <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
             key={currentPage}
             custom={direction}
@@ -120,38 +126,36 @@ const BottomMenu = () => {
             exit="exit"
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="absolute inset-0 grid grid-cols-3 grid-rows-4 pl-1 pb-1 rounded-md gap-0.5 align-middle h-full w-full"
-            layout
           >
-            {currentItems.map((elem, index) => (
+            {currentItems.map((elem) => (
               <div
-                key={index}
+                key={elem.id}
                 className="min-h-[52px] min-w-[70px] flex items-center justify-center"
               >
                 <motion.button
-                  layout
                   type="button"
-                  id={`button-${index}`}
+                  id={`button-${elem.id}`}
                   onClick={() => handleOnClick(elem)}
                   animate={{ scale: elem.isClicked ? 1.1 : 1 }}
                   transition={{ duration: 0.075, ease: 'easeInOut' }}
                   className={`text-white bg-gradient-to-r from-green-950  w-full h-full
           via-green-900 to-green-950 hover:bg-gradient-to-br 
           focus:outline-non overflow-hidden text-ellipsis
-          font-medium rounded-md text-lg text-center`}
+          font-medium rounded-md text-lg text-center whitespace-nowrap`}
                 >
                   {elem.button}
                 </motion.button>
               </div>
             ))}
           </motion.div>
-        </div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
       <div className="flex justify-center mt-1 mb-1 items-center gap-2">
         {Array.from({ length: totalPages }).map((_, index) => (
           <span
             key={index}
             className={`w-2 h-2 rounded-full ${
-              index === currentPage - 1 ? 'bg-blue-500' : 'bg-gray-400'
+              index === currentPage ? 'bg-blue-500' : 'bg-gray-400'
             }`}
           />
         ))}
