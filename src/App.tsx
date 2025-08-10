@@ -7,8 +7,9 @@ import NumbersButtons from './components/ui/NumbersButtons';
 import SideMenu from './components/ui/SideMenu';
 import TotalsComponent from './components/ui/TotalsComponent';
 import Miselaneos from './components/common/Miselaneos';
-import { type ButtonItem } from './types/types';
-import { ThemesList } from './types/constTypes';
+import { type ButtonItem, type Themes } from './types/types';
+import { getMainColors } from './helpers/getButtonColors';
+import { useState } from 'react';
 
 const exampleButtons: ButtonItem[] = [
   { id: 1, title: 'Agregar Producto', onClick: () => {}, isClicked: false },
@@ -89,25 +90,31 @@ const exampleButtons: ButtonItem[] = [
 ];
 
 function App() {
+  const [theme, setTheme] = useState<Themes>('GREEN');
+  const mainColors = getMainColors(theme);
+
+  const onChangeTheme = (them: Themes) => {
+    setTheme(them);
+  };
   return (
     <>
-      <main>
+      <main className={`${mainColors.background} ${mainColors.textColor}`}>
         <section className="main-input">
-          <MainInput textLabel="Receipt from Monday 31 Jun" />
+          <MainInput textLabel="Receipt from Monday 31 Jun" theme={theme} />
         </section>
         <section className="sales-grid">
-          <SalesTable salesData={[]} />
-          <Payments />
+          <SalesTable salesData={[]} theme={theme} />
+          <Payments theme={theme} />
         </section>
         <section className="totals-grid">
-          <Miselaneos />
-          <TotalsComponent />
+          <Miselaneos theme={theme} onChangeTheme={onChangeTheme} />
+          <TotalsComponent theme={theme} />
         </section>
         <section className="side-menu">
-          <SideMenu />
+          <SideMenu theme={theme} />
         </section>
         <section className="bottom-menu">
-          <BottomMenu buttons={exampleButtons} theme={ThemesList.DARK} />
+          <BottomMenu buttons={exampleButtons} theme={theme} />
         </section>
         <section className="number-buttons">
           <NumbersButtons />
