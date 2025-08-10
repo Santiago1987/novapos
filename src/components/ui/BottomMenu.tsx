@@ -48,6 +48,7 @@ const BottomMenu = ({ buttons, theme }: Props) => {
         buttons={selectedSubMenu?.buttons || []}
         title={selectedSubMenu?.title || ''}
         onClose={handleOnCloseSubmenuModal}
+        theme={theme}
       />
     </div>
   );
