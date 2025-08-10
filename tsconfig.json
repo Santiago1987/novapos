@@ -13,9 +13,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["src/*"],
+      "@components/*": ["components/*"],
+      "@helpers/*": ["helpers/*"],
+      "@types/*": ["types/*"]
     },
     "types": [
       "node",
@@ -25,6 +27,6 @@
       "@testing-library/react",
       "vitest/globals",
       "happy-dom"
-    ]
-  }
+    ],
+  },
 }

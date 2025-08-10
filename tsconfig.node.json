@@ -21,6 +21,12 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "noImplicitReturns": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@helpers/*": ["helpers/*"],
+      "@types/*": ["types/*"]
+    }
   },
-  "include": ["vite.config.ts","vitest.config.ts"]
+  "include": ["vite.config.ts","vitest.config.ts"],
 }
