@@ -8,7 +8,7 @@ const MainInput = ({ textLabel }: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    console.log('Component mounted or inputValue changed:', inputValue);
+    //console.log('Component mounted or inputValue changed:', inputValue);
   }, [inputValue]);
 
   const handleOnChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
