@@ -141,7 +141,7 @@ const ButtonsGrid = ({
             exit="exit"
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className={`absolute inset-0 grid grid-cols-3 ${gap} w-full h-auto
-                           auto-rows-min ${gridClassName}`}
+                           ${gridClassName}`}
           >
             {currentItems.map((elem) => {
               const colors = getButtonColors({ button: elem, theme });
