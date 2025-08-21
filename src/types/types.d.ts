@@ -8,7 +8,7 @@ export interface Layout {
   };
   components: {
     buttons?: Button[];
-    tables?: TableType<T>;
+    tables?: TableType<T>[];
   };
 }
 
@@ -20,22 +20,23 @@ export interface Button {
     onClick?: () => void;
     isClicked: boolean;
     textColor: string;
-    size?: {
-      width: string;
-      height: string;
-    };
-  };
-  position: {
-    mode: 'absolute' | 'grid';
-    x?: number;
-    y?: number;
-    section?: {
-      sectionName: string;
-      gridRow?: number;
-      gridCol?: number;
-    };
+    size?: Size;
+    position: Position;
   };
   subMenu?: SubMenu;
+}
+
+export interface Position {
+  mode: 'absolute' | 'grid';
+  x?: number;
+  y?: number;
+  gridRow?: number;
+  gridCol?: number;
+}
+
+export interface Size {
+  width: string;
+  height: string;
 }
 
 export interface SubMenu {
@@ -55,16 +56,7 @@ export interface Table {
       height: string;
     };
   };
-  position: {
-    mode: 'absolute' | 'grid';
-    x?: number;
-    y?: number;
-    section?: {
-      sectionName: string;
-      gridRow?: number;
-      gridCol?: number;
-    };
-  };
+  position: Position;
 }
 
 export interface Sales extends Table {
