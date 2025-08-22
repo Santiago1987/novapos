@@ -13,7 +13,7 @@ export interface Layout {
 }
 
 export interface Button {
-  id: number;
+  id: string;
   properties: {
     label: string;
     color: string;
@@ -45,7 +45,7 @@ export interface SubMenu {
 }
 
 export interface Table {
-  id: number;
+  id: string;
   type: 'sales' | 'payments' | 'promotions';
   properties: {
     headerColor?: string;

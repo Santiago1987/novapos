@@ -5,18 +5,22 @@ export type LayoutStoreState = LayoutState & Actions;
 export interface LayoutState {
   isEditing: boolean;
   layout: Layout;
-  selectedComponent: string | null;
+  selectedComponent: {
+    id: string | null;
+    type: 'buttons' | 'tables';
+  };
 }
 
 export interface Actions {
   toggleEditing: () => void;
   addButton: (button: Button) => void;
   addTable: (table: TableType<Sales | Payments>) => void;
-  updateComponent: (
+  updateButton: (id: string, properties: Partial<Button['properties']>) => void;
+  updateTable: (
     id: string,
-    update: Partial<(Button | TableType<Sales | Payments>)['properties']>
+    properties: Partial<TableType<Sales | Payments>['properties']>
   ) => void;
-  setComponents: (components: Button | TableType<Sales | Payments>) => void;
-  selectComponent: (id: string | null) => void;
-  deleteComponent: (id: string) => void;
+  selectComponent: (id: string | null, type: 'tables' | 'buttons') => void;
+  deleteButton: (id: string) => void;
+  deleteTable: (id: string) => void;
 }
