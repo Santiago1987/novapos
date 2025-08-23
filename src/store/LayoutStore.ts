@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import type { Layout } from '../types/types';
 
 const blanckLayout: Layout = {
-  background: '#fff',
+  background: '#ffffff',
   size: {
     high: 'h-full',
     width: 'w-full',
@@ -31,7 +31,15 @@ export const useLayoutStore = create<LayoutStoreState>()(
         ...initialVariables,
         toggleEditing: () => {
           const { isEditing } = get();
+          console.log('Toggling editing mode:', isEditing);
           set({ isEditing: !isEditing });
+          console.log('get:', get());
+        },
+        editLayoutBackground: (background) => {
+          const { layout } = get();
+          const newLayout = structuredClone(layout);
+          newLayout.background = background;
+          set({ layout: newLayout });
         },
         addButton: (button) => {
           const { layout } = get();
@@ -101,6 +109,9 @@ export const useLayoutStore = create<LayoutStoreState>()(
           layout.components.tables = newbuttonList;
 
           set({ layout });
+        },
+        reset: () => {
+          set({ ...initialVariables });
         },
       }),
       { name: 'layout-store' }

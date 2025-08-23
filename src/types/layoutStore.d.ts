@@ -23,4 +23,6 @@ export interface Actions {
   selectComponent: (id: string | null, type: 'tables' | 'buttons') => void;
   deleteButton: (id: string) => void;
   deleteTable: (id: string) => void;
+  editLayoutBackground: (background: string) => void;
+  reset: () => void;
 }

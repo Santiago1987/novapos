@@ -7,8 +7,8 @@ export interface Layout {
     width: string;
   };
   components: {
-    buttons?: Button[];
-    tables?: TableType<T>[];
+    buttons: Button[];
+    tables: TableType<T>[];
   };
 }
 
@@ -62,14 +62,14 @@ export interface Table {
 export interface Sales extends Table {
   columns: {
     type: keyof typeof SalesColumns;
-    tile: string;
+    title: string;
   }[];
 }
 
 export interface Payments extends Table {
   columns: {
     type: keyof typeof PaymentsColumns;
-    tile: string;
+    title: string;
   }[];
 }
 
