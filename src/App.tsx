@@ -1,9 +1,12 @@
+import Editor from './components/main/Editor';
 import './App.css';
 
 function App() {
   return (
     <>
-      <main></main>
+      <main className="w-full h-full">
+        <Editor />
+      </main>
     </>
   );
 }

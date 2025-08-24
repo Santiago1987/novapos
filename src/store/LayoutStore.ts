@@ -4,13 +4,24 @@ import { create } from 'zustand';
 import type { Layout } from '../types/types';
 
 const blanckLayout: Layout = {
-  background: '#ffffff',
+  background: 'bg-black',
   size: {
     high: 'h-full',
     width: 'w-full',
   },
   components: {
-    buttons: [],
+    buttons: [
+      {
+        id: 'btn-pepito',
+        properties: {
+          label: 'Button 1',
+          color: 'bg-blue-500',
+          position: { mode: 'absolute', x: 50, y: 50 },
+          isClicked: false,
+          textColor: 'text-white',
+        },
+      },
+    ],
     tables: [],
   },
 };
