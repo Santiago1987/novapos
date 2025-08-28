@@ -27,7 +27,7 @@ export interface Button {
 }
 
 export interface Position {
-  mode: 'absolute' | 'grid';
+  mode: 'absolute';
   x?: number;
   y?: number;
   gridRow?: number;

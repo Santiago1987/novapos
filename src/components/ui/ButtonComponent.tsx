@@ -19,10 +19,12 @@ const ButtonComponent = ({ button }: Props) => {
     top: properties.position.y,
     width: properties.size ? properties.size.width : 'auto',
     height: properties.size ? properties.size.height : 'auto',
-    backgroundColor: properties.color ? properties.color : 'bg-blue-500',
+    backgroundColor: properties.color ? properties.color : 'bg-red-500',
     cursor: 'grab',
     touchAction: 'none',
   } as React.CSSProperties;
+
+  const sizeProps = `w-[${properties.size?.width}px] h-[${properties.size?.height}px]`;
 
   return (
     <div
@@ -30,9 +32,11 @@ const ButtonComponent = ({ button }: Props) => {
       {...listeners}
       {...attributes}
       style={style}
-      className={`flex items-center justify-center rounded bg-black ${properties.color}}`}
+      className={`flex items-center justify-center bg-black ${properties.color}}`}
     >
-      <button className={`p-2 ${properties.textColor} ${properties.color}`}>
+      <button
+        className={`p-2 rounded-xs ${sizeProps} ${properties.textColor} ${properties.color}`}
+      >
         {properties.label}
       </button>
     </div>
