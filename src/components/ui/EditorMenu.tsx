@@ -1,7 +1,11 @@
 import { useDraggable } from '@dnd-kit/core';
 import { useLayoutStore } from '../../store/LayoutStore';
 
-const EditorMenu = () => {
+type Props = {
+  dragStyle: string;
+};
+
+const EditorMenu = ({ dragStyle }: Props) => {
   const { setNodeRef, listeners, attributes, transform } = useDraggable({
     id: 'new-button',
     data: {
@@ -20,10 +24,10 @@ const EditorMenu = () => {
 
   return (
     <div
-      className="absolute flex flex-col justify-start items-center gap-1
+      className={`absolute flex flex-col justify-start items-center gap-1
                     z-50 top-1 right-1 min-w-[200px] w-2/12 h-11/12 text-black 
                     bg-white rounded-2xl border-solid border-2 border-gray-300
-                    shadow-lg shadow-gray-400/50"
+                    shadow-lg shadow-gray-400/50 ${dragStyle}`}
     >
       <h1 className="p-1 text-2xl">Editor Menu</h1>
       <div

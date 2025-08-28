@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLayoutStore } from '../../store/LayoutStore';
 import { createSnapModifier, restrictToWindowEdges } from '@dnd-kit/modifiers';
 import {
@@ -26,29 +26,7 @@ const Editor = () => {
   );
   const [dragStarted, setDragStarted] = useState(false);
   const [mausePosition, setMausePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    if (dragStarted) {
-      console.log('drag started');
-      document.addEventListener(
-        'mausemove',
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-          console.log('moving', e.clientX, e.clientY);
-          setMausePosition({ x: e.clientX, y: e.clientY });
-        }
-      );
-    }
-    if (!dragStarted) {
-      console.log('drag ended');
-      document.removeEventListener(
-        'mausemove',
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-          setMausePosition({ x: e.clientX, y: e.clientY });
-        }
-      );
-      setDragStarted(false);
-    }
-  }, [dragStarted]);
+  const [dragStyle, setDragStyle] = useState('opacity-100');
 
   const gridSize = 5;
   const snapToGrid = createSnapModifier(gridSize);
@@ -56,9 +34,8 @@ const Editor = () => {
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
-
-    console.log(mausePosition);
     setDragStarted(false);
+    setDragStyle('opacity-100');
 
     // NEW BUTTON
     if (active.id === 'new-button') {
@@ -66,7 +43,11 @@ const Editor = () => {
         id: uuidv4(),
         properties: {
           label: 'New Button',
-          position: { mode: 'absolute', x: 5, y: 5 },
+          position: {
+            mode: 'absolute',
+            x: mausePosition.x,
+            y: mausePosition.y,
+          },
           size: { width: '150', height: '50' },
           color: 'bg-blue-500',
           textColor: 'text-white',
@@ -94,6 +75,13 @@ const Editor = () => {
     });
   };
 
+  //handle mouse position
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!dragStarted) return;
+    setMausePosition({ x: e.clientX, y: e.clientY });
+    setDragStyle('opacity-50');
+  };
+
   return (
     <DndContext
       onDragEnd={handleDragEnd}
@@ -101,13 +89,16 @@ const Editor = () => {
       sensors={sensors}
       modifiers={[snapToGrid, restrictToWindowEdges]}
     >
-      <div className={`w-screen h-screen relative ${background}`}>
+      <div
+        onMouseMove={handleMouseMove}
+        className={`w-screen h-screen relative ${background}`}
+      >
         <div ref={setNodeRef}>
           {components.buttons.map((button) => (
             <ButtonComponent key={button.id} button={button} />
           ))}
         </div>
-        <EditorMenu />
+        <EditorMenu dragStyle={dragStyle} />
       </div>
     </DndContext>
   );
