@@ -75,6 +75,9 @@ const Editor = () => {
     });
   };
 
+  //handle is dragging
+  const handleIsDraggin = (isDragging: boolean) => setDragStarted(isDragging);
+
   //handle mouse position
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!dragStarted) return;
@@ -85,7 +88,6 @@ const Editor = () => {
   return (
     <DndContext
       onDragEnd={handleDragEnd}
-      onDragStart={() => setDragStarted(true)}
       sensors={sensors}
       modifiers={[snapToGrid, restrictToWindowEdges]}
     >
@@ -98,7 +100,7 @@ const Editor = () => {
             <ButtonComponent key={button.id} button={button} />
           ))}
         </div>
-        <EditorMenu dragStyle={dragStyle} />
+        <EditorMenu dragStyle={dragStyle} handleIsDraggin={handleIsDraggin} />
       </div>
     </DndContext>
   );

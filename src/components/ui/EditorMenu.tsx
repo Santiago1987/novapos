@@ -1,18 +1,27 @@
 import { useDraggable } from '@dnd-kit/core';
 import { useLayoutStore } from '../../store/LayoutStore';
+import { useEffect } from 'react';
 
 type Props = {
   dragStyle: string;
+  handleIsDraggin: (isDragging: boolean) => void;
 };
 
-const EditorMenu = ({ dragStyle }: Props) => {
-  const { setNodeRef, listeners, attributes, transform } = useDraggable({
-    id: 'new-button',
-    data: {
-      position: document.getElementById('new-button')?.getBoundingClientRect(),
-    },
-  });
+const EditorMenu = ({ dragStyle, handleIsDraggin }: Props) => {
+  const { setNodeRef, listeners, attributes, transform, isDragging } =
+    useDraggable({
+      id: 'new-button',
+      data: {
+        position: document
+          .getElementById('new-button')
+          ?.getBoundingClientRect(),
+      },
+    });
   const { reset } = useLayoutStore();
+
+  useEffect(() => {
+    handleIsDraggin(isDragging);
+  }, [isDragging, handleIsDraggin]);
 
   const style = {
     transform: transform
