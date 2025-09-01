@@ -20,8 +20,10 @@ export interface Button {
     onClick?: () => void;
     isClicked: boolean;
     textColor: string;
+    fontSize: string;
     size?: Size;
     position: Position;
+    miscStyles?: string;
   };
   subMenu?: SubMenu;
 }
@@ -55,8 +57,8 @@ export interface Table {
       width: string;
       height: string;
     };
+    position: Position;
   };
-  position: Position;
 }
 
 export interface Sales extends Table {

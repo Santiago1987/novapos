@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useLayoutStore } from '../../store/LayoutStore';
 import { createSnapModifier, restrictToWindowEdges } from '@dnd-kit/modifiers';
 import {
@@ -15,7 +14,13 @@ import EditorMenu from '../ui/EditorMenu';
 import { v4 as uuidv4 } from 'uuid';
 
 const Editor = () => {
-  const { layout, updateButton, addButton } = useLayoutStore();
+  const {
+    layout,
+    selectedComponent,
+    updateButton,
+    addButton,
+    selectComponent,
+  } = useLayoutStore();
   const { setNodeRef } = useDroppable({ id: 'editor' });
   const { background, components } = layout;
   const sensors = useSensors(
@@ -24,9 +29,6 @@ const Editor = () => {
     }),
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
-  const [dragStarted, setDragStarted] = useState(false);
-  const [mausePosition, setMausePosition] = useState({ x: 0, y: 0 });
-  const [dragStyle, setDragStyle] = useState('opacity-100');
 
   const gridSize = 5;
   const snapToGrid = createSnapModifier(gridSize);
@@ -34,24 +36,25 @@ const Editor = () => {
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
-    setDragStarted(false);
-    setDragStyle('opacity-100');
 
     // NEW BUTTON
     if (active.id === 'new-button') {
+      const { x, y } = active.data.current?.position || { x: 0, y: 0 };
       addButton({
         id: uuidv4(),
         properties: {
           label: 'New Button',
           position: {
             mode: 'absolute',
-            x: mausePosition.x,
-            y: mausePosition.y,
+            x: x - (x % gridSize),
+            y: y - (y % gridSize),
           },
-          size: { width: '150', height: '50' },
+          size: { width: '150px', height: '50px' },
           color: 'bg-blue-500',
           textColor: 'text-white',
+          fontSize: 'text-lg',
           isClicked: false,
+          miscStyles: 'rounded-lg shadow-md shadow-gray-400/50',
         },
       });
     }
@@ -75,14 +78,30 @@ const Editor = () => {
     });
   };
 
-  //handle is dragging
-  const handleIsDraggin = (isDragging: boolean) => setDragStarted(isDragging);
+  //SELECT COMPONENT
+  const handleSelectComponent = (id: string, type: 'buttons' | 'tables') => {
+    selectComponent(id, type);
+  };
 
-  //handle mouse position
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (!dragStarted) return;
-    setMausePosition({ x: e.clientX, y: e.clientY });
-    setDragStyle('opacity-50');
+  //HANDEL COPY COMPONENT
+  const handleCopyComponent = (id: string, type: 'buttons' | 'tables') => {
+    const component = layout.components[type].find((comp) => comp.id === id);
+    if (!component) return;
+    if (type === 'buttons') {
+      const newButton = {
+        ...component,
+        id: uuidv4(),
+        properties: {
+          ...component.properties,
+          position: {
+            ...component.properties.position,
+            x: (component.properties.position.x || 0) + 20,
+            y: (component.properties.position.y || 0) + 20,
+          },
+        },
+      };
+      addButton(newButton);
+    }
   };
 
   return (
@@ -91,16 +110,19 @@ const Editor = () => {
       sensors={sensors}
       modifiers={[snapToGrid, restrictToWindowEdges]}
     >
-      <div
-        onMouseMove={handleMouseMove}
-        className={`w-screen h-screen relative ${background}`}
-      >
+      <div className={`w-screen h-screen relative ${background}`}>
         <div ref={setNodeRef}>
           {components.buttons.map((button) => (
-            <ButtonComponent key={button.id} button={button} />
+            <ButtonComponent
+              key={button.id}
+              button={button}
+              isSelected={selectedComponent.id === button.id}
+              handleSelectComponent={handleSelectComponent}
+              handleCopyComponent={handleCopyComponent}
+            />
           ))}
         </div>
-        <EditorMenu dragStyle={dragStyle} handleIsDraggin={handleIsDraggin} />
+        <EditorMenu />
       </div>
     </DndContext>
   );
