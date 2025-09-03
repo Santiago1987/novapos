@@ -14,6 +14,7 @@ export interface Layout {
 
 export interface Button {
   id: string;
+  type: 'button' | 'submenu';
   properties: {
     label: string;
     color: string;

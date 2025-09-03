@@ -13,11 +13,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"],
-      "@helpers/*": ["helpers/*"],
-      "@types/*": ["types/*"]
+      "src/*":["./src/*"]
     },
     "types": [
       "node",

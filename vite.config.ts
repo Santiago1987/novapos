@@ -7,4 +7,9 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
   },
+  resolve: {
+    alias: {
+      src: '/src',
+    },
+  },
 });

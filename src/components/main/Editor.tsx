@@ -1,4 +1,4 @@
-import { useLayoutStore } from '../../store/LayoutStore';
+import { useLayoutStore } from 'src/store/LayoutStore';
 import { createSnapModifier, restrictToWindowEdges } from '@dnd-kit/modifiers';
 import {
   DndContext,
@@ -9,9 +9,10 @@ import {
   PointerSensor,
   useSensors,
 } from '@dnd-kit/core';
-import ButtonComponent from '../ui/ButtonComponent';
-import EditorMenu from '../ui/EditorMenu';
+import ButtonComponent from '../ui/editor/ButtonComponent';
+import EditorMenu from '../ui/editor/EditorMenu';
 import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
 
 const Editor = () => {
   const {
@@ -20,6 +21,7 @@ const Editor = () => {
     updateButton,
     addButton,
     selectComponent,
+    deleteButton,
   } = useLayoutStore();
   const { setNodeRef } = useDroppable({ id: 'editor' });
   const { background, components } = layout;
@@ -29,6 +31,8 @@ const Editor = () => {
     }),
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
+  const [changeTextVisible, setChangeTextVisible] = useState(false);
+  const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
   const gridSize = 5;
   const snapToGrid = createSnapModifier(gridSize);
@@ -42,6 +46,7 @@ const Editor = () => {
       const { x, y } = active.data.current?.position || { x: 0, y: 0 };
       addButton({
         id: uuidv4(),
+        type: 'button',
         properties: {
           label: 'New Button',
           position: {
@@ -50,8 +55,8 @@ const Editor = () => {
             y: y - (y % gridSize),
           },
           size: { width: '150px', height: '50px' },
-          color: 'bg-blue-500',
-          textColor: 'text-white',
+          color: '#3b82f6',
+          textColor: '#ffffff',
           fontSize: 'text-lg',
           isClicked: false,
           miscStyles: 'rounded-lg shadow-md shadow-gray-400/50',
@@ -80,6 +85,12 @@ const Editor = () => {
 
   //SELECT COMPONENT
   const handleSelectComponent = (id: string, type: 'buttons' | 'tables') => {
+    setChangeTextVisible(false);
+    setColorPickerVisible(false);
+    if (selectedComponent.id === id) {
+      selectComponent(null, 'buttons');
+      return;
+    }
     selectComponent(id, type);
   };
 
@@ -87,7 +98,7 @@ const Editor = () => {
   const handleCopyComponent = (id: string, type: 'buttons' | 'tables') => {
     const component = layout.components[type].find((comp) => comp.id === id);
     if (!component) return;
-    if (type === 'buttons') {
+    if (type === 'buttons' && component.type === 'button') {
       const newButton = {
         ...component,
         id: uuidv4(),
@@ -102,6 +113,28 @@ const Editor = () => {
       };
       addButton(newButton);
     }
+  };
+
+  const handleDeleteComponent = (id: string, type: 'buttons' | 'tables') => {
+    if (type === 'buttons') {
+      deleteButton(id);
+      setChangeTextVisible(false);
+    }
+  };
+
+  const handleOnClickTextChange = () => {
+    setChangeTextVisible(!changeTextVisible);
+    setColorPickerVisible(false);
+  };
+
+  const handleOnClickColorChange = () => {
+    setChangeTextVisible(false);
+    setColorPickerVisible(!colorPickerVisible);
+  };
+
+  const handleOnColorChange = (color: string) => {
+    if (!selectedComponent.id) return;
+    updateButton(selectedComponent.id, { color: color });
   };
 
   return (
@@ -119,10 +152,17 @@ const Editor = () => {
               isSelected={selectedComponent.id === button.id}
               handleSelectComponent={handleSelectComponent}
               handleCopyComponent={handleCopyComponent}
+              handleDeleteComponent={handleDeleteComponent}
+              handleOnClickTextChange={handleOnClickTextChange}
+              handleOnClickColorChange={handleOnClickColorChange}
             />
           ))}
         </div>
-        <EditorMenu />
+        <EditorMenu
+          changeTextVisible={changeTextVisible}
+          colorPickerVisible={colorPickerVisible}
+          handleOnColorChange={handleOnColorChange}
+        />
       </div>
     </DndContext>
   );

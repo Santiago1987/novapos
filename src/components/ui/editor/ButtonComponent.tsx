@@ -1,18 +1,21 @@
 import { useDraggable } from '@dnd-kit/core';
-import type { Button } from '../../types/types';
+import type { Button } from '../../../types/types';
 import {
   ContentCopy,
   Delete,
   FormatText,
   Function,
   FormatColorFill,
-} from '../icons/SVGIcons';
+} from '../../icons/SVGIcons';
 
 type Props = {
   button: Button;
   isSelected: boolean;
   handleSelectComponent: (id: string, type: 'buttons' | 'tables') => void;
   handleCopyComponent: (id: string, type: 'buttons' | 'tables') => void;
+  handleDeleteComponent: (id: string, type: 'buttons' | 'tables') => void;
+  handleOnClickTextChange: () => void;
+  handleOnClickColorChange: () => void;
 };
 
 const ButtonComponent = ({
@@ -20,6 +23,9 @@ const ButtonComponent = ({
   isSelected,
   handleSelectComponent,
   handleCopyComponent,
+  handleDeleteComponent,
+  handleOnClickTextChange,
+  handleOnClickColorChange,
 }: Props) => {
   const { setNodeRef, listeners, attributes, transform } = useDraggable({
     id: button.id,
@@ -41,6 +47,11 @@ const ButtonComponent = ({
   } as React.CSSProperties;
 
   const sizeProps = `w-[${properties.size?.width}] h-[${properties.size?.height}] max-w-[${properties.size?.width}] max-h-[${properties.size?.height}]`;
+  const customProps = `${sizeProps} ${properties.miscStyles ? properties.miscStyles : ''} ${properties.fontSize}`;
+  const buttonStyle = {
+    backgroundColor: properties.color,
+    color: properties.textColor,
+  };
 
   const iconWidth = '1.4em';
   const iconHeight = '1.4em';
@@ -51,7 +62,7 @@ const ButtonComponent = ({
       {...listeners}
       {...attributes}
       style={style}
-      className={`flex items-center justify-center`}
+      className={`flex items-center justify-center rounded-lg`}
     >
       <div className="relative flex flex-col items-center justify-center">
         <div
@@ -61,17 +72,21 @@ const ButtonComponent = ({
           <button onClick={() => handleCopyComponent(button.id, 'buttons')}>
             <ContentCopy width={iconWidth} height={iconHeight} />
           </button>
-          <button>
+          <button onClick={() => handleOnClickTextChange()}>
             <FormatText width={iconWidth} height={iconHeight} />
           </button>
           <button>
-            <Delete width={iconWidth} height={iconHeight} color="red" />
+            <Delete
+              onClick={() => handleDeleteComponent(button.id, 'buttons')}
+              width={iconWidth}
+              height={iconHeight}
+              color="red"
+            />
           </button>
         </div>
         <button
-          className={`p-1 ${sizeProps} ${properties.textColor} ${properties.color}
-        ${properties.miscStyles ? properties.miscStyles : ''} ${properties.fontSize} wrap-anywhere
-        ${isSelected ? 'ring-4 ring-blue-300' : ''}`}
+          className={`p-1  wrap-anywhere leading-5 ${customProps} ${isSelected ? 'ring-4 ring-blue-300' : ''}`}
+          style={buttonStyle}
           onClick={() => handleSelectComponent(button.id, 'buttons')}
         >
           {properties.label}
@@ -83,7 +98,7 @@ const ButtonComponent = ({
           <button>
             <Function width={iconWidth} height={iconHeight} />
           </button>
-          <button>
+          <button onClick={handleOnClickColorChange}>
             <FormatColorFill width={iconWidth} height={iconHeight} />
           </button>
         </div>
