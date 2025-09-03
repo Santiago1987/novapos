@@ -1,7 +1,7 @@
 import { useLayoutStore } from '../../../store/LayoutStore';
 
 type Props = {
-  handleOnColorChange: (color: string) => void;
+  handleOnColorChange: (color: string, type: 'text' | 'background') => void;
 };
 const ColorPicker = ({ handleOnColorChange }: Props) => {
   const { layout, selectedComponent } = useLayoutStore();
@@ -58,7 +58,7 @@ const ColorPicker = ({ handleOnColorChange }: Props) => {
       <h2 className="p1 text-xl">Backgraund color</h2>
       <input
         type="color"
-        onChange={(e) => handleOnColorChange(e.target.value)}
+        onChange={(e) => handleOnColorChange(e.target.value, 'background')}
         className="w-11/12 h-10 border-solid border-2 border-gray-300 rounded-lg p-1"
         value={bgValue}
       />
@@ -66,7 +66,7 @@ const ColorPicker = ({ handleOnColorChange }: Props) => {
       <input
         type="color"
         value={textValue}
-        onChange={(e) => handleOnColorChange(e.target.value)}
+        onChange={(e) => handleOnColorChange(e.target.value, 'text')}
         className="w-11/12 h-10 border-solid border-2 border-gray-300 rounded-lg p-1"
       />
     </div>

@@ -8,13 +8,17 @@ import { DragVariant } from 'src/components/icons/SVGIcons';
 type Props = {
   changeTextVisible: boolean;
   colorPickerVisible: boolean;
-  handleOnColorChange: (color: string) => void;
+  text: string;
+  handleOnColorChange: (color: string, type: 'text' | 'background') => void;
+  handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const EditorMenu = ({
   changeTextVisible,
   colorPickerVisible,
+  text,
   handleOnColorChange,
+  handleOnChangeText,
 }: Props) => {
   const { reset } = useLayoutStore();
   const [isDragging, setIsDragging] = useState(false);
@@ -41,7 +45,9 @@ const EditorMenu = ({
         >
           <NewButton handleIsDragging={handleIsDragging} />
         </div>
-        {changeTextVisible && <TextChange />}
+        {changeTextVisible && (
+          <TextChange text={text} handleOnChangeText={handleOnChangeText} />
+        )}
         {colorPickerVisible && (
           <ColorPicker handleOnColorChange={handleOnColorChange} />
         )}

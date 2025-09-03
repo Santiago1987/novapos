@@ -1,12 +1,12 @@
 import { useDraggable } from '@dnd-kit/core';
-import type { Button } from '../../../types/types';
+import type { Button } from 'src/types/types';
 import {
   ContentCopy,
   Delete,
   FormatText,
   Function,
   FormatColorFill,
-} from '../../icons/SVGIcons';
+} from 'src/components/icons/SVGIcons';
 
 type Props = {
   button: Button;

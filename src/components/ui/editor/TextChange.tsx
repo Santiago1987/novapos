@@ -1,16 +1,9 @@
-import { useLayoutStore } from '../../../store/LayoutStore';
-const TextChange = () => {
-  const { layout, selectedComponent, updateButton } = useLayoutStore();
+type Props = {
+  text: string;
+  handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
-  const handleOnChange = (text: string) => {
-    if (!selectedComponent.id) return;
-    updateButton(selectedComponent.id, { label: text });
-  };
-
-  const text = layout.components.buttons.find(
-    (butt) => butt.id === selectedComponent.id
-  )?.properties.label;
-
+const TextChange = ({ text, handleOnChangeText }: Props) => {
   return (
     <div
       className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
@@ -22,7 +15,7 @@ const TextChange = () => {
           type="text"
           className="w-11/12 h-8 border-solid border-2 border-gray-300 rounded-lg p-1"
           placeholder="Change button text..."
-          onChange={(e) => handleOnChange(e.target.value)}
+          onChange={handleOnChangeText}
           value={text}
         />
       </div>
