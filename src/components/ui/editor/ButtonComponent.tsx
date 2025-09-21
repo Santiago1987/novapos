@@ -7,6 +7,7 @@ import {
   Function,
   FormatColorFill,
 } from 'src/components/icons/SVGIcons';
+import { AnimatePresence, motion } from 'framer-motion';
 
 type Props = {
   button: Button;
@@ -29,6 +30,9 @@ const ButtonComponent = ({
 }: Props) => {
   const { setNodeRef, listeners, attributes, transform } = useDraggable({
     id: button.id,
+    data: {
+      type: 'button',
+    },
   });
   const { properties } = button;
 
@@ -65,25 +69,31 @@ const ButtonComponent = ({
       className={`flex items-center justify-center rounded-lg`}
     >
       <div className="relative flex flex-col items-center justify-center">
-        <div
-          className={`absolute flex gap-1 justify-between w-[${properties.size?.width}] 
-          ${isSelected ? 'visible' : 'invisible'} top-[-25px] z-50`}
-        >
-          <button onClick={() => handleCopyComponent(button.id, 'buttons')}>
-            <ContentCopy width={iconWidth} height={iconHeight} />
-          </button>
-          <button onClick={() => handleOnClickTextChange()}>
-            <FormatText width={iconWidth} height={iconHeight} />
-          </button>
-          <button>
-            <Delete
-              onClick={() => handleDeleteComponent(button.id, 'buttons')}
-              width={iconWidth}
-              height={iconHeight}
-              color="red"
-            />
-          </button>
-        </div>
+        <AnimatePresence>
+          {isSelected && (
+            <motion.div
+              className={`absolute flex gap-1 justify-between w-[${properties.size?.width}] z-50`}
+              initial={{ opacity: 0, top: '-10px' }}
+              animate={{ opacity: 1, top: '-25px' }}
+              exit={{ opacity: 0, top: '-10px' }}
+            >
+              <button onClick={() => handleCopyComponent(button.id, 'buttons')}>
+                <ContentCopy width={iconWidth} height={iconHeight} />
+              </button>
+              <button onClick={() => handleOnClickTextChange()}>
+                <FormatText width={iconWidth} height={iconHeight} />
+              </button>
+              <button>
+                <Delete
+                  onClick={() => handleDeleteComponent(button.id, 'buttons')}
+                  width={iconWidth}
+                  height={iconHeight}
+                  color="red"
+                />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <button
           className={`p-1  wrap-anywhere leading-5 ${customProps} ${isSelected ? 'ring-4 ring-blue-300' : ''}`}
           style={buttonStyle}
@@ -91,17 +101,21 @@ const ButtonComponent = ({
         >
           {properties.label}
         </button>
-        <div
-          className={`absolute flex gap-1 justify-between w-[${properties.size?.width}] 
-          ${isSelected ? 'visible' : 'invisible'} top-[53px] z-50`}
-        >
-          <button>
-            <Function width={iconWidth} height={iconHeight} />
-          </button>
-          <button onClick={handleOnClickColorChange}>
-            <FormatColorFill width={iconWidth} height={iconHeight} />
-          </button>
-        </div>
+        {isSelected && (
+          <motion.div
+            className={`absolute flex gap-1 justify-between w-[${properties.size?.width}] z-50`}
+            initial={{ opacity: 0, top: '38px' }}
+            animate={{ opacity: 1, top: '53px' }}
+            exit={{ opacity: 0, top: '38px' }}
+          >
+            <button>
+              <Function width={iconWidth} height={iconHeight} />
+            </button>
+            <button onClick={handleOnClickColorChange}>
+              <FormatColorFill width={iconWidth} height={iconHeight} />
+            </button>
+          </motion.div>
+        )}
       </div>
     </div>
   );

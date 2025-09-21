@@ -51,10 +51,7 @@ const ColorPicker = ({ handleOnColorChange }: Props) => {
   )?.properties.textColor;
 
   return (
-    <div
-      className="flex flex-col justify-evenly items-center w-11/12 
-                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50 py-1"
-    >
+    <>
       <h2 className="p1 text-xl">Backgraund color</h2>
       <input
         type="color"
@@ -69,7 +66,7 @@ const ColorPicker = ({ handleOnColorChange }: Props) => {
         onChange={(e) => handleOnColorChange(e.target.value, 'text')}
         className="w-11/12 h-10 border-solid border-2 border-gray-300 rounded-lg p-1"
       />
-    </div>
+    </>
   );
 };
 
