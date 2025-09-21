@@ -16,6 +16,7 @@ const useEditor = ({ gridSize }: Props) => {
     selectedComponent,
     selectComponent,
     deleteButton,
+    modifyEditorPosition,
   } = useLayoutStore();
 
   //VARIABLES
@@ -47,25 +48,42 @@ const useEditor = ({ gridSize }: Props) => {
           miscStyles: 'rounded-lg shadow-md shadow-gray-400/50',
         },
       });
+      return;
     }
 
-    const component = layout.components.buttons.find(
-      (butt) => butt.id === active.id
-    );
-    if (!component) return;
-    if (!delta) return;
-    const { x, y } = delta;
+    // POSITON OF A EXISTING BUTTON
+    if (active.data.current?.type === 'button') {
+      const component = layout.components.buttons.find(
+        (butt) => butt.id === active.id
+      );
+      if (!component) return;
+      if (!delta) return;
+      const { x, y } = delta;
 
-    const newX = (component.properties.position.x || 0) + x;
-    const newY = (component.properties.position.y || 0) + y;
+      const newX = (component.properties.position.x || 0) + x;
+      const newY = (component.properties.position.y || 0) + y;
 
-    updateButton(component.id, {
-      position: {
-        ...component.properties.position,
-        x: newX,
-        y: newY,
-      },
-    });
+      updateButton(component.id, {
+        position: {
+          ...component.properties.position,
+          x: newX,
+          y: newY,
+        },
+      });
+      return;
+    }
+
+    //EDITO MENU POSITION
+    if (active.id === 'editor-manu') {
+      if (!delta) return;
+      const { x: EditorX, y: EditorY } = layout.editorMenu.position;
+      const { x, y } = delta;
+
+      const newX = (EditorX || 0) + x;
+      const newY = (EditorY || 0) + y;
+
+      modifyEditorPosition(newX, newY);
+    }
   };
 
   //SELECT COMPONENT

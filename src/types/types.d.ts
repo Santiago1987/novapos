@@ -10,6 +10,12 @@ export interface Layout {
     buttons: Button[];
     tables: TableType<T>[];
   };
+  editorMenu: {
+    position: {
+      x: number;
+      y: number;
+    };
+  };
 }
 
 export interface Button {

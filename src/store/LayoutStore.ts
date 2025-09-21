@@ -13,6 +13,12 @@ const blanckLayout: Layout = {
     buttons: [],
     tables: [],
   },
+  editorMenu: {
+    position: {
+      x: 0,
+      y: 0,
+    },
+  },
 };
 
 const initialVariables: LayoutState = {
@@ -112,6 +118,11 @@ export const useLayoutStore = create<LayoutStoreState>()(
         },
         reset: () => {
           set({ ...initialVariables });
+        },
+        modifyEditorPosition: (x: number, y: number) => {
+          const { layout } = get();
+          layout.editorMenu.position = { x, y };
+          set({ layout });
         },
       }),
       { name: 'layout-store' }

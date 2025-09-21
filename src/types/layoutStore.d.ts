@@ -25,4 +25,5 @@ export interface Actions {
   deleteTable: (id: string) => void;
   editLayoutBackground: (background: string) => void;
   reset: () => void;
+  modifyEditorPosition: (x: number, y: number) => void;
 }
