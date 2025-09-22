@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import type { Layout } from '../types/types';
 
 const blanckLayout: Layout = {
-  background: 'bg-white',
+  background: '#ffffff',
   size: {
     high: 'h-full',
     width: 'w-full',

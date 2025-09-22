@@ -6,6 +6,7 @@ import ColorPicker from './ColorPicker';
 import { DragVariant } from 'src/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDraggable } from '@dnd-kit/core';
+import BodyBackgroundColorPicker from './BodyBackgroundColorPicker';
 
 type Props = {
   changeTextVisible: boolean;
@@ -24,14 +25,12 @@ const EditorMenu = ({
 }: Props) => {
   const { reset, layout } = useLayoutStore();
   const [dragSart, setDragSart] = useState(false);
+
+  //EDITOR DRAGGING
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
       id: 'editor-manu',
     });
-
-  const handleIsDragging = (dragging: boolean) => {
-    setDragSart(dragging);
-  };
 
   const { x, y } = layout.editorMenu.position;
   const style = {
@@ -42,6 +41,11 @@ const EditorMenu = ({
     top: y,
     touchAction: 'none',
   } as React.CSSProperties;
+  //---------------------------------------------------
+
+  const handleIsDragging = (dragging: boolean) => {
+    setDragSart(dragging);
+  };
 
   return (
     <div
@@ -49,7 +53,7 @@ const EditorMenu = ({
       ref={setNodeRef}
       style={style}
       className={`absolute top-2 left-2 flex flex-col justify-between items-center
-                    z-50 min-w-[200px] w-3/12 h-6/12 text-black 
+                    z-50 min-w-[200px] w-3/12 h-8/12 text-black 
                     bg-white rounded-2xl border-solid border-2 border-gray-300
                     shadow-lg shadow-gray-400/50 ${dragSart ? 'opacity-50' : 'opacity-100'}`}
     >
@@ -78,6 +82,12 @@ const EditorMenu = ({
                     border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
         >
           <NewButton handleIsDragging={handleIsDragging} />
+        </div>
+        <div
+          className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
+                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
+        >
+          <BodyBackgroundColorPicker />
         </div>
         <AnimatePresence>
           {changeTextVisible && (

@@ -25,7 +25,7 @@ const NewButton = ({ handleIsDragging }: Props) => {
     transform: transform
       ? `translate3d(${transform?.x}px, ${transform?.y}px, 0)`
       : undefined,
-    cursor: 'grab',
+    cursor: isDragging ? 'grabbing' : 'grab',
     touchAction: 'none',
     backgroundColor: '#3b82f6',
     color: '#ffffff',

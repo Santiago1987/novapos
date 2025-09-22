@@ -28,12 +28,13 @@ const ButtonComponent = ({
   handleOnClickTextChange,
   handleOnClickColorChange,
 }: Props) => {
-  const { setNodeRef, listeners, attributes, transform } = useDraggable({
-    id: button.id,
-    data: {
-      type: 'button',
-    },
-  });
+  const { setNodeRef, listeners, attributes, transform, isDragging } =
+    useDraggable({
+      id: button.id,
+      data: {
+        type: 'button',
+      },
+    });
   const { properties } = button;
 
   const style = {
@@ -46,7 +47,6 @@ const ButtonComponent = ({
     width: properties.size ? `${properties.size.width}` : 'auto',
     height: properties.size ? `${properties.size.height}` : 'auto',
     backgroundColor: properties.color ? properties.color : 'bg-red-500',
-    cursor: 'grab',
     touchAction: 'none',
   } as React.CSSProperties;
 
@@ -55,6 +55,7 @@ const ButtonComponent = ({
   const buttonStyle = {
     backgroundColor: properties.color,
     color: properties.textColor,
+    cursor: isDragging ? 'grabbing' : 'grab',
   };
 
   const iconWidth = '1.4em';

@@ -46,7 +46,7 @@ const Editor = () => {
       sensors={sensors}
       modifiers={[snapToGrid, restrictToWindowEdges]}
     >
-      <div className={`w-screen h-screen relative ${background}`}>
+      <div className={`w-screen h-screen relative`} style={{ background }}>
         <div ref={setNodeRef}>
           {components.buttons.map((button) => (
             <ButtonComponent
