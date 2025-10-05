@@ -10,6 +10,8 @@ import {
 import ButtonComponent from 'src/components/ui/editor/ButtonComponent';
 import EditorMenu from 'src/components/ui/editor/EditorMenu';
 import useEditor from 'src/hooks/useEditor';
+import useResize from 'src/hooks/useResize';
+import ResizeComponent from '../ui/editor/ResizeComponent';
 
 const Editor = () => {
   const gridSize = 5;
@@ -37,6 +39,18 @@ const Editor = () => {
     handleOnChangeText,
   } = useEditor({ gridSize });
 
+  const {
+    resizeStarted,
+    dimensions,
+    position,
+    handleResizeStart,
+    handleOnResizeManualChange,
+    handleOnResizeEnd,
+    handlePointerDown,
+    handlePointerMove,
+    handleMauseUp,
+  } = useResize();
+
   const { background, components } = layout;
   const snapToGrid = createSnapModifier(gridSize);
 
@@ -58,6 +72,7 @@ const Editor = () => {
               handleDeleteComponent={handleDeleteComponent}
               handleOnClickTextChange={handleOnClickTextChange}
               handleOnClickColorChange={handleOnClickColorChange}
+              handleResizeStart={handleResizeStart}
             />
           ))}
         </div>
@@ -67,6 +82,21 @@ const Editor = () => {
           handleOnColorChange={handleOnColorChange}
           text={text ? text : ''}
           handleOnChangeText={handleOnChangeText}
+          resizeStarted={resizeStarted}
+          dimensions={dimensions}
+          handleOnResizeManualChange={handleOnResizeManualChange}
+          handleOnResizeEnd={handleOnResizeEnd}
+        />
+        <ResizeComponent
+          risizeStarted={resizeStarted}
+          label={text || ''}
+          width={`${dimensions.width}px`}
+          height={`${dimensions.height}px`}
+          x={position.x}
+          y={position.y}
+          handlePointerDown={handlePointerDown}
+          handlePointerMove={handlePointerMove}
+          handleMauseUp={handleMauseUp}
         />
       </div>
     </DndContext>

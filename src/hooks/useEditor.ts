@@ -17,6 +17,7 @@ const useEditor = ({ gridSize }: Props) => {
     selectComponent,
     deleteButton,
     modifyEditorPosition,
+    modifyButtonsDimensions,
   } = useLayoutStore();
 
   //VARIABLES
@@ -155,6 +156,12 @@ const useEditor = ({ gridSize }: Props) => {
     }
   };
 
+  // COMPONENT RISIZE BUTONS
+  const handleOnResizeEnd = (width: string, height: string) => {
+    if (!selectedComponent.id) return;
+    modifyButtonsDimensions(selectedComponent.id, width, height);
+  };
+
   const text = layout.components['buttons'].find(
     (elem) => elem.id === selectedComponent.id
   )?.properties.label;
@@ -173,6 +180,7 @@ const useEditor = ({ gridSize }: Props) => {
     handleOnClickColorChange,
     handleOnColorChange,
     handleOnChangeText,
+    handleOnResizeEnd,
   };
 };
 

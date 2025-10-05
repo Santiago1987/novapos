@@ -7,13 +7,21 @@ import { DragVariant } from 'src/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDraggable } from '@dnd-kit/core';
 import BodyBackgroundColorPicker from './BodyBackgroundColorPicker';
+import ResizeChange from './ResizeChange';
 
 type Props = {
   changeTextVisible: boolean;
   colorPickerVisible: boolean;
+  resizeStarted: boolean;
+  dimensions: { width: string; height: string };
   text: string;
   handleOnColorChange: (color: string, type: 'text' | 'background') => void;
   handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOnResizeManualChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: 'width' | 'height'
+  ) => void;
+  handleOnResizeEnd: () => void;
 };
 
 const EditorMenu = ({
@@ -22,6 +30,10 @@ const EditorMenu = ({
   text,
   handleOnColorChange,
   handleOnChangeText,
+  resizeStarted,
+  dimensions,
+  handleOnResizeManualChange,
+  handleOnResizeEnd,
 }: Props) => {
   const { reset, layout } = useLayoutStore();
   const [dragSart, setDragSart] = useState(false);
@@ -81,14 +93,15 @@ const EditorMenu = ({
           className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
                     border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
         >
-          <NewButton handleIsDragging={handleIsDragging} />
+          <BodyBackgroundColorPicker />
         </div>
         <div
           className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
                     border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
         >
-          <BodyBackgroundColorPicker />
+          <NewButton handleIsDragging={handleIsDragging} />
         </div>
+
         <AnimatePresence>
           {changeTextVisible && (
             <motion.div
@@ -111,6 +124,22 @@ const EditorMenu = ({
               exit={{ opacity: 0, scale: 0 }}
             >
               <ColorPicker handleOnColorChange={handleOnColorChange} />
+            </motion.div>
+          )}
+          {resizeStarted && (
+            <motion.div
+              className="flex flex-col justify-evenly items-center w-11/12 
+                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50 py-1"
+              initial={{ opacity: 0, scale: 0.75 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+            >
+              <ResizeChange
+                width={dimensions.width}
+                height={dimensions.height}
+                handleOnResizeManualChange={handleOnResizeManualChange}
+                handleOnResizeEnd={handleOnResizeEnd}
+              />
             </motion.div>
           )}
         </AnimatePresence>

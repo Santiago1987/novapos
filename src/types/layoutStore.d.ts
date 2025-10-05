@@ -26,4 +26,5 @@ export interface Actions {
   editLayoutBackground: (background: string) => void;
   reset: () => void;
   modifyEditorPosition: (x: number, y: number) => void;
+  modifyButtonsDimensions: (id: string, width: string, height: string) => void;
 }

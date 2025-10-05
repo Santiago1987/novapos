@@ -3,7 +3,7 @@ import type { ThemesList, SalesColumns, PaymentsColumns } from './constTypes';
 export interface Layout {
   background?: string;
   size?: {
-    high: string;
+    height: string;
     width: string;
   };
   components: {
@@ -28,7 +28,7 @@ export interface Button {
     isClicked: boolean;
     textColor: string;
     fontSize: string;
-    size?: Size;
+    size: Size;
     position: Position;
     miscStyles?: string;
   };
@@ -60,10 +60,7 @@ export interface Table {
     headerColor?: string;
     backgroundColor?: string;
     textcolor?: string;
-    size?: {
-      width: string;
-      height: string;
-    };
+    size?: Size;
     position: Position;
   };
 }

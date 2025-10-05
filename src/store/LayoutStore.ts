@@ -6,7 +6,7 @@ import type { Layout } from '../types/types';
 const blanckLayout: Layout = {
   background: '#ffffff',
   size: {
-    high: 'h-full',
+    height: 'h-full',
     width: 'w-full',
   },
   components: {
@@ -37,9 +37,8 @@ export const useLayoutStore = create<LayoutStoreState>()(
         ...initialVariables,
         toggleEditing: () => {
           const { isEditing } = get();
-          console.log('Toggling editing mode:', isEditing);
+
           set({ isEditing: !isEditing });
-          console.log('get:', get());
         },
         editLayoutBackground: (background) => {
           const { layout } = get();
@@ -123,6 +122,23 @@ export const useLayoutStore = create<LayoutStoreState>()(
           const { layout } = get();
           layout.editorMenu.position = { x, y };
           set({ layout });
+        },
+        modifyButtonsDimensions: (
+          id: string,
+          width: string,
+          height: string
+        ) => {
+          const { layout } = get();
+          const newLayout = structuredClone(layout);
+
+          const button = newLayout.components.buttons.find(
+            (butt) => butt.id === id
+          );
+          if (!button) return;
+          if (!button.properties.size)
+            button.properties.size = { width: 'auto', height: 'auto' };
+          button.properties.size = { width, height };
+          set({ layout: newLayout });
         },
       }),
       { name: 'layout-store' }

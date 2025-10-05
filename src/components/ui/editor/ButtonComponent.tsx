@@ -6,6 +6,7 @@ import {
   FormatText,
   Function,
   FormatColorFill,
+  Resize,
 } from 'src/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -17,6 +18,7 @@ type Props = {
   handleDeleteComponent: (id: string, type: 'buttons' | 'tables') => void;
   handleOnClickTextChange: () => void;
   handleOnClickColorChange: () => void;
+  handleResizeStart: (width: number, height: number) => void;
 };
 
 const ButtonComponent = ({
@@ -27,6 +29,7 @@ const ButtonComponent = ({
   handleDeleteComponent,
   handleOnClickTextChange,
   handleOnClickColorChange,
+  handleResizeStart,
 }: Props) => {
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -44,18 +47,20 @@ const ButtonComponent = ({
     position: properties.position.mode === 'absolute' ? 'absolute' : 'relative',
     left: properties.position.x,
     top: properties.position.y,
-    width: properties.size ? `${properties.size.width}` : 'auto',
-    height: properties.size ? `${properties.size.height}` : 'auto',
+    width: `${properties.size.width}`,
+    height: `${properties.size.height}`,
     backgroundColor: properties.color ? properties.color : 'bg-red-500',
     touchAction: 'none',
   } as React.CSSProperties;
 
-  const sizeProps = `w-[${properties.size?.width}] h-[${properties.size?.height}] max-w-[${properties.size?.width}] max-h-[${properties.size?.height}]`;
-  const customProps = `${sizeProps} ${properties.miscStyles ? properties.miscStyles : ''} ${properties.fontSize}`;
+  //const sizeProps = `w-[${properties.size.width}] h-[${properties.size.height}]`;
+  const customProps = `p-1 wrap-anywhere leading-5 ${properties.miscStyles ? properties.miscStyles : ''} ${properties.fontSize}`;
   const buttonStyle = {
     backgroundColor: properties.color,
     color: properties.textColor,
     cursor: isDragging ? 'grabbing' : 'grab',
+    width: `${properties.size.width}`,
+    height: `${properties.size.height}`,
   };
 
   const iconWidth = '1.4em';
@@ -67,57 +72,84 @@ const ButtonComponent = ({
       {...listeners}
       {...attributes}
       style={style}
-      className={`flex items-center justify-center rounded-lg`}
+      className={`relative flex flex-col items-center justify-center rounded-lg`}
     >
-      <div className="relative flex flex-col items-center justify-center">
-        <AnimatePresence>
-          {isSelected && (
+      <button
+        className={`${customProps} ${isSelected ? 'ring-4 ring-blue-300' : ''}`}
+        style={buttonStyle}
+        onClick={() => handleSelectComponent(button.id, 'buttons')}
+      >
+        {properties.label}
+      </button>
+      <AnimatePresence>
+        {isSelected && (
+          <>
             <motion.div
-              className={`absolute flex gap-1 justify-between w-[${properties.size?.width}] z-50`}
+              className={`absolute flex gap-1 justify-between z-50`}
+              style={{ width: properties.size.width }}
               initial={{ opacity: 0, top: '-10px' }}
               animate={{ opacity: 1, top: '-25px' }}
               exit={{ opacity: 0, top: '-10px' }}
             >
-              <button onClick={() => handleCopyComponent(button.id, 'buttons')}>
+              <button
+                onClick={() => handleCopyComponent(button.id, 'buttons')}
+                className="cursor-pointer hover:scale-110"
+              >
                 <ContentCopy width={iconWidth} height={iconHeight} />
               </button>
-              <button onClick={() => handleOnClickTextChange()}>
+              <button
+                onClick={() => handleOnClickTextChange()}
+                className="cursor-pointer hover:scale-110"
+              >
                 <FormatText width={iconWidth} height={iconHeight} />
               </button>
-              <button>
-                <Delete
-                  onClick={() => handleDeleteComponent(button.id, 'buttons')}
-                  width={iconWidth}
-                  height={iconHeight}
-                  color="red"
-                />
+              <button
+                onClick={() => handleDeleteComponent(button.id, 'buttons')}
+                className="cursor-pointer hover:scale-110"
+              >
+                <Delete width={iconWidth} height={iconHeight} color="red" />
               </button>
             </motion.div>
-          )}
-        </AnimatePresence>
-        <button
-          className={`p-1  wrap-anywhere leading-5 ${customProps} ${isSelected ? 'ring-4 ring-blue-300' : ''}`}
-          style={buttonStyle}
-          onClick={() => handleSelectComponent(button.id, 'buttons')}
-        >
-          {properties.label}
-        </button>
-        {isSelected && (
-          <motion.div
-            className={`absolute flex gap-1 justify-between w-[${properties.size?.width}] z-50`}
-            initial={{ opacity: 0, top: '38px' }}
-            animate={{ opacity: 1, top: '53px' }}
-            exit={{ opacity: 0, top: '38px' }}
-          >
-            <button>
-              <Function width={iconWidth} height={iconHeight} />
-            </button>
-            <button onClick={handleOnClickColorChange}>
-              <FormatColorFill width={iconWidth} height={iconHeight} />
-            </button>
-          </motion.div>
+            <motion.div
+              className={`absolute flex gap-1 justify-between z-50`}
+              style={{ width: properties.size.width }}
+              initial={{
+                opacity: 0,
+                top: +properties.size.height.replace(/\D/g, '') + -10 + 'px',
+              }}
+              animate={{
+                opacity: 1,
+                top: +properties.size.height.replace(/\D/g, '') + 5 + 'px',
+              }}
+              exit={{
+                opacity: 0,
+                top: +properties.size.height.replace(/\D/g, '') + -10 + 'px',
+              }}
+            >
+              <button className="cursor-pointer hover:scale-110">
+                <Function width={iconWidth} height={iconHeight} />
+              </button>
+              <button
+                className="cursor-pointer hover:scale-110"
+                onClick={() =>
+                  handleResizeStart(
+                    +properties.size.width.replace(/\D/g, ''),
+                    +properties.size.height.replace(/\D/g, '')
+                  )
+                }
+              >
+                <Resize width={iconWidth} height={iconHeight} />
+              </button>
+              <button
+                onClick={handleOnClickColorChange}
+                className="cursor-pointer hover:scale-110"
+              >
+                <FormatColorFill width={iconWidth} height={iconHeight} />
+              </button>
+            </motion.div>
+          </>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 };
