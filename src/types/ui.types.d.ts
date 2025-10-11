@@ -80,9 +80,6 @@ export interface TableColumn<T> {
   styles?: React.CSSProperties; // Opcional: estilos adicionales (ej. align, fontSize)
 }
 
-export type SalesTable = Table<SalesColumns>;
-export type PaymentsTable = Table<PaymentsColumns>;
-
 // Table component extending general component
 export interface Table<T> extends Component<'TABLE'> {
   tableType: 'sales' | 'payments' | 'promotions';
@@ -92,6 +89,9 @@ export interface Table<T> extends Component<'TABLE'> {
     rowsColor?: string;
   };
 }
+
+export type SalesTable = Table<SalesColumns>;
+export type PaymentsTable = Table<PaymentsColumns>;
 
 //MISC TYPES
 export interface Position {

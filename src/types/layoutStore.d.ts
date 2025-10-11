@@ -1,4 +1,11 @@
-import type { Layout, TableType, Button, Sales, Payments } from './types';
+import type {
+  Layout,
+  Table,
+  Button,
+  SalesTable,
+  PaymentsTable,
+  ComponentUnion,
+} from './ui.types';
 
 export type LayoutStoreState = LayoutState & Actions;
 
@@ -7,24 +14,27 @@ export interface LayoutState {
   layout: Layout;
   selectedComponent: {
     id: string | null;
-    type: 'buttons' | 'tables';
+    type: ComponentUnion | null;
   };
 }
 
 export interface Actions {
   toggleEditing: () => void;
   addButton: (button: Button) => void;
-  addTable: (table: TableType<Sales | Payments>) => void;
+  addTable: (table: Table<SalesTable | PaymentsTable>) => void;
   updateButton: (id: string, properties: Partial<Button['properties']>) => void;
   updateTable: (
     id: string,
-    properties: Partial<TableType<Sales | Payments>['properties']>
+    properties: Partial<Table<SalesTable | PaymentsTable>['properties']>
   ) => void;
-  selectComponent: (id: string | null, type: 'tables' | 'buttons') => void;
-  deleteButton: (id: string) => void;
-  deleteTable: (id: string) => void;
+  selectComponent: (id: string | null, type: ComponentUnion) => void;
+  deleteComponent: (id: string) => void;
   editLayoutBackground: (background: string) => void;
   reset: () => void;
   modifyEditorPosition: (x: number, y: number) => void;
-  modifyButtonsDimensions: (id: string, width: string, height: string) => void;
+  modifyComponentDimensions: (
+    id: string,
+    width: string,
+    height: string
+  ) => void;
 }
