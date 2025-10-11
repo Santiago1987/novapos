@@ -18,3 +18,10 @@ export const PaymentsColumns = {
   AMT: 'AMOUNT',
   VALUE: 'VALUE',
 } as const;
+
+export const ComponentTypes = {
+  BUTTON: 'buttons',
+  TABLE: 'tables',
+  LABEL: 'labels',
+  INPUT: 'inputs',
+} as const;
