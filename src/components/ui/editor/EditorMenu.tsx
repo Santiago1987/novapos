@@ -70,24 +70,6 @@ const EditorMenu = ({
                     shadow-lg shadow-gray-400/50 ${dragSart ? 'opacity-50' : 'opacity-100'}`}
     >
       <div className="relative flex flex-col justify-center items-center w-full gap-2">
-        <div
-          {...attributes}
-          {...listeners}
-          className="absolute top-1 right-1 hover:scale-120"
-        >
-          <DragVariant
-            height="25px"
-            width="25px"
-            cursor={isDragging ? 'grabbing' : 'grab'}
-          />
-        </div>
-        <div {...attributes} {...listeners} className="absolute top-1 left-1">
-          <DragVariant
-            height="25px"
-            width="25px"
-            cursor={isDragging ? 'grabbing' : 'grab'}
-          />
-        </div>
         <h1 className="p-1 text-2xl font-bold">Editor Menu</h1>
         <div
           className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
@@ -151,19 +133,45 @@ const EditorMenu = ({
       >
         Reset
       </button>
-      <div className="absolute bottom-1 left-1">
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute top-1 right-1 hover:scale-120"
+      >
+        <DragVariant
+          height="25px"
+          width="25px"
+          cursor={isDragging ? 'grabbing' : 'grab'}
+        />
+      </div>
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute top-1 left-1 hover:scale-120"
+      >
+        <DragVariant
+          height="25px"
+          width="25px"
+          cursor={isDragging ? 'grabbing' : 'grab'}
+        />
+      </div>
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute bottom-1 left-1 hover:scale-120"
+      >
         <DragVariant
           cursor={isDragging ? 'grabbing' : 'grab'}
-          {...attributes}
-          {...listeners}
           height="25px"
           width="25px"
         />
       </div>
-      <div className="absolute bottom-1 right-1">
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute bottom-1 right-1 hover:scale-120"
+      >
         <DragVariant
-          {...attributes}
-          {...listeners}
           cursor={isDragging ? 'grabbing' : 'grab'}
           height="25px"
           width="25px"
