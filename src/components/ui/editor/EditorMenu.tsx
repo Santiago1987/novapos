@@ -1,13 +1,13 @@
 import { useLayoutStore } from 'src/store/LayoutStore';
 import NewButton from './NewButton';
 import { useState } from 'react';
-import TextChange from './TextChange';
 import ColorPicker from './ColorPicker';
 import { DragVariant } from 'src/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDraggable } from '@dnd-kit/core';
 import BodyBackgroundColorPicker from './BodyBackgroundColorPicker';
 import ResizeChange from './ResizeChange';
+import TextChangeComponent from './TextChangeComponent';
 
 type Props = {
   changeTextVisible: boolean;
@@ -86,15 +86,11 @@ const EditorMenu = ({
 
         <AnimatePresence>
           {changeTextVisible && (
-            <motion.div
-              className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
-                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
-              initial={{ opacity: 0, scale: 0.75 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-            >
-              <TextChange text={text} handleOnChangeText={handleOnChangeText} />
-            </motion.div>
+            <TextChangeComponent
+              text={text}
+              changeTextVisible={changeTextVisible}
+              handleOnChangeText={handleOnChangeText}
+            />
           )}
 
           {colorPickerVisible && (

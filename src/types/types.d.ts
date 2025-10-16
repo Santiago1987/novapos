@@ -1,4 +1,9 @@
-import type { ThemesList, SalesColumns, PaymentsColumns } from './constTypes';
+import type { Langs } from 'src/types/constTypes';
+export interface Traductions {
+  [key: string]: { [key: keyof typeof Langs]: string };
+}
+
+/*import type { ThemesList, SalesColumns, PaymentsColumns } from './constTypes';
 
 export interface Layout {
   background?: string;

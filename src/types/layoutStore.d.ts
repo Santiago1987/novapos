@@ -4,18 +4,15 @@ import type {
   Button,
   SalesTable,
   PaymentsTable,
-  ComponentUnion,
 } from './ui.types';
+import type { Langs } from './constTypes';
 
 export type LayoutStoreState = LayoutState & Actions;
 
 export interface LayoutState {
   isEditing: boolean;
   layout: Layout;
-  selectedComponent: {
-    id: string | null;
-    type: ComponentUnion | null;
-  };
+  selectedComponentId: string | null;
 }
 
 export interface Actions {
@@ -27,7 +24,7 @@ export interface Actions {
     id: string,
     properties: Partial<Table<SalesTable | PaymentsTable>['properties']>
   ) => void;
-  selectComponent: (id: string | null, type: ComponentUnion) => void;
+  selectComponent: (id: string | null) => void;
   deleteComponent: (id: string) => void;
   editLayoutBackground: (background: string) => void;
   reset: () => void;
@@ -37,4 +34,5 @@ export interface Actions {
     width: string,
     height: string
   ) => void;
+  setLang: (lang: keyof typeof Langs) => void;
 }

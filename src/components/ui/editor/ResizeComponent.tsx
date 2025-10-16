@@ -25,7 +25,7 @@ const ResizeComponent = ({
 }: Props) => {
   width = width === 'px' ? '1' : width;
   height = height === 'px' ? '1' : height;
-  console.log('width, height', width, height);
+
   return (
     <AnimatePresence>
       {risizeStarted && (

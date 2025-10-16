@@ -5,6 +5,7 @@ import type { Layout } from 'src/types/ui.types';
 
 const blanckLayout: Layout = {
   background: '#ffffff',
+  lang: 'EN',
   size: {
     height: 'h-full',
     width: 'w-full',
@@ -21,10 +22,7 @@ const blanckLayout: Layout = {
 const initialVariables: LayoutState = {
   isEditing: false,
   layout: blanckLayout,
-  selectedComponent: {
-    id: null,
-    type: null,
-  },
+  selectedComponentId: null,
 };
 
 export const useLayoutStore = create<LayoutStoreState>()(
@@ -36,6 +34,12 @@ export const useLayoutStore = create<LayoutStoreState>()(
           const { isEditing } = get();
 
           set({ isEditing: !isEditing });
+        },
+        setLang: (lang) => {
+          const { layout } = get();
+          const newLayout = structuredClone(layout);
+          newLayout.lang = lang;
+          set({ layout: newLayout });
         },
         editLayoutBackground: (background) => {
           const { layout } = get();
@@ -83,8 +87,8 @@ export const useLayoutStore = create<LayoutStoreState>()(
               : table
           );
         },
-        selectComponent: (id, type) => {
-          set({ selectedComponent: { id, type } });
+        selectComponent: (id) => {
+          set({ selectedComponentId: id });
         },
         deleteComponent: (id) => {
           const { layout } = get();

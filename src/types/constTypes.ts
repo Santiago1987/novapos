@@ -25,3 +25,10 @@ export const ComponentTypes = {
   LABEL: 'labels',
   INPUT: 'inputs',
 } as const;
+
+export const Langs = {
+  EN: 'EN',
+  ES: 'ES',
+  BE: 'BE',
+  ENB: 'ENB',
+} as const;

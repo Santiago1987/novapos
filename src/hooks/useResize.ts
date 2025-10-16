@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLayoutStore } from 'src/store/LayoutStore';
 
 const useResize = () => {
-  const { layout, selectedComponent, modifyButtonsDimensions } =
+  const { layout, selectedComponentId, modifyComponentDimensions } =
     useLayoutStore();
 
   const [isResizing, setIsResizing] = useState(false);
@@ -16,10 +16,8 @@ const useResize = () => {
   const startY = useRef(0);
 
   useEffect(() => {
-    if (selectedComponent.id && selectedComponent.type === 'buttons') {
-      const comp = layout.components.buttons.find(
-        (b) => b.id === selectedComponent.id
-      );
+    if (selectedComponentId) {
+      const comp = layout.components.find((b) => b.id === selectedComponentId);
       if (comp && comp.properties.size) {
         setDimensions({
           width: comp.properties.size.width.replace(/\D/g, ''),
@@ -29,10 +27,10 @@ const useResize = () => {
           x: comp.properties.position.x || 0,
           y: comp.properties.position.y || 0,
         });
-        setText(comp.properties.label || '');
+        setText(comp.properties.text || '');
       }
     }
-  }, [selectedComponent]);
+  }, [selectedComponentId]);
 
   const handlePointerDown = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -69,9 +67,9 @@ const useResize = () => {
   const handleMauseUp = () => {
     console.log('handleMauseUp');
     setIsResizing(false);
-    if (selectedComponent.id && selectedComponent.type === 'buttons') {
-      modifyButtonsDimensions(
-        selectedComponent.id,
+    if (selectedComponentId) {
+      modifyComponentDimensions(
+        selectedComponentId,
         dimensions.width + 'px',
         dimensions.height + 'px'
       );
@@ -100,9 +98,9 @@ const useResize = () => {
 
   const handleOnResizeEnd = () => {
     setResizeStarted(false);
-    if (selectedComponent.id && selectedComponent.type === 'buttons') {
-      modifyButtonsDimensions(
-        selectedComponent.id,
+    if (selectedComponentId) {
+      modifyComponentDimensions(
+        selectedComponentId,
         dimensions.width + 'px',
         dimensions.height + 'px'
       );

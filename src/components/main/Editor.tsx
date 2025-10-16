@@ -7,11 +7,12 @@ import {
   PointerSensor,
   useSensors,
 } from '@dnd-kit/core';
-import ButtonComponent from 'src/components/ui/editor/ButtonComponent';
+import ComponentFactory from 'src/components/ui/editor/ComponentFactory';
 import EditorMenu from 'src/components/ui/editor/EditorMenu';
 import useEditor from 'src/hooks/useEditor';
 import useResize from 'src/hooks/useResize';
 import ResizeComponent from '../ui/editor/ResizeComponent';
+import useTextChange from 'src/hooks/useTextChange';
 
 const Editor = () => {
   const gridSize = 5;
@@ -24,20 +25,23 @@ const Editor = () => {
   );
 
   const {
-    changeTextVisible,
     colorPickerVisible,
     layout,
-    selectedComponent,
-    text,
+    selectedComponentId,
     handleDragEnd,
     handleSelectComponent,
     handleCopyComponent,
     handleDeleteComponent,
-    handleOnClickTextChange,
     handleOnClickColorChange,
     handleOnColorChange,
-    handleOnChangeText,
   } = useEditor({ gridSize });
+
+  const {
+    text,
+    changeTextVisible,
+    handleOnChangeText,
+    handleOnClickTextChange,
+  } = useTextChange();
 
   const {
     resizeStarted,
@@ -51,7 +55,7 @@ const Editor = () => {
     handleMauseUp,
   } = useResize();
 
-  const { background, components } = layout;
+  const { background, components, lang } = layout;
   const snapToGrid = createSnapModifier(gridSize);
 
   return (
@@ -62,11 +66,16 @@ const Editor = () => {
     >
       <div className={`w-screen h-screen relative`} style={{ background }}>
         <div ref={setNodeRef}>
-          {components.buttons.map((button) => (
-            <ButtonComponent
-              key={button.id}
-              button={button}
-              isSelected={selectedComponent.id === button.id}
+          {components.map((component) => (
+            <ComponentFactory
+              key={component.id}
+              component={component}
+              text={text}
+              lang={lang}
+              changeTextVisible={
+                changeTextVisible && selectedComponentId === component.id
+              }
+              isSelected={selectedComponentId === component.id}
               handleSelectComponent={handleSelectComponent}
               handleCopyComponent={handleCopyComponent}
               handleDeleteComponent={handleDeleteComponent}

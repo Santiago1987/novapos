@@ -3,13 +3,16 @@ import type {
   SalesColumns,
   PaymentsColumns,
   ComponentTypes,
+  Langs,
 } from './constTypes';
 
 export type ComponentUnion = Button | Table<SalesData> | Table<PaymentsData>;
+export type ComponentTypes = keyof typeof ComponentTypes;
 
 // Layout configuration for UI components
 export interface Layout {
   background?: string;
+  lang: keyof typeof Langs;
   size: {
     height: string;
     width: string;
@@ -24,8 +27,8 @@ export interface BaseComponentProps {
   text?: string;
   textColor?: string;
   fontSize?: string;
-  size?: Size;
-  position?: Position;
+  size: Size;
+  position: Position;
   className?: string;
   styles?: React.CSSProperties;
   backgroundColor?: string;
@@ -33,7 +36,7 @@ export interface BaseComponentProps {
 }
 
 // General component interface
-export interface Component<T extends ComponentTypes> {
+export interface Component<T extends keyof typeof ComponentTypes> {
   id: string;
   type: T;
   properties: BaseComponentProps;
@@ -41,6 +44,7 @@ export interface Component<T extends ComponentTypes> {
 
 // Button component extending general component
 export interface Button extends Component<'BUTTON'> {
+  type: 'BUTTON';
   subMenu?: SubMenu;
   properties: BaseComponentProps & {
     onClick?: () => void;
@@ -51,10 +55,14 @@ export interface Button extends Component<'BUTTON'> {
 
 // SubMenu structure for buttons
 export interface SubMenu {
-  title: string;
+  title: Text;
   buttons: Button[];
   position: Position;
   size: Size;
+}
+
+export interface Text {
+  [key: string]: { lang: keyof typeof Langs; text: string }[];
 }
 
 //-------------------------TABLES-------------------------//
@@ -82,6 +90,7 @@ export interface TableColumn<T> {
 
 // Table component extending general component
 export interface Table<T> extends Component<'TABLE'> {
+  type: 'TABLE';
   tableType: 'sales' | 'payments' | 'promotions';
   columns: TableColumn<T>[];
   properties: BaseComponentProps & {
