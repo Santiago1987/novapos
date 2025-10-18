@@ -8,6 +8,8 @@ import { useDraggable } from '@dnd-kit/core';
 import BodyBackgroundColorPicker from './BodyBackgroundColorPicker';
 import ResizeChange from './ResizeChange';
 import TextChangeComponent from './TextChangeComponent';
+import { Langs } from 'src/types/constTypes';
+import { useTraductionsStore } from 'src/store/TraductionsStore';
 
 type Props = {
   changeTextVisible: boolean;
@@ -15,6 +17,7 @@ type Props = {
   resizeStarted: boolean;
   dimensions: { width: string; height: string };
   text: string;
+  lang: keyof typeof Langs;
   handleOnColorChange: (color: string, type: 'text' | 'background') => void;
   handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleOnResizeManualChange: (
@@ -22,21 +25,28 @@ type Props = {
     type: 'width' | 'height'
   ) => void;
   handleOnResizeEnd: () => void;
+  handleOnConfirmTextChange: () => void;
+  handleOnChangeLang: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const EditorMenu = ({
   changeTextVisible,
   colorPickerVisible,
   text,
+  lang,
   handleOnColorChange,
   handleOnChangeText,
   resizeStarted,
   dimensions,
   handleOnResizeManualChange,
   handleOnResizeEnd,
+  handleOnConfirmTextChange,
+  handleOnChangeLang,
 }: Props) => {
   const { reset, layout } = useLayoutStore();
   const [dragSart, setDragSart] = useState(false);
+
+  const { t } = useTraductionsStore();
 
   //EDITOR DRAGGING
   const { setNodeRef, transform, listeners, attributes, isDragging } =
@@ -70,7 +80,7 @@ const EditorMenu = ({
                     shadow-lg shadow-gray-400/50 ${dragSart ? 'opacity-50' : 'opacity-100'}`}
     >
       <div className="relative flex flex-col justify-center items-center w-full gap-2">
-        <h1 className="p-1 text-2xl font-bold">Editor Menu</h1>
+        <h1 className="p-1 text-2xl font-bold">{t('editorMenu', lang)}</h1>
         <div
           className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
                     border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
@@ -81,15 +91,18 @@ const EditorMenu = ({
           className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
                     border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
         >
-          <NewButton handleIsDragging={handleIsDragging} />
+          <NewButton handleIsDragging={handleIsDragging} lang={lang} />
         </div>
 
         <AnimatePresence>
           {changeTextVisible && (
             <TextChangeComponent
               text={text}
+              lang={lang}
               changeTextVisible={changeTextVisible}
               handleOnChangeText={handleOnChangeText}
+              handleOnConfirmTextChange={handleOnConfirmTextChange}
+              handleOnChangeLang={handleOnChangeLang}
             />
           )}
 
@@ -113,6 +126,7 @@ const EditorMenu = ({
               exit={{ opacity: 0, scale: 0 }}
             >
               <ResizeChange
+                lang={lang}
                 width={dimensions.width}
                 height={dimensions.height}
                 handleOnResizeManualChange={handleOnResizeManualChange}
@@ -127,7 +141,7 @@ const EditorMenu = ({
                   shadow-md shadow-gray-400/50"
         onClick={reset}
       >
-        Reset
+        {t('resetLayout', lang)}
       </button>
       <div
         {...attributes}

@@ -10,7 +10,7 @@ import {
 } from 'src/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { ButtonProps } from 'src/types/componentProps';
-import t from 'src/helpers/getTraduction';
+import { useTraductionsStore } from 'src/store/TraductionsStore';
 
 interface Props extends ButtonProps {
   button: Button;
@@ -37,6 +37,7 @@ const ButtonComponent = ({
       },
     });
   const { properties } = button;
+  const { t } = useTraductionsStore();
 
   const style = {
     transform: transform
@@ -65,7 +66,7 @@ const ButtonComponent = ({
   const iconWidth = '1.4em';
   const iconHeight = '1.4em';
 
-  const buttonText = changeTextVisible ? text : t(properties.text, lang);
+  const buttonText = changeTextVisible ? text : t(button.id, lang);
 
   return (
     <div

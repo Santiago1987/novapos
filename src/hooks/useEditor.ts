@@ -2,6 +2,7 @@ import type { DragEndEvent } from '@dnd-kit/core';
 import { useState } from 'react';
 import { useLayoutStore } from 'src/store/LayoutStore';
 import { v4 as uuidv4 } from 'uuid';
+import { useTraductionsStore } from 'src/store/TraductionsStore';
 
 type Props = {
   gridSize: number;
@@ -21,6 +22,8 @@ const useEditor = ({ gridSize }: Props) => {
 
   //VARIABLES
   const [colorPickerVisible, setColorPickerVisible] = useState(false);
+
+  const { removeTraduction } = useTraductionsStore();
 
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
@@ -115,6 +118,7 @@ const useEditor = ({ gridSize }: Props) => {
   //DELETE COMPONENT
   const handleDeleteComponent = (id: string) => {
     deleteComponent(id);
+    removeTraduction(id);
   };
 
   // CHANGFE COLOR COMPONENT VISIBLE

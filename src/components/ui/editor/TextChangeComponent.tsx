@@ -1,45 +1,64 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Langs } from 'src/types/constTypes';
+import { useTraductionsStore } from 'src/store/TraductionsStore';
 
 type Props = {
   changeTextVisible: boolean;
   text: string;
+  lang: keyof typeof Langs;
   handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOnConfirmTextChange: () => void;
+  handleOnChangeLang: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const TextChangeComponent = ({
   text,
   changeTextVisible,
+  lang,
   handleOnChangeText,
+  handleOnConfirmTextChange,
+  handleOnChangeLang,
 }: Props) => {
+  const { t } = useTraductionsStore();
   return (
     <AnimatePresence>
       {changeTextVisible && (
         <motion.div
-          className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
+          className="flex flex-col justify-evenly items-center w-11/12 h-[140px] 
                     border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
           initial={{ opacity: 0, scale: 0.75 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
         >
-          <div className="flex flex-col justify-evenly items-center w-11/12 h-full">
-            <h2 className="p1 text-xl">Text Change</h2>
-            <div className="flex flex-row gap-1">
-              <select name="lang">
-                {Object.keys(Langs).map((lang) => (
-                  <option key={lang} value={lang}>
-                    {lang}
+          <div className="flex flex-col justify-evenly items-center h-full w-full gap-1">
+            <h2 className="p1 text-xl">{t('textChange', lang)}</h2>
+            <div className="flex flex-row gap-1 w-full px-2">
+              <select
+                name="lang"
+                className="w-1/4 border-2 border-gray-600 rounded-lg p-1"
+                onChange={handleOnChangeLang}
+              >
+                {Object.keys(Langs).map((language) => (
+                  <option key={language} value={language}>
+                    {language}
                   </option>
                 ))}
               </select>
               <input
                 type="text"
-                className="w-11/12 h-8 border-solid border-2 border-gray-300 rounded-lg p-1"
+                className="w-3/4 h-8 border-solid border-2 border-gray-600 rounded-lg p-1"
                 placeholder="Change button text..."
                 onChange={handleOnChangeText}
                 value={text}
               />
             </div>
+            <button
+              className="w-8/12 p-1 bg-black text-white font-bold rounded-lg text-lg 
+                  shadow-md shadow-gray-400/50"
+              onClick={handleOnConfirmTextChange}
+            >
+              {t('confirm', lang)}
+            </button>
           </div>
         </motion.div>
       )}

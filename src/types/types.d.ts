@@ -1,7 +1,8 @@
 import type { Langs } from 'src/types/constTypes';
-export interface Traductions {
-  [key: string]: { [key: keyof typeof Langs]: string };
-}
+export type TranslationMap = Record<
+  string,
+  Record<keyof typeof Langs?, string>
+>;
 
 /*import type { ThemesList, SalesColumns, PaymentsColumns } from './constTypes';
 

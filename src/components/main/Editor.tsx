@@ -41,6 +41,8 @@ const Editor = () => {
     changeTextVisible,
     handleOnChangeText,
     handleOnClickTextChange,
+    handleOnConfirmTextChange,
+    handleOnChangeLang,
   } = useTextChange();
 
   const {
@@ -90,11 +92,14 @@ const Editor = () => {
           colorPickerVisible={colorPickerVisible}
           handleOnColorChange={handleOnColorChange}
           text={text ? text : ''}
+          lang={lang}
           handleOnChangeText={handleOnChangeText}
           resizeStarted={resizeStarted}
           dimensions={dimensions}
           handleOnResizeManualChange={handleOnResizeManualChange}
           handleOnResizeEnd={handleOnResizeEnd}
+          handleOnConfirmTextChange={handleOnConfirmTextChange}
+          handleOnChangeLang={handleOnChangeLang}
         />
         <ResizeComponent
           risizeStarted={resizeStarted}
