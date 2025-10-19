@@ -104,8 +104,8 @@ const Editor = () => {
         <ResizeComponent
           risizeStarted={resizeStarted}
           label={text || ''}
-          width={`${dimensions.width}px`}
-          height={`${dimensions.height}px`}
+          width={dimensions.width}
+          height={dimensions.height}
           x={position.x}
           y={position.y}
           handlePointerDown={handlePointerDown}
