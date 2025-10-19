@@ -23,7 +23,7 @@ const useEditor = ({ gridSize }: Props) => {
   //VARIABLES
   const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
-  const { removeTraduction } = useTraductionsStore();
+  const { removeTraduction, updateTraduction } = useTraductionsStore();
 
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
@@ -32,11 +32,12 @@ const useEditor = ({ gridSize }: Props) => {
     // NEW BUTTON
     if (active.id === 'new-button') {
       const { x, y } = active.data.current?.position || { x: 0, y: 0 };
+      const newID = uuidv4();
       addButton({
-        id: uuidv4(),
+        id: newID,
         type: 'BUTTON',
         properties: {
-          text: 'New Button',
+          text: 'NewButton',
           position: {
             x: x - (x % gridSize),
             y: y - (y % gridSize),
@@ -48,6 +49,7 @@ const useEditor = ({ gridSize }: Props) => {
           className: 'rounded-lg shadow-md shadow-gray-400/50',
         },
       });
+      updateTraduction(newID, 'New Button', 'EN');
       return;
     }
 

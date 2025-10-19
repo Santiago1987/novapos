@@ -70,7 +70,7 @@ export const useTraductionsStore = create<TraductionsStoreState>()(
             copyTrad[id] = { EN: '' };
           }
           copyTrad[id][lang] = text;
-          console.log(id, lang, copyTrad);
+
           set({ traductionsList: copyTrad });
         },
         removeTraduction: (id) => {

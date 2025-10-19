@@ -74,7 +74,7 @@ const ButtonComponent = ({
       {...listeners}
       {...attributes}
       style={style}
-      className={`relative flex flex-col items-center justify-center rounded-lg`}
+      className={`absolute flex flex-col items-center justify-center rounded-lg`}
     >
       <button
         className={`${customProps} ${isSelected ? 'ring-4 ring-blue-300' : ''}`}
