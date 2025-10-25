@@ -7,7 +7,7 @@ type Props = {
   risizeStarted: boolean;
   x: number;
   y: number;
-  handlePointerDown: (e: React.MouseEvent) => void;
+  handlePointerDown: (e: React.PointerEvent<HTMLDivElement>) => void;
   handlePointerMove: (e: React.PointerEvent<HTMLDivElement>) => void;
   handleMauseUp: () => void;
 };
