@@ -1,8 +1,10 @@
 import { useLayoutStore } from 'src/store/LayoutStore';
+import { useTraductionsStore } from 'src/store/TraductionsStore';
 
 const BodyBackgroundColorPicker = () => {
   const { layout, editLayoutBackground } = useLayoutStore();
-  const { background } = layout;
+  const { background, lang } = layout;
+  const { t } = useTraductionsStore();
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     editLayoutBackground(e.target.value);
@@ -10,7 +12,7 @@ const BodyBackgroundColorPicker = () => {
 
   return (
     <>
-      <h2 className="p1 text-xl">Sales backgraund color</h2>
+      <h2 className="p1 text-xl">{t('salesBackgroundColor', lang)}</h2>
       <input
         type="color"
         onChange={handleColorChange}

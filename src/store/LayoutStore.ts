@@ -1,18 +1,16 @@
 import { devtools, persist } from 'zustand/middleware';
 import { type LayoutState, type LayoutStoreState } from '../types/layoutStore';
 import { create } from 'zustand';
-import type { Layout } from '../types/types';
+import type { Layout } from 'src/types/ui.types';
 
 const blanckLayout: Layout = {
   background: '#ffffff',
+  lang: 'EN',
   size: {
     height: 'h-full',
     width: 'w-full',
   },
-  components: {
-    buttons: [],
-    tables: [],
-  },
+  components: [],
   editorMenu: {
     position: {
       x: 0,
@@ -24,10 +22,7 @@ const blanckLayout: Layout = {
 const initialVariables: LayoutState = {
   isEditing: false,
   layout: blanckLayout,
-  selectedComponent: {
-    id: null,
-    type: 'buttons',
-  },
+  selectedComponentId: null,
 };
 
 export const useLayoutStore = create<LayoutStoreState>()(
@@ -40,6 +35,12 @@ export const useLayoutStore = create<LayoutStoreState>()(
 
           set({ isEditing: !isEditing });
         },
+        setLang: (lang) => {
+          const { layout } = get();
+          const newLayout = structuredClone(layout);
+          newLayout.lang = lang;
+          set({ layout: newLayout });
+        },
         editLayoutBackground: (background) => {
           const { layout } = get();
           const newLayout = structuredClone(layout);
@@ -49,70 +50,54 @@ export const useLayoutStore = create<LayoutStoreState>()(
         addButton: (button) => {
           const { layout } = get();
           const newLayout = structuredClone(layout);
-          let { buttons } = newLayout.components;
-          if (!buttons) buttons = [];
-          buttons = [...buttons, button];
-          newLayout.components.buttons = buttons;
+          let { components } = newLayout;
+          if (!components) components = [];
+          components = [...components, button];
+          newLayout.components = components;
           set({ layout: newLayout });
         },
         addTable: (table) => {
           const { layout } = get();
           const newLayout = structuredClone(layout);
-          let { tables } = newLayout.components;
-          if (!tables) tables = [];
-          tables = [...tables, table];
-          newLayout.components.tables = tables;
+          let { components } = newLayout;
+          if (!components) components = [];
+          components = [...components, table];
+          newLayout.components = components;
           set({ layout: newLayout });
         },
         updateButton: (id, properties) => {
           const { layout } = get();
           const newLayaut = structuredClone(layout);
-          const buttonList = newLayaut.components.buttons;
-          if (!buttonList || buttonList.length === 0) return;
-
-          layout.components.buttons = buttonList.map((butt) =>
-            butt.id === id
-              ? { ...butt, properties: { ...butt.properties, ...properties } }
-              : butt
+          const { components } = newLayaut;
+          layout.components = components.map((comp) =>
+            comp.id === id
+              ? { ...comp, properties: { ...comp.properties, ...properties } }
+              : comp
           );
-
           set({ layout });
         },
         updateTable: (id, properties) => {
           const { layout } = get();
           const newLayaut = structuredClone(layout);
-          const tableList = newLayaut.components.tables;
-          if (!tableList || tableList.length === 0) return;
+          const { components } = newLayaut;
 
-          layout.components.tables = tableList.map((table) =>
+          layout.components = components.map((table) =>
             table.id === id
               ? { ...table, properties: { ...table.properties, ...properties } }
               : table
           );
         },
-        selectComponent: (id, type) => {
-          set({ selectedComponent: { id, type } });
+        selectComponent: (id) => {
+          set({ selectedComponentId: id });
         },
-        deleteButton: (id) => {
+        deleteComponent: (id) => {
           const { layout } = get();
           const newLayaut = structuredClone(layout);
-          const buttonList = newLayaut.components.buttons;
-          if (!buttonList || buttonList.length === 0) return;
+          const { components } = newLayaut;
+          if (!components || components.length === 0) return;
 
-          const newbuttonList = buttonList.filter((butt) => butt.id !== id);
-          layout.components.buttons = newbuttonList;
-
-          set({ layout });
-        },
-        deleteTable: (id) => {
-          const { layout } = get();
-          const newLayaut = structuredClone(layout);
-          const tableList = newLayaut.components.tables;
-          if (!tableList || tableList.length === 0) return;
-
-          const newbuttonList = tableList.filter((table) => table.id !== id);
-          layout.components.tables = newbuttonList;
-
+          const newbuttonList = components.filter((comp) => comp.id !== id);
+          layout.components = newbuttonList;
           set({ layout });
         },
         reset: () => {
@@ -123,21 +108,17 @@ export const useLayoutStore = create<LayoutStoreState>()(
           layout.editorMenu.position = { x, y };
           set({ layout });
         },
-        modifyButtonsDimensions: (
+        modifyComponentDimensions: (
           id: string,
           width: string,
           height: string
         ) => {
           const { layout } = get();
           const newLayout = structuredClone(layout);
-
-          const button = newLayout.components.buttons.find(
-            (butt) => butt.id === id
-          );
-          if (!button) return;
-          if (!button.properties.size)
-            button.properties.size = { width: 'auto', height: 'auto' };
-          button.properties.size = { width, height };
+          const { components } = newLayout;
+          const component = components.find((comp) => comp.id === id);
+          if (!component) return;
+          component.properties.size = { width, height };
           set({ layout: newLayout });
         },
       }),

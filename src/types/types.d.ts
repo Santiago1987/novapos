@@ -1,4 +1,10 @@
-import type { ThemesList, SalesColumns, PaymentsColumns } from './constTypes';
+import type { Langs } from 'src/types/constTypes';
+export type TranslationMap = Record<
+  string,
+  Record<keyof typeof Langs?, string>
+>;
+
+/*import type { ThemesList, SalesColumns, PaymentsColumns } from './constTypes';
 
 export interface Layout {
   background?: string;

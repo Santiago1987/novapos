@@ -7,7 +7,7 @@ type Props = {
   risizeStarted: boolean;
   x: number;
   y: number;
-  handlePointerDown: (e: React.MouseEvent) => void;
+  handlePointerDown: (e: React.PointerEvent<HTMLDivElement>) => void;
   handlePointerMove: (e: React.PointerEvent<HTMLDivElement>) => void;
   handleMauseUp: () => void;
 };
@@ -25,19 +25,19 @@ const ResizeComponent = ({
 }: Props) => {
   width = width === 'px' ? '1' : width;
   height = height === 'px' ? '1' : height;
-  console.log('width, height', width, height);
+
   return (
     <AnimatePresence>
       {risizeStarted && (
         <motion.div
           className="absolute flex justify-center items-center border-2 border-dashed border-gray-400 "
           style={{
-            width: width,
-            height: height,
+            width,
+            height,
             left: x,
             top: y,
           }}
-          animate={{ width: width, height: height }}
+          animate={{ width, height }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
           <label className="p-1 wrap-anywhere leading-5">{label}</label>

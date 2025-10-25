@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import { DragVariant } from '../../icons/SVGIcons';
 import { useDraggable } from '@dnd-kit/core';
+import { useTraductionsStore } from 'src/store/TraductionsStore';
+import type { Langs } from 'src/types/constTypes';
 
 type Props = {
   handleIsDragging: (dragging: boolean) => void;
+  lang: keyof typeof Langs;
 };
 
-const NewButton = ({ handleIsDragging }: Props) => {
+const NewButton = ({ handleIsDragging, lang }: Props) => {
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
       id: 'new-button',
@@ -16,6 +19,7 @@ const NewButton = ({ handleIsDragging }: Props) => {
           ?.getBoundingClientRect(),
       },
     });
+  const { t } = useTraductionsStore();
 
   useEffect(() => {
     handleIsDragging(isDragging);
@@ -33,7 +37,7 @@ const NewButton = ({ handleIsDragging }: Props) => {
 
   return (
     <div className="flex flex-col justify-evenly items-center w-11/12 h-[100px]">
-      <h2 className="p-1 text-xl">New Button</h2>
+      <h2 className="p-1 text-xl">{t('NewButton', lang)}</h2>
       <button
         id="new-button"
         className="flex flex-row items-center w-[150px] h-[50px] p-1 rounded-lg 
@@ -46,7 +50,9 @@ const NewButton = ({ handleIsDragging }: Props) => {
         <div className="w-1/4 flex justify-center items-center">
           <DragVariant style={{ width: '1.2em', height: '1.2em' }} />
         </div>
-        <div className="w-3/4 flex justify-center items-center">Drag me</div>
+        <div className="w-3/4 flex justify-center items-center">
+          {t('dragMe', lang)}
+        </div>
       </button>
     </div>
   );

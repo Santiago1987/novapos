@@ -4,7 +4,7 @@ type Props = {
   handleOnColorChange: (color: string, type: 'text' | 'background') => void;
 };
 const ColorPicker = ({ handleOnColorChange }: Props) => {
-  const { layout, selectedComponent } = useLayoutStore();
+  const { layout, selectedComponentId } = useLayoutStore();
   /*const colors = [
     'red',
     'orange',
@@ -42,12 +42,12 @@ const ColorPicker = ({ handleOnColorChange }: Props) => {
     '950',
   ];*/
 
-  const bgValue = layout.components.buttons.find(
-    (butt) => butt.id === selectedComponent.id
-  )?.properties.color;
+  const bgValue = layout.components.find(
+    (butt) => butt.id === selectedComponentId
+  )?.properties.backgroundColor;
 
-  const textValue = layout.components.buttons.find(
-    (butt) => butt.id === selectedComponent.id
+  const textValue = layout.components.find(
+    (butt) => butt.id === selectedComponentId
   )?.properties.textColor;
 
   return (

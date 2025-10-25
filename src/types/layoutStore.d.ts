@@ -1,30 +1,38 @@
-import type { Layout, TableType, Button, Sales, Payments } from './types';
+import type {
+  Layout,
+  Table,
+  Button,
+  SalesTable,
+  PaymentsTable,
+} from './ui.types';
+import type { Langs } from './constTypes';
 
 export type LayoutStoreState = LayoutState & Actions;
 
 export interface LayoutState {
   isEditing: boolean;
   layout: Layout;
-  selectedComponent: {
-    id: string | null;
-    type: 'buttons' | 'tables';
-  };
+  selectedComponentId: string | null;
 }
 
 export interface Actions {
   toggleEditing: () => void;
   addButton: (button: Button) => void;
-  addTable: (table: TableType<Sales | Payments>) => void;
+  addTable: (table: Table<SalesTable | PaymentsTable>) => void;
   updateButton: (id: string, properties: Partial<Button['properties']>) => void;
   updateTable: (
     id: string,
-    properties: Partial<TableType<Sales | Payments>['properties']>
+    properties: Partial<Table<SalesTable | PaymentsTable>['properties']>
   ) => void;
-  selectComponent: (id: string | null, type: 'tables' | 'buttons') => void;
-  deleteButton: (id: string) => void;
-  deleteTable: (id: string) => void;
+  selectComponent: (id: string | null) => void;
+  deleteComponent: (id: string) => void;
   editLayoutBackground: (background: string) => void;
   reset: () => void;
   modifyEditorPosition: (x: number, y: number) => void;
-  modifyButtonsDimensions: (id: string, width: string, height: string) => void;
+  modifyComponentDimensions: (
+    id: string,
+    width: string,
+    height: string
+  ) => void;
+  setLang: (lang: keyof typeof Langs) => void;
 }
