@@ -1,14 +1,16 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useLayoutStore } from 'src/store/LayoutStore';
+import { useResizeStore } from 'src/store/ResizeStore';
 
 const useResize = () => {
-  const { layout, selectedComponentId, modifyComponentDimensions } =
-    useLayoutStore();
+  const {
+    layout,
+    selectedComponentId,
+    componentActions: { updateButton },
+    globalsActions: { setToggleGlobal },
+  } = useLayoutStore();
 
-  const [dimensions, setDimensions] = useState({ width: '', height: '' });
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [resizeStarted, setResizeStarted] = useState(false);
-  const [text, setText] = useState('');
+  const { position, dimensions, setDimensions, setPosition } = useResizeStore();
 
   const startX = useRef(0);
   const startY = useRef(0);
@@ -30,9 +32,6 @@ const useResize = () => {
     initialHeight.current = Number(dimensions.height.replace('px', ''));
 
     isResizing.current = true;
-
-    window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('pointerup', handleMauseUp);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -46,24 +45,22 @@ const useResize = () => {
     const newWidth = initialWidth.current + deltaX;
     const newHeight = initialHeight.current + deltaY;
 
-    setDimensions({
-      width: `${Math.max(newWidth, 50)}px`,
-      height: `${Math.max(newHeight, 25)}px`,
-    });
+    const width = `${Math.max(newWidth, 50)}px`;
+    const height = `${Math.max(newHeight, 25)}px`;
+
+    setDimensions(width, height);
   };
 
   const handleMauseUp = () => {
     isResizing.current = false;
     if (selectedComponentId) {
-      modifyComponentDimensions(
-        selectedComponentId,
-        dimensions.width,
-        dimensions.height
-      );
+      updateButton(selectedComponentId, {
+        size: {
+          width: dimensions.width,
+          height: dimensions.height,
+        },
+      });
     }
-
-    window.removeEventListener('pointermove', handlePointerMove);
-    window.removeEventListener('pointerup', handleMauseUp);
   };
 
   const handleOnResizeManualChange = (
@@ -72,51 +69,48 @@ const useResize = () => {
   ) => {
     const value = e.target.value.replace(/\D/g, '');
     if (type === 'width') {
-      setDimensions((prev) => ({ ...prev, width: value }));
+      setDimensions(value + 'px', dimensions.height);
     } else {
-      setDimensions((prev) => ({ ...prev, height: value }));
+      setDimensions(dimensions.width, value + 'px');
     }
   };
 
   const handleResizeStart = (iniWidth: number, iniHeight: number) => {
-    setResizeStarted(!resizeStarted);
+    setToggleGlobal('resizeStarted', true);
     initialHeight.current = iniHeight;
     initialWidth.current = iniWidth;
     if (selectedComponentId) {
-      const comp = layout.components.find((b) => b.id === selectedComponentId);
+      const comp = layout.components[selectedComponentId];
+      const width = comp.properties.size.width.replace(/\D/g, '') + 'px';
+      const height = comp.properties.size.height.replace(/\D/g, '') + 'px';
+
       if (comp && comp.properties.size) {
-        setDimensions({
-          width: comp.properties.size.width.replace(/\D/g, '') + 'px',
-          height: comp.properties.size.height.replace(/\D/g, '') + 'px',
-        });
-        setPosition({
-          x: comp.properties.position.x || 0,
-          y: comp.properties.position.y || 0,
-        });
-        setText(comp.properties.text || '');
+        setDimensions(width, height);
+        setPosition(
+          comp.properties.position.x || 0,
+          comp.properties.position.y || 0
+        );
       }
     }
   };
 
   const handleOnResizeEnd = () => {
-    setResizeStarted(false);
+    setToggleGlobal('resizeStarted', false);
     if (selectedComponentId) {
-      modifyComponentDimensions(
-        selectedComponentId,
-        dimensions.width,
-        dimensions.height
-      );
+      updateButton(selectedComponentId, {
+        size: {
+          width: dimensions.width,
+          height: dimensions.height,
+        },
+      });
     }
-    setText('');
-    setDimensions({ width: '', height: '' });
+    setDimensions('1px', '1px');
   };
 
   return {
     isResizing,
     dimensions,
-    resizeStarted,
     position,
-    text,
     handlePointerDown,
     handleResizeStart,
     handleOnResizeManualChange,

@@ -20,7 +20,7 @@ export interface Layout {
   editorMenu: {
     position: Position;
   };
-  components: ComponentUnion[];
+  components: Record<string, ComponentUnion>;
 }
 
 export interface BaseComponentProps {

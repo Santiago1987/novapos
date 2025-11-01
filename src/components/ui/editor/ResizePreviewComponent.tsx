@@ -1,30 +1,18 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLayoutStore } from 'src/store/LayoutStore';
+import useResize from 'src/hooks/useResize';
 
-type Props = {
-  label: string;
-  width: string;
-  height: string;
-  risizeStarted: boolean;
-  x: number;
-  y: number;
-  handlePointerDown: (e: React.PointerEvent<HTMLDivElement>) => void;
-  handlePointerMove: (e: React.PointerEvent<HTMLDivElement>) => void;
-  handleMauseUp: () => void;
-};
-
-const ResizeComponent = ({
-  risizeStarted,
-  label,
-  width,
-  height,
-  x,
-  y,
-  handlePointerDown,
-  handlePointerMove,
-  handleMauseUp,
-}: Props) => {
-  width = width === 'px' ? '1' : width;
-  height = height === 'px' ? '1' : height;
+const ResizePreviewComponent = () => {
+  const {
+    position,
+    dimensions,
+    handlePointerDown,
+    handlePointerMove,
+    handleMauseUp,
+  } = useResize();
+  const { x, y } = position;
+  const { width, height } = dimensions;
+  const risizeStarted = useLayoutStore((state) => state.globals.resizeStarted);
 
   return (
     <AnimatePresence>
@@ -40,7 +28,6 @@ const ResizeComponent = ({
           animate={{ width, height }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         >
-          <label className="p-1 wrap-anywhere leading-5">{label}</label>
           <div
             style={{
               position: 'absolute',
@@ -61,4 +48,4 @@ const ResizeComponent = ({
   );
 };
 
-export default ResizeComponent;
+export default ResizePreviewComponent;

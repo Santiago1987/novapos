@@ -1,8 +1,9 @@
 import { devtools, persist } from 'zustand/middleware';
 import { create } from 'zustand';
 import { Langs } from 'src/types/constTypes';
-import type { TraductionsStoreState } from 'src/types/traductionsStore';
-import type { TranslationMap } from 'src/types/traductionsStore';
+import type { TraductionsStoreState } from 'src/types/miscStore';
+import type { TranslationMap } from 'src/types/miscStore';
+import { produce } from 'immer';
 
 const traductionsini: TranslationMap = {
   hello: { EN: 'Hello', ES: 'Hola', BE: 'Bonjour' },
@@ -59,27 +60,25 @@ export const useTraductionsStore = create<TraductionsStoreState>()(
           if (!key || !traductionsList[key]) {
             return traductionsList['default'][resolvedLang] ?? '';
           }
-
           return traductionsList[key][resolvedLang] ?? '';
         },
         updateTraduction: (id, text, lang) => {
-          const { traductionsList } = get();
-          const copyTrad = structuredClone(traductionsList);
+          set(
+            produce((state: TraductionsStoreState) => {
+              if (!state.traductionsList[id]) {
+                state.traductionsList[id] = { EN: '' };
+              }
 
-          if (!copyTrad[id]) {
-            copyTrad[id] = { EN: '' };
-          }
-          copyTrad[id][lang] = text;
-
-          set({ traductionsList: copyTrad });
+              state.traductionsList[id][lang] = text;
+            })
+          );
         },
         removeTraduction: (id) => {
-          const { traductionsList } = get();
-          const copyTrad = structuredClone(traductionsList);
-          if (id in copyTrad) {
-            delete copyTrad[id];
-          }
-          set(copyTrad);
+          set(
+            produce((state: TraductionsStoreState) => {
+              delete state.traductionsList[id];
+            })
+          );
         },
       }),
       { name: 'traductions-storage' }

@@ -1,44 +1,47 @@
 import { useState } from 'react';
 import { Langs } from 'src/types/constTypes';
 import { useLayoutStore } from 'src/store/LayoutStore';
-import { useTraductionsStore } from 'src/store/TraductionsStore';
+import { useTraductionsStore } from 'src/store/TraductionStore';
 
 type LangsType = keyof typeof Langs;
 
 const useTextChange = () => {
-  const [text, setText] = useState('');
-  const [changeTextVisible, setChangeTextVisible] = useState(false);
+  const [previewText, setPreviewText] = useState<string>('');
   const [lang, setLang] = useState<LangsType>('EN');
-  const { updateButton, selectedComponentId } = useLayoutStore();
+  const {
+    //componentActions: { updateButton },
+    selectedComponentId,
+    globalsActions,
+  } = useLayoutStore();
   const { updateTraduction } = useTraductionsStore();
 
   // CHANGE TEXT COMPONENT VISIBLE
-  const handleOnClickTextChange = (initext: string) => {
-    setChangeTextVisible(!changeTextVisible);
-    setText(initext);
+  const handleOnClickTextChange = () => {
+    globalsActions.setToggleGlobal('textEditorVisible', true);
   };
 
   const handleOnChangeLang = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lan = e.target.value as keyof typeof Langs;
     setLang(lan);
+    setPreviewText('');
   };
 
   // CONPONENT TEXT CHANGE
   const handleOnChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setText(e.target.value);
+    if (!selectedComponentId) return;
+    const text = e.target.value;
+    //updateTraduction(selectedComponentId, text, lang);
+    setPreviewText(text);
   };
 
   const handleOnConfirmTextChange = () => {
-    setChangeTextVisible(false);
+    globalsActions.setToggleGlobal('textEditorVisible', false);
     if (!selectedComponentId) return;
-    updateButton(selectedComponentId, { text });
-    updateTraduction(selectedComponentId, text, lang);
+    updateTraduction(selectedComponentId, previewText, lang);
   };
 
   return {
-    text,
-    lang,
-    changeTextVisible,
+    previewText,
     handleOnClickTextChange,
     handleOnChangeText,
     handleOnConfirmTextChange,
