@@ -3,45 +3,24 @@ import NewButton from './NewButton';
 import { useState } from 'react';
 import ColorPicker from './ColorPicker';
 import { DragVariant } from 'src/components/icons/SVGIcons';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useDraggable } from '@dnd-kit/core';
 import BodyBackgroundColorPicker from './BodyBackgroundColorPicker';
-import ResizeChange from './ResizeChange';
+import ResizeChangeComponent from './ResizeChangeComponent';
 import TextChangeComponent from './TextChangeComponent';
 import { Langs } from 'src/types/constTypes';
-import { useTraductionsStore } from 'src/store/TraductionsStore';
+import { useTraductionsStore } from 'src/store/TraductionStore';
 
 type Props = {
-  changeTextVisible: boolean;
   colorPickerVisible: boolean;
-  resizeStarted: boolean;
-  dimensions: { width: string; height: string };
-  text: string;
   lang: keyof typeof Langs;
   handleOnColorChange: (color: string, type: 'text' | 'background') => void;
-  handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOnResizeManualChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    type: 'width' | 'height'
-  ) => void;
-  handleOnResizeEnd: () => void;
-  handleOnConfirmTextChange: () => void;
-  handleOnChangeLang: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const EditorMenu = ({
-  changeTextVisible,
   colorPickerVisible,
-  text,
   lang,
   handleOnColorChange,
-  handleOnChangeText,
-  resizeStarted,
-  dimensions,
-  handleOnResizeManualChange,
-  handleOnResizeEnd,
-  handleOnConfirmTextChange,
-  handleOnChangeLang,
 }: Props) => {
   const { reset, layout } = useLayoutStore();
   const [dragSart, setDragSart] = useState(false);
@@ -94,47 +73,20 @@ const EditorMenu = ({
           <NewButton handleIsDragging={handleIsDragging} lang={lang} />
         </div>
 
-        <AnimatePresence>
-          {changeTextVisible && (
-            <TextChangeComponent
-              text={text}
-              lang={lang}
-              changeTextVisible={changeTextVisible}
-              handleOnChangeText={handleOnChangeText}
-              handleOnConfirmTextChange={handleOnConfirmTextChange}
-              handleOnChangeLang={handleOnChangeLang}
-            />
-          )}
+        <TextChangeComponent />
+        {colorPickerVisible && (
+          <motion.div
+            className="flex flex-col justify-evenly items-center w-11/12 
+                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50 py-1"
+            initial={{ opacity: 0, scale: 0.75 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+          >
+            <ColorPicker handleOnColorChange={handleOnColorChange} />
+          </motion.div>
+        )}
 
-          {colorPickerVisible && (
-            <motion.div
-              className="flex flex-col justify-evenly items-center w-11/12 
-                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50 py-1"
-              initial={{ opacity: 0, scale: 0.75 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-            >
-              <ColorPicker handleOnColorChange={handleOnColorChange} />
-            </motion.div>
-          )}
-          {resizeStarted && (
-            <motion.div
-              className="flex flex-col justify-evenly items-center w-11/12 
-                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50 py-1"
-              initial={{ opacity: 0, scale: 0.75 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-            >
-              <ResizeChange
-                lang={lang}
-                width={dimensions.width}
-                height={dimensions.height}
-                handleOnResizeManualChange={handleOnResizeManualChange}
-                handleOnResizeEnd={handleOnResizeEnd}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <ResizeChangeComponent />
       </div>
       <button
         className="w-8/12 p-1 mb-1 bg-black text-white font-bold rounded-lg text-lg 

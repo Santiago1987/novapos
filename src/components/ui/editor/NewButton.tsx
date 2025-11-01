@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { DragVariant } from '../../icons/SVGIcons';
 import { useDraggable } from '@dnd-kit/core';
-import { useTraductionsStore } from 'src/store/TraductionsStore';
+import { useTraductionsStore } from 'src/store/TraductionStore';
 import type { Langs } from 'src/types/constTypes';
 
 type Props = {

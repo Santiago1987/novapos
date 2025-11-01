@@ -2,7 +2,7 @@ import type { DragEndEvent } from '@dnd-kit/core';
 import { useState } from 'react';
 import { useLayoutStore } from 'src/store/LayoutStore';
 import { v4 as uuidv4 } from 'uuid';
-import { useTraductionsStore } from 'src/store/TraductionsStore';
+import { useTraductionsStore } from 'src/store/TraductionStore';
 
 type Props = {
   gridSize: number;
@@ -12,12 +12,9 @@ const useEditor = ({ gridSize }: Props) => {
   //LAYOUT EDITOR
   const {
     layout,
-    addButton,
-    updateButton,
+    componentActions: { addComponent, updateButton, deleteComponent },
     selectedComponentId,
-    selectComponent,
-    deleteComponent,
-    modifyEditorPosition,
+    editorActions: { selectComponent, modifyEditorPosition },
   } = useLayoutStore();
 
   //VARIABLES
@@ -33,7 +30,7 @@ const useEditor = ({ gridSize }: Props) => {
     if (active.id === 'new-button') {
       const { x, y } = active.data.current?.position || { x: 0, y: 0 };
       const newID = uuidv4();
-      addButton({
+      addComponent(newID, {
         id: newID,
         type: 'BUTTON',
         properties: {
@@ -55,7 +52,7 @@ const useEditor = ({ gridSize }: Props) => {
 
     // POSITON OF A EXISTING BUTTON
     if (active.data.current?.type === 'button') {
-      const component = layout.components.find((butt) => butt.id === active.id);
+      const component = layout.components[active.id];
       if (!component) return;
       if (!delta) return;
       const { x, y } = delta;
@@ -98,13 +95,14 @@ const useEditor = ({ gridSize }: Props) => {
 
   //HANDEL COPY COMPONENT
   const handleCopyComponent = (id: string) => {
-    const component = layout.components.find((comp) => comp.id === id);
+    const component = layout.components[id];
     if (!component) return;
     if (component.type !== 'BUTTON') return;
 
+    const newID = uuidv4();
     const newComponent = {
       ...component,
-      id: uuidv4(),
+      id: newID,
       properties: {
         ...component.properties,
         position: {
@@ -114,7 +112,7 @@ const useEditor = ({ gridSize }: Props) => {
         },
       },
     };
-    addButton(newComponent);
+    addComponent(newID, newComponent);
   };
 
   //DELETE COMPONENT

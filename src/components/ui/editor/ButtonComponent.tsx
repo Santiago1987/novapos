@@ -10,7 +10,10 @@ import {
 } from 'src/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { ButtonProps } from 'src/types/componentProps';
-import { useTraductionsStore } from 'src/store/TraductionsStore';
+import { useTraductionsStore } from 'src/store/TraductionStore';
+import useTextChange from 'src/hooks/useTextChange';
+import { useLayoutStore } from 'src/store/LayoutStore';
+import useResize from 'src/hooks/useResize';
 
 interface Props extends ButtonProps {
   button: Button;
@@ -19,15 +22,11 @@ interface Props extends ButtonProps {
 const ButtonComponent = ({
   button,
   isSelected,
-  lang,
-  text,
-  changeTextVisible,
+
   handleSelectComponent,
   handleCopyComponent,
   handleDeleteComponent,
-  handleOnClickTextChange,
   handleOnClickColorChange,
-  handleResizeStart,
 }: Props) => {
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -36,8 +35,12 @@ const ButtonComponent = ({
         type: 'button',
       },
     });
-  const { properties } = button;
+  const lang = useLayoutStore((state) => state.layout.lang);
   const { t } = useTraductionsStore();
+  const { handleOnClickTextChange } = useTextChange();
+  const { handleResizeStart } = useResize();
+
+  const { properties } = button;
 
   const style = {
     transform: transform
@@ -66,7 +69,7 @@ const ButtonComponent = ({
   const iconWidth = '1.4em';
   const iconHeight = '1.4em';
 
-  const buttonText = changeTextVisible ? text : t(button.id, lang);
+  const buttonText = t(button.id, lang);
 
   return (
     <div
@@ -100,7 +103,7 @@ const ButtonComponent = ({
                 <ContentCopy width={iconWidth} height={iconHeight} />
               </button>
               <button
-                onClick={() => handleOnClickTextChange(buttonText || '')}
+                onClick={handleOnClickTextChange}
                 className="cursor-pointer hover:scale-110"
               >
                 <FormatText width={iconWidth} height={iconHeight} />

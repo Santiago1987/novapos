@@ -10,9 +10,7 @@ import {
 import ComponentFactory from 'src/components/ui/editor/ComponentFactory';
 import EditorMenu from 'src/components/ui/editor/EditorMenu';
 import useEditor from 'src/hooks/useEditor';
-import useResize from 'src/hooks/useResize';
-import ResizeComponent from '../ui/editor/ResizeComponent';
-import useTextChange from 'src/hooks/useTextChange';
+import ResizePreviewComponent from '../ui/editor/ResizePreviewComponent';
 
 const Editor = () => {
   const gridSize = 5;
@@ -36,27 +34,6 @@ const Editor = () => {
     handleOnColorChange,
   } = useEditor({ gridSize });
 
-  const {
-    text,
-    changeTextVisible,
-    handleOnChangeText,
-    handleOnClickTextChange,
-    handleOnConfirmTextChange,
-    handleOnChangeLang,
-  } = useTextChange();
-
-  const {
-    resizeStarted,
-    dimensions,
-    position,
-    handleResizeStart,
-    handleOnResizeManualChange,
-    handleOnResizeEnd,
-    handlePointerDown,
-    handlePointerMove,
-    handleMauseUp,
-  } = useResize();
-
   const { background, components, lang } = layout;
   const snapToGrid = createSnapModifier(gridSize);
 
@@ -68,50 +45,25 @@ const Editor = () => {
     >
       <div className={`w-screen h-screen relative`} style={{ background }}>
         <div ref={setNodeRef}>
-          {components.map((component) => (
+          {Object.keys(components).map((idc) => (
             <ComponentFactory
-              key={component.id}
-              component={component}
-              text={text}
+              key={idc}
+              component={components[idc]}
               lang={lang}
-              changeTextVisible={
-                changeTextVisible && selectedComponentId === component.id
-              }
-              isSelected={selectedComponentId === component.id}
+              isSelected={selectedComponentId === idc}
               handleSelectComponent={handleSelectComponent}
               handleCopyComponent={handleCopyComponent}
               handleDeleteComponent={handleDeleteComponent}
-              handleOnClickTextChange={handleOnClickTextChange}
               handleOnClickColorChange={handleOnClickColorChange}
-              handleResizeStart={handleResizeStart}
             />
           ))}
         </div>
         <EditorMenu
-          changeTextVisible={changeTextVisible}
           colorPickerVisible={colorPickerVisible}
           handleOnColorChange={handleOnColorChange}
-          text={text ? text : ''}
           lang={lang}
-          handleOnChangeText={handleOnChangeText}
-          resizeStarted={resizeStarted}
-          dimensions={dimensions}
-          handleOnResizeManualChange={handleOnResizeManualChange}
-          handleOnResizeEnd={handleOnResizeEnd}
-          handleOnConfirmTextChange={handleOnConfirmTextChange}
-          handleOnChangeLang={handleOnChangeLang}
         />
-        <ResizeComponent
-          risizeStarted={resizeStarted}
-          label={text || ''}
-          width={dimensions.width}
-          height={dimensions.height}
-          x={position.x}
-          y={position.y}
-          handlePointerDown={handlePointerDown}
-          handlePointerMove={handlePointerMove}
-          handleMauseUp={handleMauseUp}
-        />
+        <ResizePreviewComponent />
       </div>
     </DndContext>
   );

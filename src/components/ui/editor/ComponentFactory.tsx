@@ -12,9 +12,7 @@ interface Props extends ButtonProps {
   handleSelectComponent: (id: string, type: 'buttons' | 'tables') => void;
   handleCopyComponent: (id: string, type: 'buttons' | 'tables') => void;
   handleDeleteComponent: (id: string, type: 'buttons' | 'tables') => void;
-  handleOnClickTextChange: (initext: string) => void;
   handleOnClickColorChange: () => void;
-  handleResizeStart: (iniWidth: number, iniHeight: number) => void;
 }
 
 const ComponentFactory = (props: Props) => {
@@ -22,29 +20,21 @@ const ComponentFactory = (props: Props) => {
   if (component.type === 'BUTTON') {
     const {
       isSelected,
-      lang,
-      text,
-      changeTextVisible,
+
       handleCopyComponent,
       handleDeleteComponent,
-      handleOnClickTextChange,
       handleOnClickColorChange,
-      handleResizeStart,
+
       handleSelectComponent,
     } = props;
     return (
       <ButtonComponent
         button={component}
-        text={text}
-        lang={lang}
-        changeTextVisible={changeTextVisible}
         isSelected={isSelected}
         handleSelectComponent={handleSelectComponent}
         handleCopyComponent={handleCopyComponent}
         handleDeleteComponent={handleDeleteComponent}
-        handleOnClickTextChange={handleOnClickTextChange}
         handleOnClickColorChange={handleOnClickColorChange}
-        handleResizeStart={handleResizeStart}
       />
     );
   }

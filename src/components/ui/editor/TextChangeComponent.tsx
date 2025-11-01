@@ -1,25 +1,24 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { Langs } from 'src/types/constTypes';
-import { useTraductionsStore } from 'src/store/TraductionsStore';
+import { useTraductionsStore } from 'src/store/TraductionStore';
+import useTextChange from 'src/hooks/useTextChange';
+import { useLayoutStore } from 'src/store/LayoutStore';
 
-type Props = {
-  changeTextVisible: boolean;
-  text: string;
-  lang: keyof typeof Langs;
-  handleOnChangeText: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleOnConfirmTextChange: () => void;
-  handleOnChangeLang: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-};
-
-const TextChangeComponent = ({
-  text,
-  changeTextVisible,
-  lang,
-  handleOnChangeText,
-  handleOnConfirmTextChange,
-  handleOnChangeLang,
-}: Props) => {
+const TextChangeComponent = () => {
   const { t } = useTraductionsStore();
+  const {
+    previewText,
+    handleOnChangeText,
+    handleOnConfirmTextChange,
+    handleOnChangeLang,
+  } = useTextChange();
+
+  //Nunca desestructures objetos anidados directamente si esperas que sus propiedades internas activen re-renders.
+  const changeTextVisible = useLayoutStore(
+    (state) => state.globals.textEditorVisible
+  );
+  const lang = useLayoutStore((state) => state.layout.lang);
+
   return (
     <AnimatePresence>
       {changeTextVisible && (
@@ -49,7 +48,7 @@ const TextChangeComponent = ({
                 className="w-3/4 h-8 border-solid border-2 border-gray-600 rounded-lg p-1"
                 placeholder="Change button text..."
                 onChange={handleOnChangeText}
-                value={text}
+                value={previewText}
               />
             </div>
             <button
