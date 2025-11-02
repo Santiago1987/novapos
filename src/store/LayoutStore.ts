@@ -1,8 +1,82 @@
 import { devtools, persist } from 'zustand/middleware';
 import { type LayoutState, type LayoutStoreState } from '../types/layoutStore';
 import { create } from 'zustand';
-import type { Layout } from 'src/types/ui.types';
+import type { Layout, SalesTable } from 'src/types/ui.types';
 import { produce } from 'immer';
+import { v4 as uuidv4 } from 'uuid';
+
+const idtable = uuidv4();
+
+const tableExample = {
+  id: idtable,
+  type: 'TABLE',
+  tableType: 'sales',
+  properties: {
+    size: { width: '100%', height: 'auto' },
+    position: { x: 50, y: 100 },
+    backgroundColor: '#f9fafb',
+    header: {
+      backgroundColor: '#1f2937',
+      textColor: '#ffffff',
+      fontSize: '14px',
+      fontFamily: 'Inter, sans-serif',
+    },
+    rows: {
+      backgroundColor: '#ffffff',
+      textColor: '#374151',
+      fontSize: '13px',
+      fontFamily: '',
+      hoverColor: '#f3f4f6',
+    },
+    border: {
+      color: '#e5e7eb',
+      width: '1px',
+    },
+  },
+  columns: [
+    {
+      key: 'QTY',
+      title: 'Cantidad',
+      visible: true,
+      order: 0,
+      width: '20%',
+      textColor: '#1f2937',
+      fontSize: '13px',
+      align: 'center',
+    },
+    {
+      key: 'DESCR',
+      title: 'Descripción',
+      visible: true,
+      order: 1,
+      width: '40%',
+      textColor: '#374151',
+      fontSize: '13px',
+      align: 'left',
+    },
+    {
+      key: 'UNPR',
+      title: 'Precio Unit.',
+      visible: true,
+      order: 2,
+      width: '20%',
+      textColor: '#374151',
+      fontSize: '13px',
+      align: 'right',
+    },
+    {
+      key: 'VALUE',
+      title: 'Total',
+      visible: true,
+      order: 3,
+      width: '20%',
+      textColor: '#10b981',
+      fontSize: '13px',
+      fontWeight: '600',
+      align: 'right',
+    },
+  ],
+} as SalesTable;
 
 const blanckLayout: Layout = {
   background: '#ffffff',
@@ -11,7 +85,9 @@ const blanckLayout: Layout = {
     height: 'h-full',
     width: 'w-full',
   },
-  components: {},
+  components: {
+    [idtable]: tableExample,
+  },
   editorMenu: {
     position: {
       x: 0,

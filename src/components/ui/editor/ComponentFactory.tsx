@@ -19,10 +19,8 @@ const ComponentFactory = (props: Props) => {
   if (component.type === 'BUTTON') {
     const {
       isSelected,
-
       handleCopyComponent,
       handleDeleteComponent,
-
       handleSelectComponent,
     } = props;
     return (
