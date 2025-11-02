@@ -23,7 +23,7 @@ const TableComponent = ({ component }: Props) => {
     fontSize: RFS,
     fontFamily: RFF,
   } = rows;
-  const rowProps = `text-[${RFF}] font-[${RFS}] text-[${RTC}]`;
+  const rowProps = `text-[${RFF}] font-[${RFS}] text-[${RTC}] text-center`;
 
   return (
     <table>
