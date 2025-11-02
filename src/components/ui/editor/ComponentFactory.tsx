@@ -12,7 +12,6 @@ interface Props extends ButtonProps {
   handleSelectComponent: (id: string, type: 'buttons' | 'tables') => void;
   handleCopyComponent: (id: string, type: 'buttons' | 'tables') => void;
   handleDeleteComponent: (id: string, type: 'buttons' | 'tables') => void;
-  handleOnClickColorChange: () => void;
 }
 
 const ComponentFactory = (props: Props) => {
@@ -23,7 +22,6 @@ const ComponentFactory = (props: Props) => {
 
       handleCopyComponent,
       handleDeleteComponent,
-      handleOnClickColorChange,
 
       handleSelectComponent,
     } = props;
@@ -34,7 +32,6 @@ const ComponentFactory = (props: Props) => {
         handleSelectComponent={handleSelectComponent}
         handleCopyComponent={handleCopyComponent}
         handleDeleteComponent={handleDeleteComponent}
-        handleOnClickColorChange={handleOnClickColorChange}
       />
     );
   }

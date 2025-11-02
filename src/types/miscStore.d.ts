@@ -27,3 +27,11 @@ export type ResizeStoreState = {
   setDimensions: (width: string, height: string) => void;
   setText: (text: string) => void;
 };
+
+//--------------------------------Color Change Store Types--------------------------------//
+export type ColorChangeStoreState = {
+  backgroundColor: string;
+  textColor: string;
+  setBackgroundColorColor: (color: string) => void;
+  setTextColor: (color: string) => void;
+};

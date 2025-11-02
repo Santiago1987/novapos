@@ -23,15 +23,12 @@ const Editor = () => {
   );
 
   const {
-    colorPickerVisible,
     layout,
     selectedComponentId,
     handleDragEnd,
     handleSelectComponent,
     handleCopyComponent,
     handleDeleteComponent,
-    handleOnClickColorChange,
-    handleOnColorChange,
   } = useEditor({ gridSize });
 
   const { background, components, lang } = layout;
@@ -43,7 +40,12 @@ const Editor = () => {
       sensors={sensors}
       modifiers={[snapToGrid, restrictToWindowEdges]}
     >
-      <div className={`w-screen h-screen relative`} style={{ background }}>
+      <div
+        className={`w-screen h-screen relative`}
+        style={{
+          background,
+        }}
+      >
         <div ref={setNodeRef}>
           {Object.keys(components).map((idc) => (
             <ComponentFactory
@@ -54,15 +56,10 @@ const Editor = () => {
               handleSelectComponent={handleSelectComponent}
               handleCopyComponent={handleCopyComponent}
               handleDeleteComponent={handleDeleteComponent}
-              handleOnClickColorChange={handleOnClickColorChange}
             />
           ))}
         </div>
-        <EditorMenu
-          colorPickerVisible={colorPickerVisible}
-          handleOnColorChange={handleOnColorChange}
-          lang={lang}
-        />
+        <EditorMenu lang={lang} />
         <ResizePreviewComponent />
       </div>
     </DndContext>

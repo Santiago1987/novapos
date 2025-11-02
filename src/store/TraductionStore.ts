@@ -44,6 +44,12 @@ const traductionsini: TranslationMap = {
   width: { EN: 'Width', ES: 'Ancho', BE: 'breedte' },
   height: { EN: 'Height', ES: 'Altura', BE: 'Hoogte' },
   close: { EN: 'Close', ES: 'Cerrar', BE: 'Dichtbij' },
+  textColor: { EN: 'Text Color', ES: 'Color de Texto', BE: 'Tekstkleur' },
+  backgroundColor: {
+    EN: 'Background Color',
+    ES: 'Color de Fondo',
+    BE: 'Achtergrondkleur',
+  },
 };
 
 export const useTraductionsStore = create<TraductionsStoreState>()(

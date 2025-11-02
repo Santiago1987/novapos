@@ -14,6 +14,7 @@ import { useTraductionsStore } from 'src/store/TraductionStore';
 import useTextChange from 'src/hooks/useTextChange';
 import { useLayoutStore } from 'src/store/LayoutStore';
 import useResize from 'src/hooks/useResize';
+import useColorChange from 'src/hooks/useColorChange';
 
 interface Props extends ButtonProps {
   button: Button;
@@ -22,11 +23,9 @@ interface Props extends ButtonProps {
 const ButtonComponent = ({
   button,
   isSelected,
-
   handleSelectComponent,
   handleCopyComponent,
   handleDeleteComponent,
-  handleOnClickColorChange,
 }: Props) => {
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -39,6 +38,7 @@ const ButtonComponent = ({
   const { t } = useTraductionsStore();
   const { handleOnClickTextChange } = useTextChange();
   const { handleResizeStart } = useResize();
+  const { handleOnClickColorChange } = useColorChange();
 
   const { properties } = button;
 

@@ -36,24 +36,29 @@ const NewButton = ({ handleIsDragging, lang }: Props) => {
   } as React.CSSProperties;
 
   return (
-    <div className="flex flex-col justify-evenly items-center w-11/12 h-[100px]">
-      <h2 className="p-1 text-xl">{t('NewButton', lang)}</h2>
-      <button
-        id="new-button"
-        className="flex flex-row items-center w-[150px] h-[50px] p-1 rounded-lg 
+    <div
+      className="flex flex-col justify-evenly items-center w-11/12 h-[100px] 
+                    border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50"
+    >
+      <div className="flex flex-col justify-evenly items-center w-11/12 h-[100px]">
+        <h2 className="p-1 text-xl">{t('NewButton', lang)}</h2>
+        <button
+          id="new-button"
+          className="flex flex-row items-center w-[150px] h-[50px] p-1 rounded-lg 
                         shadow-md shadow-gray-400/50 text-lg"
-        ref={setNodeRef}
-        {...listeners}
-        {...attributes}
-        style={style}
-      >
-        <div className="w-1/4 flex justify-center items-center">
-          <DragVariant style={{ width: '1.2em', height: '1.2em' }} />
-        </div>
-        <div className="w-3/4 flex justify-center items-center">
-          {t('dragMe', lang)}
-        </div>
-      </button>
+          ref={setNodeRef}
+          {...listeners}
+          {...attributes}
+          style={style}
+        >
+          <div className="w-1/4 flex justify-center items-center">
+            <DragVariant style={{ width: '1.2em', height: '1.2em' }} />
+          </div>
+          <div className="w-3/4 flex justify-center items-center">
+            {t('dragMe', lang)}
+          </div>
+        </button>
+      </div>
     </div>
   );
 };
