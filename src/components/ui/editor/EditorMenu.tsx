@@ -115,5 +115,3 @@ const EditorMenu = ({ lang }: Props) => {
 };
 
 export default EditorMenu;
-
-//test
