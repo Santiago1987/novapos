@@ -1,4 +1,4 @@
-import { type ButtonItem } from 'types/types';
+/*import { type ButtonItem } from 'types/types';
 import { type Themes } from 'types/types';
 
 export const getMainColors = (theme: Themes) => {
@@ -74,4 +74,4 @@ export const getButtonColors = ({
   const colorRes = theme ? colors[theme] : colors.default;
 
   return colorRes;
-};
+};*/

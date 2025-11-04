@@ -1,4 +1,4 @@
-import { getButtonColors } from '../../helpers/getButtonColors';
+/*import { getButtonColors } from '../../helpers/getButtonColors';
 import type { ButtonItem, Themes } from 'types/types';
 
 const items: ButtonItem[] = [
@@ -97,4 +97,4 @@ const SideMenu = ({ theme }: Props) => {
   );
 };
 
-export default SideMenu;
+export default SideMenu;*/

@@ -1,4 +1,4 @@
-import type { Themes } from 'types/types';
+/*import type { Themes } from 'types/types';
 import Clock from './Clock';
 import { useState } from 'react';
 type Props = {
@@ -47,4 +47,4 @@ const Miselaneos = ({ theme, onChangeTheme }: Props) => {
   );
 };
 
-export default Miselaneos;
+export default Miselaneos;*/

@@ -1,4 +1,4 @@
-import type { Themes } from 'types/types';
+/*import type { Themes } from 'types/types';
 
 type Props = {
   salesData: {
@@ -87,4 +87,4 @@ const SalesTable = ({ selesData, theme }: Props) => {
   );
 };
 
-export default SalesTable;
+export default SalesTable;*/

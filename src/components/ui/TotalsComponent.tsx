@@ -1,4 +1,4 @@
-import type { Themes } from 'types/types';
+/*import type { Themes } from 'types/types';
 
 type Props = {
   theme: Themes;
@@ -106,4 +106,4 @@ const TotalsComponent = ({ theme }: Props) => {
   );
 };
 
-export default TotalsComponent;
+export default TotalsComponent;*/

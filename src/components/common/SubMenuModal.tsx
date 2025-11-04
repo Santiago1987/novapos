@@ -1,4 +1,4 @@
-import type { ButtonItem } from 'types/types'; // Adjust the path as needed
+/*import type { ButtonItem } from 'types/types'; // Adjust the path as needed
 import { motion } from 'framer-motion';
 import { type Themes } from 'types/types';
 import ButtonsGrid from './ButtonsGrid';
@@ -67,4 +67,4 @@ const SubMenuModal = ({ isOpen, buttons, title, theme, onClose }: Props) => {
   );
 };
 
-export default SubMenuModal;
+export default SubMenuModal;*/

@@ -21,9 +21,11 @@ const ColorPicker = () => {
       '#ffffff'
     : '#ffffff';
 
-  const textValue = selectedComponentId
+  const textValue = '#ffffff';
+
+  /*const textValue = selectedComponentId
     ? layout.components[selectedComponentId]?.properties.textColor || '#000000'
-    : '#000000';
+    : '#000000';*/
 
   return (
     <AnimatePresence>
