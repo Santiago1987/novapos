@@ -1,4 +1,4 @@
-import type { Themes } from 'types/types';
+/*import type { Themes } from 'types/types';
 import { useState, useEffect } from 'react';
 
 type Props = {
@@ -92,4 +92,4 @@ const MainInput = ({ textLabel, theme }: Props) => {
   );
 };
 
-export default MainInput;
+export default MainInput;*/

@@ -1,4 +1,4 @@
-import type { Themes } from 'types/types';
+/*import type { Themes } from 'types/types';
 import { useState, useEffect } from 'react';
 
 type Props = {
@@ -46,4 +46,4 @@ const Clock = ({ theme }: Props) => {
   );
 };
 
-export default Clock;
+export default Clock;*/

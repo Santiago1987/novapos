@@ -1,4 +1,4 @@
-import { useState } from 'react';
+/*import { useState } from 'react';
 import { type ButtonItem, type SubMenu } from 'types/types';
 import { type Themes } from 'types/types';
 import SubMenuModal from '../common/SubMenuModal';
@@ -54,4 +54,4 @@ const BottomMenu = ({ buttons, theme }: Props) => {
   );
 };
 
-export default BottomMenu;
+export default BottomMenu;*/

@@ -1,5 +1,5 @@
 import { devtools, persist } from 'zustand/middleware';
-import { type LayoutState, type LayoutStoreState } from '../types/layoutStore';
+import { type LayoutState, type LayoutStoreState } from 'src/types/layoutStore';
 import { create } from 'zustand';
 import type { Layout, SalesTable } from 'src/types/ui.types';
 import { produce } from 'immer';
