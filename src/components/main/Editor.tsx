@@ -11,6 +11,7 @@ import ComponentFactory from 'src/components/ui/editor/ComponentFactory';
 import EditorMenu from 'src/components/ui/editor/EditorMenu';
 import useEditor from 'src/hooks/useEditor';
 import ResizePreviewComponent from '../ui/editor/ResizePreviewComponent';
+import { useLayoutStore } from 'src/store/LayoutStore';
 
 const Editor = () => {
   const gridSize = 5;
@@ -21,6 +22,7 @@ const Editor = () => {
     }),
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
+  const isEditing = useLayoutStore((state) => state.isEditing);
 
   const {
     layout,
@@ -35,34 +37,36 @@ const Editor = () => {
   const snapToGrid = createSnapModifier(gridSize);
 
   return (
-    <DndContext
-      onDragEnd={handleDragEnd}
-      sensors={sensors}
-      modifiers={[snapToGrid, restrictToWindowEdges]}
-    >
-      <div
-        className={`w-screen h-screen relative`}
-        style={{
-          background,
-        }}
+    isEditing && (
+      <DndContext
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+        modifiers={[snapToGrid, restrictToWindowEdges]}
       >
-        <div ref={setNodeRef}>
-          {Object.keys(components).map((idc) => (
-            <ComponentFactory
-              key={idc}
-              component={components[idc]}
-              lang={lang}
-              isSelected={selectedComponentId === idc}
-              handleSelectComponent={handleSelectComponent}
-              handleCopyComponent={handleCopyComponent}
-              handleDeleteComponent={handleDeleteComponent}
-            />
-          ))}
+        <div
+          className={`w-screen h-screen relative`}
+          style={{
+            background,
+          }}
+        >
+          <div ref={setNodeRef}>
+            {Object.keys(components).map((idc) => (
+              <ComponentFactory
+                key={idc}
+                component={components[idc]}
+                lang={lang}
+                isSelected={selectedComponentId === idc}
+                handleSelectComponent={handleSelectComponent}
+                handleCopyComponent={handleCopyComponent}
+                handleDeleteComponent={handleDeleteComponent}
+              />
+            ))}
+          </div>
+          <EditorMenu lang={lang} />
+          <ResizePreviewComponent />
         </div>
-        <EditorMenu lang={lang} />
-        <ResizePreviewComponent />
-      </div>
-    </DndContext>
+      </DndContext>
+    )
   );
 };
 
