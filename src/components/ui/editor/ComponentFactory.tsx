@@ -1,7 +1,7 @@
-import type { ComponentUnion } from 'src/types/ui.types';
-import ButtonComponent from './ButtonComponent';
-import type { ButtonProps } from 'src/types/componentProps';
-import type { Langs } from 'src/types/constTypes';
+import type { ComponentUnion } from '@/types/ui.types';
+import ButtonComponent from '@/components/ui/editor/ButtonComponent';
+import type { ButtonProps } from '@/types/componentProps';
+import type { Langs } from '@/types/constTypes';
 
 interface Props extends ButtonProps {
   component: ComponentUnion;

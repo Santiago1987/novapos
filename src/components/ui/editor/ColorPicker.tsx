@@ -1,7 +1,7 @@
-import { useLayoutStore } from '../../../store/LayoutStore';
+import { useLayoutStore } from '@/store/LayoutStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import useColorChange from '../../../hooks/useColorChange';
-import { useTraductionsStore } from 'src/store/TraductionStore';
+import useColorChange from '@/hooks/useColorChange';
+import { useTraductionsStore } from '@/store/TraductionStore';
 
 const ColorPicker = () => {
   const { layout, selectedComponentId } = useLayoutStore();

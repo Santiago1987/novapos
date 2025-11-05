@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import { useLayoutStore } from 'src/store/LayoutStore';
-import { useResizeStore } from 'src/store/ResizeStore';
+import { useLayoutStore } from '@/store/LayoutStore';
+import { useResizeStore } from '@/store/ResizeStore';
 
 const useResize = () => {
   const {

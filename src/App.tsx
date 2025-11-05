@@ -1,6 +1,6 @@
-import Editor from './components/main/Editor';
-import './App.css';
-import CustomerView from './components/main/CustomerView';
+import Editor from '@/components/main/Editor';
+import '@/App.css';
+import CustomerView from '@/components/main/CustomerView';
 
 function App() {
   return (

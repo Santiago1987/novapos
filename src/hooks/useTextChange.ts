@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Langs } from 'src/types/constTypes';
-import { useLayoutStore } from 'src/store/LayoutStore';
-import { useTraductionsStore } from 'src/store/TraductionStore';
+import { Langs } from '@/types/constTypes';
+import { useLayoutStore } from '@/store/LayoutStore';
+import { useTraductionsStore } from '@/store/TraductionStore';
 
 type LangsType = keyof typeof Langs;
 

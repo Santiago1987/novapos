@@ -1,5 +1,5 @@
 import { useDraggable } from '@dnd-kit/core';
-import type { Button } from 'src/types/ui.types';
+import type { Button } from '@/types/ui.types';
 import {
   ContentCopy,
   Delete,
@@ -7,14 +7,14 @@ import {
   Function,
   FormatColorFill,
   Resize,
-} from 'src/components/icons/SVGIcons';
+} from '@/components/icons/SVGIcons';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ButtonProps } from 'src/types/componentProps';
-import { useTraductionsStore } from 'src/store/TraductionStore';
-import useTextChange from 'src/hooks/useTextChange';
-import { useLayoutStore } from 'src/store/LayoutStore';
-import useResize from 'src/hooks/useResize';
-import useColorChange from 'src/hooks/useColorChange';
+import type { ButtonProps } from '@/types/componentProps';
+import { useTraductionsStore } from '@/store/TraductionStore';
+import useTextChange from '@/hooks/useTextChange';
+import { useLayoutStore } from '@/store/LayoutStore';
+import useResize from '@/hooks/useResize';
+import useColorChange from '@/hooks/useColorChange';
 
 interface Props extends ButtonProps {
   button: Button;

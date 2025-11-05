@@ -1,5 +1,5 @@
-import { useLayoutStore } from 'src/store/LayoutStore';
-import { useTraductionsStore } from 'src/store/TraductionStore';
+import { useLayoutStore } from '@/store/LayoutStore';
+import { useTraductionsStore } from '@/store/TraductionStore';
 
 const BodyBackgroundColorPicker = () => {
   const {

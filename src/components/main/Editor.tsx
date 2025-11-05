@@ -7,11 +7,11 @@ import {
   PointerSensor,
   useSensors,
 } from '@dnd-kit/core';
-import ComponentFactory from 'src/components/ui/editor/ComponentFactory';
-import EditorMenu from 'src/components/ui/editor/EditorMenu';
-import useEditor from 'src/hooks/useEditor';
-import ResizePreviewComponent from '../ui/editor/ResizePreviewComponent';
-import { useLayoutStore } from 'src/store/LayoutStore';
+import ComponentFactory from '@/components/ui/editor/ComponentFactory';
+import EditorMenu from '@/components/ui/editor/EditorMenu';
+import useEditor from '@/hooks/useEditor';
+import ResizePreviewComponent from '@/components/ui/editor/ResizePreviewComponent';
+import { useLayoutStore } from '@/store/LayoutStore';
 
 const Editor = () => {
   const gridSize = 5;

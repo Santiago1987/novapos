@@ -1,4 +1,4 @@
-import { useLayoutStore } from 'src/store/LayoutStore';
+import { useLayoutStore } from '@/store/LayoutStore';
 
 const useColorChange = () => {
   const {

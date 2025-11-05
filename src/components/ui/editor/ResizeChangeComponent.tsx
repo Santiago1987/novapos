@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useLayoutStore } from 'src/store/LayoutStore';
-import { useTraductionsStore } from 'src/store/TraductionStore';
-import useResize from 'src/hooks/useResize';
+import { useLayoutStore } from '@/store/LayoutStore';
+import { useTraductionsStore } from '@/store/TraductionStore';
+import useResize from '@/hooks/useResize';
 
 const ResizeChangeComponent = () => {
   const { t } = useTraductionsStore();
