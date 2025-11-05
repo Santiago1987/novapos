@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Langs } from 'src/types/constTypes';
-import { useTraductionsStore } from 'src/store/TraductionStore';
-import useTextChange from 'src/hooks/useTextChange';
-import { useLayoutStore } from 'src/store/LayoutStore';
+import { Langs } from '@/types/constTypes';
+import { useTraductionsStore } from '@/store/TraductionStore';
+import useTextChange from '@/hooks/useTextChange';
+import { useLayoutStore } from '@/store/LayoutStore';
 
 const TextChangeComponent = () => {
   const { t } = useTraductionsStore();

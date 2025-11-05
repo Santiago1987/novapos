@@ -23,7 +23,7 @@
     "noImplicitReturns": true,
     "baseUrl": ".",
     "paths": {
-      "src/*":["./src/*"]
+      "@/*":["./src/*"]
     },
   },
   "include": ["vite.config.ts","vitest.config.ts"],

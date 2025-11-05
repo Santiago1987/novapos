@@ -1,6 +1,6 @@
 import { devtools, persist } from 'zustand/middleware';
 import { create } from 'zustand';
-import type { ResizeStoreState } from 'src/types/miscStore';
+import type { ResizeStoreState } from '@/types/miscStore';
 import { produce } from 'immer';
 
 const initialVariables: Pick<

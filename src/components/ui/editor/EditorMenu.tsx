@@ -1,14 +1,14 @@
-import { useLayoutStore } from 'src/store/LayoutStore';
-import NewButton from './NewButton';
+import { useLayoutStore } from '@/store/LayoutStore';
+import NewButton from '@/components/ui/editor/NewButton';
 import { useState } from 'react';
-import ColorPicker from './ColorPicker';
-import { DragVariant } from 'src/components/icons/SVGIcons';
+import ColorPicker from '@/components/ui/editor/ColorPicker';
+import { DragVariant } from '@/components/icons/SVGIcons';
 import { useDraggable } from '@dnd-kit/core';
-import BodyBackgroundColorPicker from './BodyBackgroundColorPicker';
-import ResizeChangeComponent from './ResizeChangeComponent';
-import TextChangeComponent from './TextChangeComponent';
-import { Langs } from 'src/types/constTypes';
-import { useTraductionsStore } from 'src/store/TraductionStore';
+import BodyBackgroundColorPicker from '@/components/ui/editor/BodyBackgroundColorPicker';
+import ResizeChangeComponent from '@/components/ui/editor/ResizeChangeComponent';
+import TextChangeComponent from '@/components/ui/editor/TextChangeComponent';
+import { Langs } from '@/types/constTypes';
+import { useTraductionsStore } from '@/store/TraductionStore';
 
 type Props = {
   lang: keyof typeof Langs;

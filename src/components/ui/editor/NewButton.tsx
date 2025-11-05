@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { DragVariant } from '../../icons/SVGIcons';
+import { DragVariant } from '@/components/icons/SVGIcons';
 import { useDraggable } from '@dnd-kit/core';
-import { useTraductionsStore } from 'src/store/TraductionStore';
-import type { Langs } from 'src/types/constTypes';
+import { useTraductionsStore } from '@/store/TraductionStore';
+import type { Langs } from '@/types/constTypes';
 
 type Props = {
   handleIsDragging: (dragging: boolean) => void;

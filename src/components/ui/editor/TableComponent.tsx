@@ -1,4 +1,4 @@
-import type { SalesTable, PaymentsTable } from 'src/types/ui.types';
+import type { SalesTable, PaymentsTable } from '@/types/ui.types';
 type Props = {
   component: SalesTable | PaymentsTable;
 };

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useLayoutStore } from 'src/store/LayoutStore';
-import useResize from 'src/hooks/useResize';
+import { useLayoutStore } from '@/store/LayoutStore';
+import useResize from '@/hooks/useResize';
 
 const ResizePreviewComponent = () => {
   const {

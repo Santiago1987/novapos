@@ -1,8 +1,8 @@
 import type { DragEndEvent } from '@dnd-kit/core';
 import { useState } from 'react';
-import { useLayoutStore } from 'src/store/LayoutStore';
+import { useLayoutStore } from '@/store/LayoutStore';
 import { v4 as uuidv4 } from 'uuid';
-import { useTraductionsStore } from 'src/store/TraductionStore';
+import { useTraductionsStore } from '@/store/TraductionStore';
 
 type Props = {
   gridSize: number;

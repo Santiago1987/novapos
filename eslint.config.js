@@ -19,5 +19,17 @@ export default tseslint.config([
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    rules: {
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        { 'ts': 'never', 'tsx': 'never' }
+      ]
+    },
+    settings: {
+      'import/resolver': {
+        'typescript': {}
+      }
+    }
   },
 ])

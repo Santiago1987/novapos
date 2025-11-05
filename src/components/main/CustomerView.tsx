@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useCustomerViewData from 'src/services/customerViewData';
+import useCustomerViewData from '@/services/customerViewData';
 
 const CustomerView = () => {
   const { data, openConnection, closeConnection } = useCustomerViewData();

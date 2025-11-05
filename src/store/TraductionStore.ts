@@ -1,8 +1,8 @@
 import { devtools, persist } from 'zustand/middleware';
 import { create } from 'zustand';
-import { Langs } from 'src/types/constTypes';
-import type { TraductionsStoreState } from 'src/types/miscStore';
-import type { TranslationMap } from 'src/types/miscStore';
+import { Langs } from '@/types/constTypes';
+import type { TraductionsStoreState } from '@/types/miscStore';
+import type { TranslationMap } from '@/types/miscStore';
 import { produce } from 'immer';
 
 const traductionsini: TranslationMap = {
