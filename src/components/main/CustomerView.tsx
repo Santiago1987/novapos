@@ -1,15 +1,10 @@
-import { useEffect } from 'react';
-import useCustomerViewData from '@/services/customerViewData';
-import CustomerSalesTable from '../ui/customerView/customerSalesTable';
+import CustomerSalesTable from '@/components/ui/customerView/CustomerSalesTable';
+import useSalesData from '@/hooks/useSalesData';
 
 const CustomerView = () => {
-  const { data, openConnection, closeConnection } = useCustomerViewData();
+  const [data] = useSalesData(2000);
 
-  useEffect(() => {
-    openConnection();
-
-    return closeConnection();
-  }, []);
+  console.log(data);
 
   return (
     <>
