@@ -1,5 +1,5 @@
-[
-  {
+{
+  "data": {
     "1": {
       "AddCost": "0.000000",
       "AddCost%": null,
@@ -152,5 +152,11 @@
     "totalnocumulrec": "0.00",
     "totalnopro": 23.5,
     "totemptamt": 10.0
+  },
+  "status": {
+    "code": 0,
+    "message": "Success",
+    "ticketEmpty": false,
+    "selectedLine": null
   }
-]
+}

@@ -5,7 +5,7 @@ import CustomerView from '@/components/main/CustomerView';
 function App() {
   return (
     <>
-      <main className="w-full h-full">
+      <main className="w-screen h-screen">
         <CustomerView />
         <Editor />
       </main>
