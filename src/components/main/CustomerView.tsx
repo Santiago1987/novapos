@@ -1,19 +1,17 @@
-import { useEffect } from 'react';
-import useCustomerViewData from '@/services/customerViewData';
+import CustomerSalesTable from '@/components/ui/customerView/CustomerSalesTable';
+import useSalesData from '@/hooks/useSalesData';
 
 const CustomerView = () => {
-  const { data, openConnection, closeConnection } = useCustomerViewData();
+  const [data] = useSalesData(2000);
 
-  useEffect(() => {
-    openConnection();
-
-    return closeConnection();
-  }, []);
+  console.log('aaa', data.data);
 
   return (
     <>
-      <h1>Customer View</h1>
-      <p>Data: {data}</p>
+      <div className="w-full h-full bg-gradient-to-r from-amber-500 to-pink-500 flex flex-col items-center justify-center">
+        <h1>Customer View</h1>
+        <CustomerSalesTable tickLns={data?.data.ticket?.lines || []} />
+      </div>
     </>
   );
 };

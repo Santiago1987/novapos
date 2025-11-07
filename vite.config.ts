@@ -13,4 +13,18 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://pos-srvrpcg.dvlp.local:57772',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/sales': {
+        target: 'http://pos-srvrpcg.dvlp.local:57772',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });

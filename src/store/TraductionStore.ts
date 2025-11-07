@@ -50,6 +50,10 @@ const traductionsini: TranslationMap = {
     ES: 'Color de Fondo',
     BE: 'Achtergrondkleur',
   },
+  quantity: { EN: 'Quantity', ES: 'Cantidad', BE: 'Hoeveelheid' },
+  description: { EN: 'Description', ES: 'Descripción', BE: 'Beschrijving' },
+  unpr: { EN: 'Unit Price', ES: 'Precio Unitario', BE: 'Stukprijs' },
+  value: { EN: 'Value', ES: 'Valor', BE: 'Waarde' },
 };
 
 export const useTraductionsStore = create<TraductionsStoreState>()(
