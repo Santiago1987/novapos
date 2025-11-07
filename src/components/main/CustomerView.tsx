@@ -4,7 +4,7 @@ import useSalesData from '@/hooks/useSalesData';
 const CustomerView = () => {
   const [data] = useSalesData(2000);
 
-  console.log('aaa', data.data.ticket);
+  console.log('aaa', data.data);
 
   return (
     <>
