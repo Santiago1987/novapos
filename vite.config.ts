@@ -24,34 +24,6 @@ export default defineConfig({
         target: 'http://pos-srvrpcg.dvlp.local:57772',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/sales/, '/api'),
-        configure: (proxy, _options) => {
-          proxy.on('proxyReq', (proxyReq, req) => {
-            // Inyectamos los headers EXACTOS que espera IRIS
-            //const user = 'sdp';
-            //const pass = 'dJ0cJq';
-            const token = req.headers['sdp_token'];
-
-            if (token) {
-              proxyReq.setHeader('sdp_token', token);
-            } else {
-              console.warn('⚠️ No se envió token en x-auth-token');
-            }
-          });
-
-          // Debug extra para errores del proxy
-          proxy.on('error', (err) => {
-            console.error('❌ Error en proxy Vite:', err);
-          });
-
-          proxy.on('proxyRes', (proxyRes, req) => {
-            console.log(
-              '✅ Respuesta del backend IRIS:',
-              proxyRes.statusCode,
-              req.url
-            );
-          });
-        },
       },
     },
   },

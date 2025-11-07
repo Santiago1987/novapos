@@ -1,9 +1,10 @@
 import { useLayoutStore } from '@/store/LayoutStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 
-const CustomerSalesTable = () => {
+const CustomerSalesTable = ({ tickLns }: { tickLns: any }) => {
   const { t } = useTraductionsStore();
   const lang = useLayoutStore((state) => state.layout.lang);
+  const lines = Object.keys(tickLns) || [];
   return (
     <>
       <div className="border bg-white w-8/10 h-8/10 rounded-lg overflow-y-auto">
@@ -17,22 +18,16 @@ const CustomerSalesTable = () => {
             </tr>
           </thead>
           <tbody className="text-lg">
-            <tr className="border-b border-gray-200">
-              <td className="p-1 text-end w-2/10">2</td>
-              <td className="p-1 text-start w-4/10 overflow-hidden text-ellipsis text-nowrap">
-                Papas fritas
-              </td>
-              <td className="p-1 text-end w-2/10">100.00</td>
-              <td className="p-1 text-end w-2/10">200.00</td>
-            </tr>
-            <tr className="border-b border-gray-200">
-              <td className="p-1 text-end w-2/10">10</td>
-              <td className="p-1 text-start w-4/10 overflow-hidden text-ellipsis">
-                Coca cola 2 LTS
-              </td>
-              <td className="p-1 text-end w-2/10">100.00</td>
-              <td className="p-1 text-end w-2/10">200.00</td>
-            </tr>
+            {lines.map((ln) => (
+              <tr key={ln} className="border-b border-gray-200">
+                <td className="p-1 text-end w-2/10">{tickLns[ln].Count}</td>
+                <td className="p-1 text-start w-4/10 overflow-hidden text-ellipsis text-nowrap">
+                  {tickLns[ln].Descr}
+                </td>
+                <td className="p-1 text-end w-2/10">{tickLns[ln].UnPrice}</td>
+                <td className="p-1 text-end w-2/10">{tickLns[ln].value}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

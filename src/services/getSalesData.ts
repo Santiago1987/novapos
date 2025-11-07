@@ -14,7 +14,7 @@ const getSalesData = (token: string) => {
     .get(`/api/pos/sales/data`, {
       headers: {
         'Content-Type': 'application/json',
-        sdp_token: token,
+        SDP_TOKEN: token,
       },
     })
     .then((res) => res.data);
