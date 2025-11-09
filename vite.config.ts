@@ -5,6 +5,7 @@ import path from 'node:path';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  base: './',
   test: {
     environment: 'happy-dom',
   },
