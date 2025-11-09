@@ -1,122 +1,61 @@
 export interface SalesDataStoreState {
-  data: Data;
+  ticket: Ticket;
   status: Status;
 }
 
-export interface TicketLines {
-  [key: string]: TicketLine | {};
-}
-
-export interface Data extends TicketLines {
-  Cashc: number;
-  CustNoPoint: number;
-  Custlng: number;
-  Customc: string;
-  Date: string;
-  DiscP: number;
-  EOID: string;
-  FID: string;
-  Hor: number;
-  LicPlt: any;
-  Opratc1: number;
-  Paid: number;
-  PayAmt: PayAmt;
-  PayCnr: PayCnr;
-  PayCnt: PayCnt;
-  PayCur: PayCur;
-  PayDate: PayDate;
-  PayDet: PayDet;
-  PayKind: PayKind;
-  PayRate: PayRate;
-  Points: string;
-  PriceBC: any;
-  QRCust: any;
-  RetChg: any;
-  RetDet: any;
-  Return: number;
-  RndDiff: any;
-  SKind: number;
-  ScaDate: string;
-  ScaTime: string;
-  Shopc: number;
-  Status: number;
-  Time: string;
-  Total1: number;
-  Total2: number;
-  Totalx: number;
-  Vatnr: string;
-  Vatt: any;
-  advance: string;
-  curc: string;
-  custblock: any;
-  custptn: string;
-  paycdispty: Paycdispty;
-  paycost: Paycost;
-  paycoupon: Paycoupon;
-  paycouppay: Paycouppay;
-  paygrp: Paygrp;
-  payintill: Payintill;
-  payjoin: Payjoin;
-  payminamt: Payminamt;
-  paynoret: Paynoret;
-  payonly: Payonly;
-  paypayterm: Paypayterm;
-  payround: Payround;
-  paysub: Paysub;
-  paytill: Paytill;
-  paytype: Paytype;
-  totalnocumulrec: string;
-  totalnopro: number;
-  totemptamt: number;
-}
-
-export interface TicketLine {
-  AddCost: number;
-  'AddCost%': number;
-  Artc: string;
-  AskCnt: boolean | null;
-  AskSalm: boolean | null;
-  BalArt: boolean | null;
-  Barcode: string;
-  Combi: boolean | null;
-  Count: number;
-  DisCoup: boolean | null;
-  EmptAmt: number | null;
-  ExpDat: string | null;
-  ExtraTx: string | null;
-  Lot: string | null;
-  LotSup: string | null;
-  NoPrChg: boolean;
-  NoPromo: boolean;
-  NoVisit: boolean;
-  PackW: any;
-  Packc: any;
-  Promo: any;
-  QRCode: any;
-  Quest: any;
-  RPrice: any;
-  RQty: any;
-  StoKUn: number;
-  SuPrice: number;
-  Text: Record<string, string>;
-  Track: any;
-  Type: string;
-  UnPrice: number;
-  Unit: any;
-  UntPack: any;
-  UnxArt: any;
-  Vatc: any;
-  Vatt: number;
-  value: number;
-  valued: number;
-  valuex: number;
-  xaskcnt: any;
-  xcount: number;
-  xunprice: number;
-}
+export type Instance = 'initial' | 'proccess' | 'finishing' | 'empty';
 
 export interface Status {
-  code: number;
-  message: string;
-  ticketEmpty: boolean;
+  emptyticket: boolean;
+  instance: Instance;
+  selectedLine: number | null;
+}
+
+export interface TicketHeader {
+  Custlng: number | null;
+  DiscP: string | null;
+  Operator: string | null;
+  Paid: string | null;
+  Return: string | null;
+  RndDiff: string | null;
+  Total1: string | null;
+  Total2: string | null;
+  Totalx: string | null;
+  advance: string | null;
+  totalnocumulrec: string | null;
+  totalnopro: string | null;
+  totemptamt: string | null;
+}
+
+export interface TicketLines {
+  AddCost: string | null;
+  Artc: string | null;
+  Barcode: string | null;
+  Count: number | null;
+  EmptAmt: number | null;
+  Promo: string | null;
+  StoKUn: number | null;
+  SuPrice: string | null;
+  Descr: string | null;
+  Text: Record<string, string> | null;
+  Type: string | null;
+  UnPrice: string | null;
+  Vatc: string | null;
+  Vatt: string | null;
+  value: string | null;
+  valued: string | null;
+  valuex: string | null;
+}
+
+export interface Payment {
+  PayAmt: string | null;
+  PayCur: string | null;
+  PayDate: string | null;
+  PayKind: string | null;
+}
+
+export interface Ticket {
+  header: TicketHeader;
+  lines: Record<string, TicketLines>;
+  payments: Payment[];
 }
