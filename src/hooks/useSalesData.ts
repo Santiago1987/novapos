@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import getCacheToken from '@/services/getCacheToken';
 import getSalesData from '@/services/getSalesData';
+import type { SalesDataStoreState } from '@/types/salesDataSore';
 
 const useSalesData = (pollInterval: number = 2000) => {
-  const [data, setData] = useState<any>('');
+  const [data, setData] = useState<SalesDataStoreState>();
   const [error, setError] = useState<string | null>(null);
 
   const tokenRef = useRef<string | null>(null);
@@ -12,7 +13,7 @@ const useSalesData = (pollInterval: number = 2000) => {
   const refreshToken = async () => {
     try {
       const restoken = await getCacheToken();
-
+      console.log('restoken', restoken);
       tokenRef.current = restoken;
     } catch (err) {
       setError('error on token: ' + err);
@@ -28,7 +29,10 @@ const useSalesData = (pollInterval: number = 2000) => {
     if (!tokenRef.current) return;
 
     try {
-      const result = await getSalesData(tokenRef.current);
+      const result = (await getSalesData(
+        tokenRef.current
+      )) as SalesDataStoreState;
+      console.log('result', result);
       setData(result);
       setError(null);
     } catch (err) {
@@ -49,7 +53,7 @@ const useSalesData = (pollInterval: number = 2000) => {
     };
   }, [pollInterval]);
 
-  return [data, error];
+  return { data, error };
 };
 
 export default useSalesData;
