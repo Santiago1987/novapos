@@ -3,7 +3,8 @@ import axios from 'axios';
 const serverURL = import.meta.env.VITE_SERVER_URL_COLRYUT;
 const cacheUser = import.meta.env.VITE_CACHE_USR;
 const cachePSW = import.meta.env.VITE_CACHE_PSW;
-const getCacheToken = () => {
+
+/*const getCacheToken = () => {
   if (!serverURL) {
     throw new Error('no server URL');
   }
@@ -20,6 +21,14 @@ const getCacheToken = () => {
       const { data } = res;
       return data.data.token.access;
     });
+};*/
+
+const getCacheToken = (): Promise<string> => {
+  if (!serverURL) {
+    throw new Error('no server URL');
+  }
+
+  return new Promise((resolve) => resolve('pepito'));
 };
 
 export default getCacheToken;

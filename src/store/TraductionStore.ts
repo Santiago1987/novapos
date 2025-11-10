@@ -1,4 +1,4 @@
-import { devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { create } from 'zustand';
 import { Langs } from '@/types/constTypes';
 import type { TraductionsStoreState } from '@/types/miscStore';
@@ -54,44 +54,55 @@ const traductionsini: TranslationMap = {
   description: { EN: 'Description', ES: 'Descripción', BE: 'Beschrijving' },
   unpr: { EN: 'Unit Price', ES: 'Precio Unitario', BE: 'Stukprijs' },
   value: { EN: 'Value', ES: 'Valor', BE: 'Waarde' },
+  payment_method: {
+    EN: 'Payment Method',
+    ES: 'Metodo de Pago',
+    BE: 'Betaallwijze',
+  },
+  amount: { EN: 'Amount', ES: 'Monto', BE: 'Aanta' },
+  total: { EN: 'Total', ES: 'Total', BE: 'Totaal' },
+  change: { EN: 'Change', ES: 'Cambio', BE: 'Teruggave' },
+  rounding: {
+    EN: 'Rounding total',
+    ES: 'Redondeo total',
+    BE: 'Afgerond totaal',
+  },
 };
 
 export const useTraductionsStore = create<TraductionsStoreState>()(
   devtools(
-    persist(
-      (set, get) => ({
-        traductionsList: traductionsini,
-        t: (key?: string, lang?: keyof typeof Langs): string => {
-          const defaultLang = 'EN' as keyof typeof Langs;
-          const resolvedLang = lang ?? defaultLang;
+    (set, get) => ({
+      traductionsList: traductionsini,
+      t: (key?: string, lang?: keyof typeof Langs): string => {
+        const defaultLang = 'EN' as keyof typeof Langs;
+        const resolvedLang = lang ?? defaultLang;
 
-          const { traductionsList } = get();
+        const { traductionsList } = get();
 
-          if (!key || !traductionsList[key]) {
-            return traductionsList['default'][resolvedLang] ?? '';
-          }
-          return traductionsList[key][resolvedLang] ?? '';
-        },
-        updateTraduction: (id, text, lang) => {
-          set(
-            produce((state: TraductionsStoreState) => {
-              if (!state.traductionsList[id]) {
-                state.traductionsList[id] = { EN: '' };
-              }
+        if (!key || !traductionsList[key]) {
+          return traductionsList['default'][resolvedLang] ?? '';
+        }
+        return traductionsList[key][resolvedLang] ?? '';
+      },
+      updateTraduction: (id, text, lang) => {
+        set(
+          produce((state: TraductionsStoreState) => {
+            if (!state.traductionsList[id]) {
+              state.traductionsList[id] = { EN: '' };
+            }
 
-              state.traductionsList[id][lang] = text;
-            })
-          );
-        },
-        removeTraduction: (id) => {
-          set(
-            produce((state: TraductionsStoreState) => {
-              delete state.traductionsList[id];
-            })
-          );
-        },
-      }),
-      { name: 'traductions-storage' }
-    )
+            state.traductionsList[id][lang] = text;
+          })
+        );
+      },
+      removeTraduction: (id) => {
+        set(
+          produce((state: TraductionsStoreState) => {
+            delete state.traductionsList[id];
+          })
+        );
+      },
+    }),
+    { name: 'traductions-storage' }
   )
 );

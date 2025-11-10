@@ -1,8 +1,9 @@
 import axios from 'axios';
+import cRec from '../../cRec.json';
 
 const serverURL = import.meta.env.VITE_SERVER_URL_COLRYUT;
 
-const getSalesData = (token: string) => {
+/*const getSalesData = (token: string) => {
   if (!serverURL) {
     throw new Error('no server URL');
   }
@@ -18,6 +19,17 @@ const getSalesData = (token: string) => {
       },
     })
     .then((res) => res.data);
+};*/
+
+const getSalesData = (token: string) => {
+  if (!serverURL) {
+    throw new Error('no server URL');
+  }
+  if (!token) {
+    throw new Error('no token');
+  }
+
+  return new Promise((resolve) => resolve(cRec));
 };
 
 export default getSalesData;
