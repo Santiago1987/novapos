@@ -13,7 +13,7 @@ const CustomerSalesTable = ({ tickLns }: Props) => {
 
   return (
     <>
-      <div className="border bg-white w-8/10 h-8/10 rounded-lg overflow-y-auto">
+      <div className="border bg-white w-full h-full rounded-lg overflow-y-auto">
         <table className="w-full border-collapse border-0 table-fixed">
           <thead className="font-bold text-xl text-white bg-blue-950">
             <tr className="sticky top-0 z-10 h-15">
