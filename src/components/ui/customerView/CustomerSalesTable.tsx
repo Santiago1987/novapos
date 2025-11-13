@@ -12,7 +12,7 @@ const CustomerSalesTable = ({ tickLns }: Props) => {
   const linesEntries = Object.entries(tickLns || {});
 
   return (
-    <>
+    <div className="w-full h-full pt-1 pr-1">
       <div className="border bg-white w-full h-full rounded-lg overflow-y-auto">
         <table className="w-full border-collapse border-0 table-fixed">
           <thead className="font-bold text-xl text-white bg-blue-950">
@@ -39,7 +39,7 @@ const CustomerSalesTable = ({ tickLns }: Props) => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 
