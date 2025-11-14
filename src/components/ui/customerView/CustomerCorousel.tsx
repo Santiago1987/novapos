@@ -27,7 +27,7 @@ const CustomerCorousel = () => {
   };
 
   return (
-    <div className="relative pt-1 pl-1 w-full h-full max-w-4xl mx-auto overflow-hidden">
+    <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400">
       <AnimatePresence initial={false} custom={1}>
         <motion.img
           key={currectIndex}

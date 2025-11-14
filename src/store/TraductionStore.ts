@@ -67,6 +67,8 @@ const traductionsini: TranslationMap = {
     ES: 'Redondeo total',
     BE: 'Afgerond totaal',
   },
+  operator: { EN: 'Operator', ES: 'Operador', BE: 'Operator' },
+  welcome: { EN: 'Welcome', ES: 'Bienvenido', BE: 'Welkom' },
 };
 
 export const useTraductionsStore = create<TraductionsStoreState>()(

@@ -10,7 +10,7 @@ const CustomerTotals = ({ data }: Props) => {
   const { t } = useTraductionsStore();
   const lang = useLayoutStore((state) => state.layout.lang);
   return (
-    <div className="flex flex-col max-w-sm min-h-[200px]">
+    <div className="flex flex-col w-[400px] h-[200px] shadow-lg shadow-gray-400">
       <div className="flex flex-row flex-1 items-center bg-blue-950 text-white rounded-t-lg">
         <label className="p-1 font-bold w-1/2 text-3xl">
           {t('total', lang)}
