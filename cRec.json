@@ -1,10 +1,14 @@
 {
-  "status": { "emptyticket": true, "instance": "sokete", "selectedLine": null },
+  "status": {
+    "emptyticket": false,
+    "instance": "sokete",
+    "selectedLine": null
+  },
   "ticket": {
     "header": {
       "Custlng": 2057,
       "DiscP": "0,00",
-      "Opertator": "Rodrigo Martinez",
+      "Operator": "Rodrigo Martinez",
       "Paid": "15,00",
       "Return": "-13,33",
       "RndDiff": "0,00",

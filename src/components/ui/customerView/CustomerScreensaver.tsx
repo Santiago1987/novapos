@@ -8,7 +8,7 @@ type Props = {
 
 const CustomerScreensaver = ({ isEmpty }: Props) => {
   const [screensaverActive, setScreensaverActive] = useState(false);
-  const inactivityTimeout = 3000;
+  const inactivityTimeout = 8000;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;

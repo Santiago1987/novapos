@@ -10,22 +10,25 @@ const CustomerPayments = ({ payments }: Props) => {
   const lang = useLayoutStore((state) => state.layout.lang);
   const { t } = useTraductionsStore();
   return (
-    <div className="w-full h-full pl-1 pb-1">
+    <div className="w-full h-full shadow-lg shadow-gray-400">
       <div className="border w-full h-full bg-white rounded-lg overflow-y-auto">
         <table className="w-full border-collapse border-0 table-fixed">
-          <thead className="font-bold text-xl text-white bg-blue-950">
-            <tr className="sticky top-0 z-10 h-15">
+          <thead>
+            <tr className="sticky top-0 z-10 h-15 font-bold text-4xl text-white bg-blue-950">
               <th className="p-1 w-6/12">{t('payment_method', lang)}</th>
               <th className="p-1 w-2/12 text-left">{t('quantity', lang)}</th>
               <th className="p-1 w-2/12">{t('amount', lang)}</th>
               <th className="p-1 w-2/12">{t('value', lang)}</th>
             </tr>
           </thead>
-          <tbody className="text-lg bg-white h-full">
+          <tbody>
             {payments &&
               payments.map((pay, index) => {
                 return (
-                  <tr key={index} className="border-b border-gray-200">
+                  <tr
+                    key={index}
+                    className="border-b border-gray-200 text-3xl h-15 bg-white"
+                  >
                     <td className="p-1 text-start w-6/20 overflow-hidden text-ellipsis text-nowrap font-bold">
                       {pay.PayKind}
                     </td>
