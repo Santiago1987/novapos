@@ -1,3 +1,5 @@
+import { useLayoutStore } from '@/store/LayoutStore';
+import { useTraductionsStore } from '@/store/TraductionStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
@@ -7,6 +9,8 @@ type Props = {
 
 const ThankYouBanner = ({ display }: Props) => {
   const [visible, setVisible] = useState(false);
+  const { t } = useTraductionsStore();
+  const lang = useLayoutStore((state) => state.layout.lang);
 
   useEffect(() => {
     const showBanner = setTimeout(() => {
@@ -36,9 +40,9 @@ const ThankYouBanner = ({ display }: Props) => {
           }}
           className="fixed top-8 left-1/2 transform -translate-x-1/2 z-50"
         >
-          <div className="relative bg-gradient-to-r from-pink-500 to-purple-600 text-white px-8 py-5 rounded-2xl shadow-2xl flex items-center gap-3 backdrop-blur-sm border border-white/20">
-            <span className="text-2xl font-bold tracking-wide">
-              ¡Gracias por venir! ✨
+          <div className="relative bg-gradient-to-r from-pink-500 to-purple-600 text-white px-10 py-8 rounded-2xl shadow-2xl flex items-center gap-3 backdrop-blur-sm border border-white/20">
+            <span className="text-6xl font-bold tracking-wide">
+              {`${t('thankyoumessage', lang)} ✨`}
             </span>
           </div>
           <motion.div

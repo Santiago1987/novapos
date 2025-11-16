@@ -15,7 +15,7 @@ const CustomerTop = ({ operator }: Props) => {
         <img
           src={AlistarLogo}
           alt="Alistar"
-          className="h-full shadow-lg shadow-gray-400"
+          className="h-full rounded-lg shadow-lg shadow-gray-400"
         />
       </div>
       <div className="flex items-center justify-center h-full w-1/3">
