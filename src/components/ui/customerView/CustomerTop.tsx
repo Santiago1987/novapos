@@ -25,7 +25,7 @@ const CustomerTop = ({ operator }: Props) => {
       </div>
       <div className="flex items-center justify-end h-full w-1/3">
         <label
-          className={`text-4xl font-bold p-2 border rounded-2xl
+          className={`text-3xl font-bold p-2 border rounded-2xl
         mr-1 bg-white shadow-lg shadow-gray-400 ${operator ? 'visible' : 'invisible'}`}
         >{`${t('operator', lang)}: ${operator}`}</label>
       </div>
