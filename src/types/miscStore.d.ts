@@ -1,5 +1,5 @@
 //--------------------------------Traductions Store Types--------------------------------//
-import type { Langs } from 'src/types/constTypes';
+import type { Langs } from '@/types/constTypes';
 export type TranslationMap = Record<
   string,
   Partial<Record<keyof typeof Langs, string>>

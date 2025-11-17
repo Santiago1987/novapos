@@ -13,7 +13,7 @@ export interface Status {
 }
 
 export interface TicketHeader {
-  Custlng: number | null;
+  Custlng: keyof typeof Langs | null;
   DiscP: string | null;
   Operator: string | null;
   Paid: string | null;
@@ -46,6 +46,7 @@ export interface TicketLines {
   value: string | null;
   valued: string | null;
   valuex: string | null;
+  Cancel: boolean | null;
 }
 
 export interface Payment {
