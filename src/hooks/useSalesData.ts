@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import getCacheToken from '@/services/getCacheToken';
 import getSalesData from '@/services/getSalesData';
 import type { SalesDataStoreState } from '@/types/salesDataSore';
+import type { AxiosError } from 'axios';
 
 const useSalesData = (pollInterval: number = 2000) => {
   const [data, setData] = useState<SalesDataStoreState>();
@@ -10,10 +11,22 @@ const useSalesData = (pollInterval: number = 2000) => {
   const tokenRef = useRef<string | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  useEffect(() => {
+    getData();
+
+    intervalRef.current = setInterval(() => {
+      getData();
+    }, pollInterval);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [pollInterval]);
+
   const refreshToken = async () => {
     try {
       const restoken = await getCacheToken();
-      console.log('restoken', restoken);
+      //console.log('restoken', restoken);
       tokenRef.current = restoken;
     } catch (err) {
       setError('error on token: ' + err);
@@ -29,29 +42,14 @@ const useSalesData = (pollInterval: number = 2000) => {
     if (!tokenRef.current) return;
 
     try {
-      const result = (await getSalesData(
-        tokenRef.current
-      )) as SalesDataStoreState;
-      console.log('result', result);
-      setData(result);
+      const result = await getSalesData(tokenRef.current);
+      setData(result.data);
       setError(null);
-    } catch (err) {
-      setError('Error on getting data: ' + err);
-      console.log('ERROR ON DATA: ', err);
+    } catch (error) {
+      setError('Error on getting data: ' + error);
+      setData(undefined);
     }
   };
-
-  useEffect(() => {
-    getData();
-
-    intervalRef.current = setInterval(() => {
-      getData();
-    }, pollInterval);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [pollInterval]);
 
   return { data, error };
 };
