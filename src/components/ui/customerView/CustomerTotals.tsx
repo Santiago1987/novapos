@@ -24,7 +24,7 @@ const CustomerTotals = ({ data }: Props) => {
           {t('change', lang)}
         </label>
         <label className="p-1 font-bold w-1/2 text-6xl text-right place-self-end">
-          {data ? `€${data.Total2}` : '€0,00'}
+          {data ? `€${data.Return}` : '€0,00'}
         </label>
       </div>
       <div className="flex flex-row flex-1 items-center bg-blue-950 text-white rounded-b-lg">
