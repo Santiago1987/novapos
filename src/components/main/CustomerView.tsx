@@ -6,9 +6,24 @@ import CustomerCorousel from '../ui/customerView/CustomerCorousel';
 import CustomerScreensaver from '../ui/customerView/CustomerScreensaver';
 import CustomerTop from '@/components/ui/customerView/CustomerTop';
 import ThankYouBanner from '../ui/customerView/ThankYouBanner';
+import { useEffect } from 'react';
+import { useLayoutStore } from '@/store/LayoutStore';
 
 const CustomerView = () => {
   const { data } = useSalesData(2000);
+  console.log('data', data);
+  const {
+    layoutActions: { setLang },
+  } = useLayoutStore();
+
+  useEffect(() => {
+    const lng = data?.ticket.header.Custlng;
+    if (data && lng) {
+      setLang(lng);
+      return;
+    }
+    setLang('EN');
+  }, [data?.ticket.header.Custlng]);
 
   return (
     <>
@@ -20,7 +35,10 @@ const CustomerView = () => {
           <CustomerTop operator={data?.ticket.header.Operator} />
         </div>
         <div className="col-1 row-span-6 row-start-2 p-1">
-          <CustomerSalesTable tickLns={data?.ticket.lines} />
+          <CustomerSalesTable
+            tickLns={data?.ticket.lines}
+            selectedLine={data?.status.selectedLine}
+          />
         </div>
         <div className="col-1 row-span-3 row-start-8 p-1">
           <CustomerPayments payments={data?.ticket.payments} />
@@ -31,8 +49,8 @@ const CustomerView = () => {
         <div className="col-2 p-1 row-span-6 row-start-2 items-center justify-center">
           <CustomerCorousel />
         </div>
-        <CustomerScreensaver isEmpty={data?.status.emptyticket} />
-        <ThankYouBanner display={false} />
+
+        <ThankYouBanner display={data?.status.instance === 'finishing'} />
       </div>
     </>
   );

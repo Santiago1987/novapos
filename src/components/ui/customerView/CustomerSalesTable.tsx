@@ -1,22 +1,38 @@
 import { useLayoutStore } from '@/store/LayoutStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 import type { TicketLines } from '@/types/salesDataSore';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   tickLns?: Record<string, TicketLines>;
+  selectedLine: number | undefined | null;
 };
 
-const CustomerSalesTable = ({ tickLns }: Props) => {
+const CustomerSalesTable = ({ tickLns, selectedLine }: Props) => {
   const { t } = useTraductionsStore();
   const lang = useLayoutStore((state) => state.layout.lang);
   const linesEntries = Object.entries(tickLns || {});
+
+  const lastRowRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    if (lastRowRef.current) {
+      lastRowRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
+  }, [tickLns]);
+
+  const validLines = linesEntries.filter(([, ln]) => !ln.Cancel);
 
   return (
     <div className="w-full h-full shadow-lg shadow-gray-400">
       <div className="border bg-white w-full h-full rounded-lg overflow-y-auto">
         <table className="w-full border-collapse border-0 table-fixed">
           <thead>
-            <tr className="sticky top-0 z-10 h-15 bg-blue-950 w-full font-bold text-3xl text-white">
+            <tr className="sticky top-0 z-10 h-15 bg-blue-950 w-full font-bold text-2xl text-white">
               <th className="p-1 w-2/10">{t('quantity', lang)}</th>
               <th className="p-1 w-4/10 text-left">{t('description', lang)}</th>
               <th className="p-1 w-2/10">{t('unpr', lang)}</th>
@@ -24,12 +40,16 @@ const CustomerSalesTable = ({ tickLns }: Props) => {
             </tr>
           </thead>
           <tbody>
-            {linesEntries.map(([id, ln]) => {
-              let descr = ln.Text && ln.Text[lang] ? ln.Text[lang] : ln.Descr;
+            {validLines.map(([id, ln]) => {
+              let descr = ln.Text?.[lang] ?? ln.Descr;
+              const isSelectedRow = selectedLine
+                ? selectedLine === parseInt(id)
+                : false;
               return (
                 <tr
                   key={id}
-                  className="border-b border-gray-200 h-15 text-2xl font-bold"
+                  ref={isSelectedRow ? lastRowRef : null}
+                  className={`border-b border-gray-200 h-15 text-2xl font-bold ${isSelectedRow ? 'bg-blue-400' : 'bg-white'}`}
                 >
                   <td className="p-1 text-end w-2/10">{ln.Count}</td>
                   <td className="p-1 text-start w-4/10 overflow-hidden text-ellipsis text-nowrap">

@@ -30,4 +30,5 @@ export const Langs = {
   EN: 'EN',
   ES: 'ES',
   BE: 'BE',
+  NLBE: 'NLBE',
 } as const;
