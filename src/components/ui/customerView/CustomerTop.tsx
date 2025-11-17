@@ -9,6 +9,7 @@ type Props = {
 const CustomerTop = ({ operator }: Props) => {
   const { t } = useTraductionsStore();
   const lang = useLayoutStore((state) => state.layout.lang);
+
   return (
     <div className="flex flex-row h-full items-center justify-between">
       <div className="h-full w-1/3 p-1">
