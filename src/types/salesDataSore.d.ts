@@ -1,3 +1,4 @@
+import { Langs } from './constTypes';
 export interface SalesDataStoreState {
   ticket: Ticket;
   status: Status;
@@ -37,7 +38,7 @@ export interface TicketLines {
   StoKUn: number | null;
   SuPrice: string | null;
   Descr: string | null;
-  Text: Record<string, string> | null;
+  Text: Record<keyof typeof Langs, string> | null;
   Type: string | null;
   UnPrice: string | null;
   Vatc: string | null;
