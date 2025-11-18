@@ -49,7 +49,7 @@ const CustomerView = () => {
         <div className="col-2 p-1 row-span-6 row-start-2 items-center justify-center">
           <CustomerCorousel />
         </div>
-
+        <CustomerScreensaver isEmpty={data?.status.emptyticket} />
         <ThankYouBanner display={data?.status.instance === 'finishing'} />
       </div>
     </>
