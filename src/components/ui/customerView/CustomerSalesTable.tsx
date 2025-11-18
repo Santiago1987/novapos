@@ -42,6 +42,7 @@ const CustomerSalesTable = ({ tickLns, selectedLine }: Props) => {
           <tbody>
             {validLines.map(([id, ln]) => {
               let descr = ln.Text?.[lang] ?? ln.Descr;
+
               const isSelectedRow = selectedLine
                 ? selectedLine === parseInt(id)
                 : false;
