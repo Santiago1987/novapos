@@ -8,7 +8,7 @@ import CustomerTop from '@/components/ui/customerView/CustomerTop';
 import ThankYouBanner from '../ui/customerView/ThankYouBanner';
 import { useEffect } from 'react';
 import { useLayoutStore } from '@/store/LayoutStore';
-import CustomerVideo from '../ui/customerView/customerVideo';
+import CustomerVideo from '@/components/ui/customerView/CustomerVideo';
 
 const CustomerView = () => {
   const { data } = useSalesData(2000);
