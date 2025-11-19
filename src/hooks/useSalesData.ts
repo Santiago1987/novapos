@@ -46,8 +46,12 @@ const useSalesData = (pollInterval: number = 2000) => {
       setData(result.data);
       setError(null);
     } catch (error) {
-      setError('Error on getting data: ' + error);
+      const err = error as AxiosError;
+      if (err.status === 408) {
+        await refreshToken();
+      }
       setData(undefined);
+      setError('Error on getting data: ' + error);
     }
   };
 
