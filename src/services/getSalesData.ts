@@ -20,7 +20,6 @@ const getSalesData = (token: string) => {
     })
     .then((res) => res.data)
     .catch((err) => {
-      console.log('errrrrrrrrr', err);
       throw err;
     });
 };
