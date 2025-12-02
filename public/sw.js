@@ -8,12 +8,12 @@ import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
 cleanupOutdatedCaches();
 
 // JSON MANIFEST -- VERSION + FILES NAMES
-const MANIFEST_URL = '/api/manifest.json'; // Adjust the URL as needed
+const MANIFEST_URL = '/api/pos/sales/filmanifest'; // Adjust the URL as needed
 let currentVersion = null; // version from manifest
 
 // IMAGES AND VIDEOS CACHE
 registerRoute(
-  ({ url }) => url.pathname.startsWith('/erc/madia/'), //al route with start with /erc/media/
+  ({ url }) => url.pathname.startsWith('/csp/api/cusfil/'), //al route with start with /erc/media/
   new CacheFirst({
     cacheName: 'media-cache',
     plugins: [
