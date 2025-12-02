@@ -58,4 +58,6 @@ const CustomerView = () => {
 
 export default CustomerView;
 
-/**<CustomerScreensaver isEmpty={data?.status.emptyticket} /> */
+/** <div className="col-2 p-1 row-span-6 row-start-2 items-center justify-center">
+      <CustomerVideo screensaverActive={data?.status.emptyticket} />
+    </div> */
