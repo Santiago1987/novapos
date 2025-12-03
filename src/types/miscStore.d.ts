@@ -35,19 +35,3 @@ export type ColorChangeStoreState = {
   setBackgroundColorColor: (color: string) => void;
   setTextColor: (color: string) => void;
 };
-
-//---------------------------------customer view manifest json ---------------------
-export interface CVFileManifest {
-  data: {
-    version: number;
-    images: string[];
-    video: {
-      screensaver: string[];
-      carousel: string[];
-    };
-  };
-}
-
-export interface SWFileResponse extends CVFileManifest {
-  updateAvailable: boolean;
-}
