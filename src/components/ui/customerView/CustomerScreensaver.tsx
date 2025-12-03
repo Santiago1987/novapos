@@ -1,14 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import videoFile from '@/assets/coca-cola.mp4';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 
-type Props = {
-  isEmpty: boolean | undefined;
-};
-
-const CustomerScreensaver = ({ isEmpty }: Props) => {
+const CustomerScreensaver = () => {
   const [screensaverActive, setScreensaverActive] = useState(false);
-  //const inactivityTimeout = 1000;
+  const isEmpty = useSalesDataStore((state) => state.status.emptyticket);
 
   useEffect(() => {
     if (isEmpty || isEmpty === undefined) {

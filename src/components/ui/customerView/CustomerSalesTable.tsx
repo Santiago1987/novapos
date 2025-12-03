@@ -1,16 +1,14 @@
-import { useLayoutStore } from '@/store/LayoutStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
-import type { TicketLines } from '@/types/salesDataSore';
 import { useEffect, useRef } from 'react';
 
-type Props = {
-  tickLns?: Record<string, TicketLines>;
-  selectedLine: number | undefined | null;
-};
-
-const CustomerSalesTable = ({ tickLns, selectedLine }: Props) => {
+const CustomerSalesTable = () => {
   const { t } = useTraductionsStore();
-  const lang = useLayoutStore((state) => state.layout.lang);
+  const lang = useCustomerViewStore((state) => state.lang);
+  const tickLns = useSalesDataStore((state) => state.ticket.lines);
+  const selectedLine = useSalesDataStore((state) => state.status.selectedLine);
+
   const linesEntries = Object.entries(tickLns || {});
 
   const lastRowRef = useRef<HTMLTableRowElement>(null);

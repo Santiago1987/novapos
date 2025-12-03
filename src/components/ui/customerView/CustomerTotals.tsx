@@ -1,14 +1,12 @@
-import { useLayoutStore } from '@/store/LayoutStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
-import type { TicketHeader } from '@/types/salesDataSore';
 
-type Props = {
-  data?: TicketHeader;
-};
-
-const CustomerTotals = ({ data }: Props) => {
+const CustomerTotals = () => {
   const { t } = useTraductionsStore();
-  const lang = useLayoutStore((state) => state.layout.lang);
+  const lang = useCustomerViewStore((state) => state.lang);
+  const data = useSalesDataStore((state) => state.ticket.header);
+
   return (
     <div className="flex flex-col w-[400px] h-[200px] shadow-lg shadow-gray-400">
       <div className="flex flex-row flex-1 items-center bg-blue-950 text-white rounded-t-lg">

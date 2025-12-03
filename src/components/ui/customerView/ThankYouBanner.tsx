@@ -1,16 +1,15 @@
-import { useLayoutStore } from '@/store/LayoutStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-type Props = {
-  display: boolean;
-};
-
-const ThankYouBanner = ({ display }: Props) => {
+const ThankYouBanner = () => {
   const [visible, setVisible] = useState(false);
   const { t } = useTraductionsStore();
-  const lang = useLayoutStore((state) => state.layout.lang);
+  const lang = useCustomerViewStore((state) => state.lang);
+  const instance = useSalesDataStore((state) => state.status.instance);
+  const display = instance === 'finishing';
 
   useEffect(() => {
     const showBanner = setTimeout(() => {
