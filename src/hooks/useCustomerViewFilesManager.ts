@@ -1,26 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import swCustViewFileUpdate from '@/services/swCustViewFileUpdate';
-import { type SWFileResponse } from '@/types/miscStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
 
 const useCustomerViewFilesManager = () => {
-  const [manifestJSON, setManifestJSON] = useState<SWFileResponse | null>(null);
+  const { setManifest } = useCustomerViewStore();
 
   useEffect(() => {
     const interval = setInterval(
       async () => {
         const result = await swCustViewFileUpdate();
+        console.log('manifest json', result);
         if (!result || !result.updateAvailable) return;
-        setManifestJSON(result);
+        let { updateAvailable, ...res } = result;
+        setManifest(res);
       },
       10 * 60 * 1000
     );
 
     return () => clearInterval(interval);
   }, []);
-
-  return {
-    manifestJSON,
-  };
 };
 
 export default useCustomerViewFilesManager;
