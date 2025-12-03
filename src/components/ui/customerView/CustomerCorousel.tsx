@@ -1,14 +1,13 @@
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL_COLRYUT;
+
 const CustomerCorousel = () => {
-  const images = [
-    'src/assets/bife-chorizo.webp',
-    'src/assets/cerveza1.webp',
-    'src/assets/cerveza2.webp',
-    'src/assets/papas-fritas.webp',
-    'src/assets/Vinos1.webp',
-  ];
+  const { manifest } = useCustomerViewStore();
+
+  const { images } = manifest;
 
   const [currectIndex, setCurrentIndex] = useState(0);
 
@@ -31,7 +30,7 @@ const CustomerCorousel = () => {
       <AnimatePresence initial={false} custom={1}>
         <motion.img
           key={currectIndex}
-          src={images[currectIndex]}
+          src={`${SERVER_URL}/api/pos/sales/${images[currectIndex]}`}
           alt={`Slide ${currectIndex + 1}`}
           className="absolute w-full h-full object-fill aspect-square
           rounded-lg"
