@@ -1,14 +1,12 @@
-import { useLayoutStore } from '@/store/LayoutStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
-import type { Payment } from '@/types/salesDataSore';
 
-type Props = {
-  payments?: Payment[];
-};
-
-const CustomerPayments = ({ payments }: Props) => {
-  const lang = useLayoutStore((state) => state.layout.lang);
+const CustomerPayments = () => {
+  const lang = useCustomerViewStore((state) => state.lang);
+  const payments = useSalesDataStore((state) => state.ticket.payments);
   const { t } = useTraductionsStore();
+
   return (
     <div className="w-full h-full shadow-lg shadow-gray-400">
       <div className="border w-full h-full bg-white rounded-lg overflow-y-auto">

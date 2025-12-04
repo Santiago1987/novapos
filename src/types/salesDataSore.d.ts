@@ -1,5 +1,7 @@
 import { Langs } from './constTypes';
-export interface SalesDataStoreState {
+export type SalesDataStoreState = SalesDataStore & Actions;
+
+export interface SalesDataStore {
   ticket: Ticket;
   status: Status;
 }
@@ -60,4 +62,9 @@ export interface Ticket {
   header: TicketHeader;
   lines: Record<string, TicketLines>;
   payments: Payment[];
+}
+
+export interface Actions {
+  setSalesData: (data: SalesDataStoreState) => void;
+  reset: () => void;
 }

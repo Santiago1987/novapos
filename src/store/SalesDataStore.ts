@@ -1,9 +1,12 @@
 import { devtools } from 'zustand/middleware';
 import { create } from 'zustand';
 import { produce } from 'immer';
-import type { SalesDataStoreState } from '@/types/salesDataSore';
+import type {
+  SalesDataStoreState,
+  SalesDataStore,
+} from '@/types/salesDataSore';
 
-const initialVariables: SalesDataStoreState = {
+const initialVariables: SalesDataStore = {
   status: { instance: 'empty', emptyticket: true, selectedLine: null },
   ticket: {
     header: {
@@ -35,6 +38,9 @@ export const useSalesDataStore = create<SalesDataStoreState>()(
           state = data;
         })
       );
+    },
+    reset: () => {
+      set(produce((state) => (state = initialVariables)));
     },
   }))
 );

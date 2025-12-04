@@ -1,14 +1,12 @@
 import AlistarLogo from '@/assets/Alistar-logo.webp';
-import { useLayoutStore } from '@/store/LayoutStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 
-type Props = {
-  operator?: string | null;
-};
-
-const CustomerTop = ({ operator }: Props) => {
+const CustomerTop = () => {
   const { t } = useTraductionsStore();
-  const lang = useLayoutStore((state) => state.layout.lang);
+  const lang = useCustomerViewStore((state) => state.lang);
+  const operator = useSalesDataStore((state) => state.ticket.header.Operator);
 
   return (
     <div className="flex flex-row h-full items-center justify-between">

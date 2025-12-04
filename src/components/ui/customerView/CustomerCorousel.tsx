@@ -1,38 +1,39 @@
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL_COLRYUT;
+
 const CustomerCorousel = () => {
-  const images = [
-    'src/assets/bife-chorizo.webp',
-    'src/assets/cerveza1.webp',
-    'src/assets/cerveza2.webp',
-    'src/assets/papas-fritas.webp',
-    'src/assets/Vinos1.webp',
-  ];
+  const manifest = useCustomerViewStore((state) => state.manifest);
+  const { images } = manifest;
 
   const [currectIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (images.length < 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images]);
 
   const variants = {
     enter: { x: '100%', opacity: 0 },
     center: { x: 0, opacity: 1 },
     exit: { x: '-100%', opacity: 0 },
   };
+  console.log('currectIndex', currectIndex);
+  console.log('asd', `${SERVER_URL}/csp/api/cusfil/${images[currectIndex]}`);
 
   return (
-    <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400">
+    <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400 rounded-lg">
       <AnimatePresence initial={false} custom={1}>
         <motion.img
           key={currectIndex}
-          src={images[currectIndex]}
-          alt={`Slide ${currectIndex + 1}`}
+          src={`${SERVER_URL}/csp/api/cusfil/${images[currectIndex]}`}
+          alt={`Slide ${images[currectIndex]}`}
           className="absolute w-full h-full object-fill aspect-square
           rounded-lg"
           custom={1}
