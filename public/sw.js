@@ -14,7 +14,7 @@ let currentVersion = null; // version from manifest
 
 // IMAGES AND VIDEOS CACHE
 registerRoute(
-  ({ url }) => url.pathname.includes('/csp/api/cusfil/'), //al route with start with /erc/media/
+  ({ url }) => url.pathname.startWith('/csp/api/cusfil/'), //al route with start with /erc/media/
   new CacheFirst({
     cacheName: 'media-cache',
     plugins: [

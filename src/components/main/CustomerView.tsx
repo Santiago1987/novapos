@@ -30,7 +30,7 @@ const CustomerView = () => {
         <div className="col-2 p-1 row-span-6 row-start-2 items-center justify-center">
           <CustomerCorousel />
         </div>
-        <CustomerScreensaver />
+
         <ThankYouBanner />
       </div>
     </>
@@ -41,4 +41,5 @@ export default CustomerView;
 
 /** <div className="col-2 p-1 row-span-6 row-start-2 items-center justify-center">
       <CustomerVideo screensaverActive={data?.status.emptyticket} />
-    </div> */
+    </div> 
+    <CustomerScreensaver />*/

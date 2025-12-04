@@ -5,25 +5,27 @@ import { useEffect, useState } from 'react';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL_COLRYUT;
 
 const CustomerCorousel = () => {
-  const { manifest } = useCustomerViewStore();
-
+  const manifest = useCustomerViewStore((state) => state.manifest);
   const { images } = manifest;
 
   const [currectIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (images.length < 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [images]);
 
   const variants = {
     enter: { x: '100%', opacity: 0 },
     center: { x: 0, opacity: 1 },
     exit: { x: '-100%', opacity: 0 },
   };
+  console.log('currectIndex', currectIndex);
+  console.log('asd', `${SERVER_URL}/csp/api/cusfil/${images[currectIndex]}`);
 
   return (
     <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400">
@@ -31,7 +33,7 @@ const CustomerCorousel = () => {
         <motion.img
           key={currectIndex}
           src={`${SERVER_URL}/api/pos/sales/${images[currectIndex]}`}
-          alt={`Slide ${currectIndex + 1}`}
+          alt={`Slide ${images[currectIndex]}`}
           className="absolute w-full h-full object-fill aspect-square
           rounded-lg"
           custom={1}

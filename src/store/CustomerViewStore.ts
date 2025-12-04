@@ -29,9 +29,11 @@ export const useCustomerViewStore = create<CustomerViewStore>()(
       );
     },
     setManifest(value) {
-      produce((state: CustomerViewState) => {
-        state.manifest = value;
-      });
+      set(
+        produce((state: CustomerViewState) => {
+          state.manifest = value;
+        })
+      );
     },
   }))
 );
