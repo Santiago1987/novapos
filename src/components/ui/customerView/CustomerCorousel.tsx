@@ -28,11 +28,11 @@ const CustomerCorousel = () => {
   console.log('asd', `${SERVER_URL}/csp/api/cusfil/${images[currectIndex]}`);
 
   return (
-    <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400">
+    <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400 rounded-lg">
       <AnimatePresence initial={false} custom={1}>
         <motion.img
           key={currectIndex}
-          src={`${SERVER_URL}/api/pos/sales/${images[currectIndex]}`}
+          src={`${SERVER_URL}/csp/api/cusfil/${images[currectIndex]}`}
           alt={`Slide ${images[currectIndex]}`}
           className="absolute w-full h-full object-fill aspect-square
           rounded-lg"
