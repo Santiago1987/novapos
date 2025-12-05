@@ -29,7 +29,7 @@ export interface TableColumnConfig<T> {
   key: keyof T; // Clave del dato (ej. 'QTY', 'PAYMETH')
   title: string; // Título de la cabecera (reemplaza 'text' para claridad)
   visible: boolean; // Indica si la columna es visible
-  width: string; // Ancho de la columna (ej. '100px', '20%')
+  width?: string; // Ancho de la columna (ej. '100px', '20%')
   order: number; // Orden de la columna en la tabla
   textColor?: string; // Color del texto (cabecera o celdas)
   styles?: React.CSSProperties; // Opcional: estilos adicionales (ej. align, fontSize)
@@ -139,6 +139,11 @@ export type SalesTable = Table<SalesColumns>;
 export type PaymentsTable = Table<PaymentsColumns>;
 export type PromotionsTable = Table<PromotionsColumns>;
 
+//=== CAROUSEL ===//
+export interface Carousel extends Component<'CAROUSEL'> {
+  carouselType: 'images' | 'videos';
+}
+
 //=== LAYOUT ===//
 export interface Layout {
   background?: string;
@@ -149,7 +154,7 @@ export interface Layout {
   };
   components: Record<
     string,
-    Button | SalesTable | PaymentsTable | PromotionsTable
+    Button | SalesTable | PaymentsTable | PromotionsTable | Carousel
   >;
 }
 

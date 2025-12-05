@@ -24,6 +24,8 @@ export const ComponentTypes = {
   TABLE: 'tables',
   LABEL: 'labels',
   INPUT: 'inputs',
+  CAROUSEL: 'carousel',
+  LOGO: 'logo',
 } as const;
 
 export const Langs = {
