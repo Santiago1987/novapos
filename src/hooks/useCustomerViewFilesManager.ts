@@ -2,23 +2,26 @@ import { useEffect, useRef } from 'react';
 import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import getCustomerViewManifest from '@/services/getCustomerViewManifest';
 import getCacheToken from '@/services/getCacheToken';
+import { useSalesDataStore } from '@/store/SalesDataStore';
 
 const useCustomerViewFilesManager = () => {
   const { setManifest } = useCustomerViewStore();
+  const refreshFiles = useSalesDataStore(
+    (state) => state.customerView.refreshFiles
+  );
+
+  const {
+    customerViewActions: { setRefreshFiles },
+  } = useSalesDataStore();
 
   const tokenRef = useRef<string | null>(null);
 
   useEffect(() => {
-    getManifest();
-    const interval = setInterval(
-      async () => {
-        getManifest();
-      },
-      10 * 60 * 1000
-    );
-
-    return () => clearInterval(interval);
-  }, []);
+    if (refreshFiles) {
+      getManifest();
+      setRefreshFiles(false);
+    }
+  }, [refreshFiles]);
 
   // HACER UN HOOK QUE MANEJE EL TOKEN Y SE ENCARGE DE REFRESCARLO
   const refreshToken = async () => {

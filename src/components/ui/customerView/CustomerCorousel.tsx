@@ -24,8 +24,6 @@ const CustomerCorousel = () => {
     center: { x: 0, opacity: 1 },
     exit: { x: '-100%', opacity: 0 },
   };
-  console.log('currectIndex', currectIndex);
-  console.log('asd', `${SERVER_URL}/csp/api/cusfil/${images[currectIndex]}`);
 
   return (
     <div className="relative w-full h-full max-w-4xl mx-auto overflow-hidden shadow-lg shadow-gray-400 rounded-lg">
