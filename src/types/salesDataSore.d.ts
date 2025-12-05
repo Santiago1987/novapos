@@ -4,6 +4,7 @@ export type SalesDataStoreState = SalesDataStore & Actions;
 export interface SalesDataStore {
   ticket: Ticket;
   status: Status;
+  customerView: CustomerViewStatus;
 }
 
 export type Instance = 'initial' | 'proccess' | 'finishing' | 'empty';
@@ -12,6 +13,11 @@ export interface Status {
   emptyticket: boolean;
   instance: Instance;
   selectedLine: number | null;
+}
+
+export interface CustomerViewStatus {
+  editing: boolean;
+  refreshFiles: boolean;
 }
 
 export interface TicketHeader {
@@ -67,4 +73,8 @@ export interface Ticket {
 export interface Actions {
   setSalesData: (data: SalesDataStoreState) => void;
   reset: () => void;
+  customerViewActions: {
+    setIsEditing: (editing: boolean) => void;
+    setRefreshFiles: (refresh: boolean) => void;
+  };
 }

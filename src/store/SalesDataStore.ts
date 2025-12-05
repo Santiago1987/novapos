@@ -7,7 +7,11 @@ import type {
 } from '@/types/salesDataSore';
 
 const initialVariables: SalesDataStore = {
-  status: { instance: 'empty', emptyticket: true, selectedLine: null },
+  status: {
+    instance: 'empty',
+    emptyticket: true,
+    selectedLine: null,
+  },
   ticket: {
     header: {
       Custlng: null,
@@ -27,6 +31,10 @@ const initialVariables: SalesDataStore = {
     lines: {},
     payments: [],
   },
+  customerView: {
+    editing: false,
+    refreshFiles: false,
+  },
 };
 
 export const useSalesDataStore = create<SalesDataStoreState>()(
@@ -41,6 +49,22 @@ export const useSalesDataStore = create<SalesDataStoreState>()(
     },
     reset: () => {
       set(produce((state) => (state = initialVariables)));
+    },
+    customerViewActions: {
+      setIsEditing: (editing: boolean) => {
+        set(
+          produce((state) => {
+            state.customerView.editing = editing;
+          })
+        );
+      },
+      setRefreshFiles: (refresh: boolean) => {
+        set(
+          produce((state) => {
+            state.customerView.refreshFiles = refresh;
+          })
+        );
+      },
     },
   }))
 );
