@@ -1,4 +1,4 @@
-import type { CVFileManifest } from '@/types/customerView';
+import type { CVFileManifest } from '@/types/customerViewStore';
 import axios, { type AxiosResponse } from 'axios';
 
 const serverURL = import.meta.env.VITE_SERVER_URL_COLRYUT;

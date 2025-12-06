@@ -1,4 +1,4 @@
-import { type SWFileResponse } from '@/types/customerView';
+import { type SWFileResponse } from '@/types/customerViewStore';
 
 const swCustViewFileUpdate = async (): Promise<SWFileResponse | null> => {
   if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) {
