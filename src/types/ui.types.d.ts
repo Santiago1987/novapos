@@ -142,6 +142,7 @@ export type PromotionsTable = Table<PromotionsColumns>;
 //=== CAROUSEL ===//
 export interface Carousel extends Component<'CAROUSEL'> {
   carouselType: 'images' | 'videos';
+  files: string[];
 }
 
 //=== LAYOUT ===//
@@ -154,7 +155,12 @@ export interface Layout {
   };
   components: Record<
     string,
-    Button | SalesTable | PaymentsTable | PromotionsTable | Carousel
+    | Button
+    | SalesTable
+    | PaymentsTable
+    | PromotionsTable
+    | Carousel
+    | Component<'LOGO'>
   >;
 }
 
