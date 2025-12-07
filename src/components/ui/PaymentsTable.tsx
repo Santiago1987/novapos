@@ -3,7 +3,7 @@ import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 
 const PaymentsTable = () => {
-  const lang = useCustomerViewStore((state) => state.lang);
+  const lang = useCustomerViewStore((state) => state.layout.lang);
   const payments = useSalesDataStore((state) => state.ticket.payments);
   const { t } = useTraductionsStore();
 

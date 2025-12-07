@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 const SalesTable = () => {
   const { t } = useTraductionsStore();
-  const lang = useCustomerViewStore((state) => state.lang);
+  const lang = useCustomerViewStore((state) => state.layout.lang);
   const tickLns = useSalesDataStore((state) => state.ticket.lines);
   const selectedLine = useSalesDataStore((state) => state.status.selectedLine);
 

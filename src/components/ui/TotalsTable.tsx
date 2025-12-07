@@ -2,9 +2,9 @@ import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 
-const CustomerTotals = () => {
+const TotalsTable = () => {
   const { t } = useTraductionsStore();
-  const lang = useCustomerViewStore((state) => state.lang);
+  const lang = useCustomerViewStore((state) => state.layout.lang);
   const data = useSalesDataStore((state) => state.ticket.header);
 
   const tableStyles = {
@@ -78,4 +78,4 @@ const CustomerTotals = () => {
   );
 };
 
-export default CustomerTotals;
+export default TotalsTable;
