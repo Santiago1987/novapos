@@ -11,46 +11,41 @@ const PaymentsTable = ({ id }: Props) => {
   const payments = useSalesDataStore((state) => state.ticket.payments);
   const { t } = useTraductionsStore();
   const {
+    layout,
     layoutActions: { selectComponent },
   } = useCustomerViewStore();
 
-  const tableStyles = {
-    tablebg: '#ffffff',
-    header: {
-      bg: '#351c75',
-      textcolor: '#ffffff',
-      fonsize: 'text-2xl',
-    },
-    body: {
-      bg: '#ffffff',
-      fontsize: 'text-2xl',
-    },
-  };
+  const paymentsTableComponent = layout.components[id];
+  if (paymentsTableComponent.type !== 'PAYMENTS_TABLE') {
+    return null;
+  }
+
+  const { position, size, rows, header } = paymentsTableComponent.properties;
 
   return (
     <div
-      className="w-full h-full shadow-lg shadow-gray-400"
+      className={`top-${position.y} left-${position.x} w-${size.width} h-${size.height} shadow-lg shadow-gray-400`}
       onClick={() => selectComponent(id)}
     >
       <div
         className="border w-full h-full rounded-lg overflow-y-auto"
-        style={{ background: tableStyles.tablebg }}
+        style={{ background: rows.backgroundColor || '#ffffff' }}
       >
-        <table
-          className={`w-full border-collapse border-0 table-fixed ${tableStyles.header.fonsize}`}
-        >
+        <table className={`w-full border-collapse border-0 table-fixed`}>
           <thead>
             <tr
-              className="sticky top-0 z-10 h-15 font-bold text-2xl"
+              className={`sticky top-0 z-10 h-15 font-bold ${header.fontSize || 'text-2xl'}`}
               style={{
-                color: tableStyles.header.textcolor,
-                background: tableStyles.header.bg,
+                color: header.textColor || '#ffffff',
+                background: header.backgroundColor || '#351c75',
               }}
             >
-              <th className="p-1 w-5/12">{t('payment_method', lang)}</th>
-              <th className="p-1 w-3/12">{t('quantity', lang)}</th>
-              <th className="p-1 w-2/12">{t('amount', lang)}</th>
-              <th className="p-1 w-2/12">{t('value', lang)}</th>
+              <th className="p-1 w-5/12 visible">
+                {t('payment_method', lang)}
+              </th>
+              <th className="p-1 w-3/12 visible">{t('quantity', lang)}</th>
+              <th className="p-1 w-2/12 visible">{t('amount', lang)}</th>
+              <th className="p-1 w-2/12 visible">{t('value', lang)}</th>
             </tr>
           </thead>
           <tbody>
@@ -59,8 +54,8 @@ const PaymentsTable = ({ id }: Props) => {
                 return (
                   <tr
                     key={index}
-                    className="border-b border-gray-200 text-2xl h-15"
-                    style={{ background: tableStyles.body.bg }}
+                    className={`border-b border-gray-200 h-15 ${rows.fontSize || 'text-2xl'}`}
+                    style={{ background: rows.backgroundColor || '#ffffff' }}
                   >
                     <td className="p-1 text-start w-5/20 overflow-hidden text-ellipsis text-nowrap font-bold">
                       {pay.PayKind}

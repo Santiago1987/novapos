@@ -13,11 +13,16 @@ const SalesTable = ({ id }: Props) => {
   const tickLns = useSalesDataStore((state) => state.ticket.lines);
   const selectedLine = useSalesDataStore((state) => state.status.selectedLine);
   const {
+    layout,
     layoutActions: { selectComponent },
   } = useCustomerViewStore();
 
-  const linesEntries = Object.entries(tickLns || {});
+  const salesTableComponent = layout.components[id];
+  if (salesTableComponent.type !== 'SALES_TABLE') {
+    return null;
+  }
 
+  const linesEntries = Object.entries(tickLns || {});
   const lastRowRef = useRef<HTMLTableRowElement>(null);
 
   useEffect(() => {
@@ -32,50 +37,33 @@ const SalesTable = ({ id }: Props) => {
 
   const validLines = linesEntries.filter(([, ln]) => !ln.Cancel);
 
-  const tableStyles = {
-    tablebg: '#ffffff',
-    position: {
-      top: 0,
-      left: 0,
-    },
-    size: {
-      w: 50,
-      h: 50,
-    },
-    header: {
-      bg: '#351c75',
-      textcolor: '#ffffff',
-      fonsize: 'text-2xl',
-    },
-    body: {
-      bg: '#ffffff',
-      selectline: '#6fa8dc',
-      fontsize: 'text-2xl',
-    },
-  };
+  //CUSTOMER STYLES
+  const { position, size, rows, header } = salesTableComponent.properties;
 
   return (
     <div
-      className={`top-${tableStyles.position.top} left-${tableStyles.position.left} w-${tableStyles.size.w} h-${tableStyles.size.h} shadow-lg shadow-gray-400`}
+      className={`top-${position.y} left-${position.x} w-${size.width} h-${size.height} shadow-lg shadow-gray-400`}
       onClick={() => selectComponent(id)}
     >
       <div
         className="border w-full h-full rounded-lg overflow-y-auto"
-        style={{ background: tableStyles.tablebg }}
+        style={{ background: rows.backgroundColor || '#ffffff' }}
       >
         <table className="w-full border-collapse border-0 table-fixed">
           <thead>
             <tr
-              className={`sticky top-0 z-10 h-15 w-full font-bold ${tableStyles.header.fonsize}`}
+              className={`sticky top-0 z-10 h-15 w-full font-bold ${header.fontSize || 'text-2xl'}`}
               style={{
-                color: tableStyles.header.textcolor,
-                background: tableStyles.header.bg,
+                color: header.textColor || '#ffffff',
+                background: header.backgroundColor || '#351c75',
               }}
             >
-              <th className="p-1 w-2/10">{t('quantity', lang)}</th>
-              <th className="p-1 w-4/10 text-left">{t('description', lang)}</th>
-              <th className="p-1 w-2/10">{t('unpr', lang)}</th>
-              <th className="p-1 w-2/10">{t('value', lang)}</th>
+              <th className="p-1 w-2/10 visible">{t('quantity', lang)}</th>
+              <th className="p-1 w-4/10 text-left visible">
+                {t('description', lang)}
+              </th>
+              <th className="p-1 w-2/10 visible">{t('unpr', lang)}</th>
+              <th className="p-1 w-2/10 visible">{t('value', lang)}</th>
             </tr>
           </thead>
           <tbody>
@@ -89,11 +77,14 @@ const SalesTable = ({ id }: Props) => {
                 <tr
                   key={id}
                   ref={isSelectedRow ? lastRowRef : null}
-                  className={`border-b border-gray-200 h-15 font-bold ${tableStyles.body.fontsize}`}
+                  className={`border-b border-gray-200 h-15 font-bold ${rows.fontSize || 'text-2xl'}`}
                   style={
                     isSelectedRow
-                      ? { background: tableStyles.body.selectline }
-                      : { background: tableStyles.body.bg }
+                      ? {
+                          background:
+                            salesTableComponent.selectedRowColor || '#6fa8dc',
+                        }
+                      : { background: rows.backgroundColor || '#ffffff' }
                   }
                 >
                   <td className="p-1 text-end w-2/10">{ln.Count}</td>
