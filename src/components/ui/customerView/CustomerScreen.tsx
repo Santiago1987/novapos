@@ -1,10 +1,10 @@
 import useCustomerViewFilesManager from '@/hooks/useCustomerViewFilesManager';
 import CustomerTop from './CustomerTop';
-import CustomerCorousel from './CustomerCorousel';
+import CustomerCorousel from './CarouselImages';
 import ThankYouBanner from './ThankYouBanner';
 import SalesTable from '../SalesTable';
 import PaymentsTable from '../PaymentsTable';
-import TotalsTable from '../TotalsTable';
+import TotalsTable from '../TotalsComponent';
 
 const CustomerScreen = () => {
   useCustomerViewFilesManager();

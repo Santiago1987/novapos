@@ -122,6 +122,7 @@ export interface SalesTable extends Component {
   type: 'SALES_TABLE';
   columns: TableColumnConfig<SalesColumns>[];
   properties: TableProperties;
+  selectedRowColor?: string;
 }
 
 export interface PaymentsTable extends Component {
@@ -137,14 +138,53 @@ export interface PromotionsTable extends Component {
 }
 
 //=== CAROUSEL ===//
-export interface Carousel extends Component {
-  carouselType: 'images' | 'videos';
-  files: string[];
+export interface CarouselImages extends Component {
+  type: 'CAROUSEL_IMAGES';
+  imgFiles: string[];
 }
 
+//=== CAROUSEL ===//
+export interface CarouselVideos extends Component {
+  type: 'CAROUSEL_VIDEOS';
+  videoFiles: string[];
+  isScreensaver: boolean;
+}
+
+//=== LOGO ===//
 export interface Logo extends Component {
   type: 'LOGO';
   imageUrl: string;
+}
+
+//=== TOTALS COMPONENT ===//
+export interface TotalsComponent extends Component {
+  type: 'TOTALS_COMPONENT';
+  total: TotalsComponentElementsProperties;
+  change: TotalsComponentElementsProperties;
+  rounding: TotalsComponentElementsProperties;
+}
+
+export type TotalsComponentElementsProperties = {
+  textColor?: string;
+  fontSize?: string;
+  fontFamily?: string;
+  backgroundColor?: string;
+  visible: boolean;
+};
+
+//=== LABEL ===//
+export interface LabelComponent extends Component {
+  type: 'LABEL';
+  fontSize?: string;
+  textColor?: string;
+  text: string;
+}
+
+//=== OPERATOR ===//
+export interface OperatorComponent extends Component {
+  type: 'OPERATOR';
+  fontSize?: string;
+  textColor?: string;
 }
 
 //=== LAYOUT ===//
@@ -155,16 +195,27 @@ export interface Layout {
   editorMenu: {
     position: Position;
   };
-  components: Record<string, ComponentList>;
+  components: Record<string, AnyComponent>;
 }
 
-export type ComponentList =
+export type ComponentList = AnyComponent;
+
+export type AnyComponent =
   | Button
   | SalesTable
   | PaymentsTable
   | PromotionsTable
-  | Carousel
+  | CarouselImages
   | Logo
-  | Component<'TOTALS_TABLE'>;
+  | TotalsComponent
+  | LabelComponent
+  | OperatorComponent
+  | CarouselVideos;
+
+type ComponentByType<T extends AnyComponent['type']> = Extract<
+  AnyComponent,
+  { type: T }
+>;
+//ejmplo de lo de arriba: type MyButton = ComponentByType<'BUTTON'>;
 
 export type Themes = (typeof ThemesList)[keyof typeof ThemesList];
