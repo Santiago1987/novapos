@@ -60,9 +60,8 @@ export interface PromotionsColumns {
 }
 
 //==== BASE COMPONENT TYPE ====//
-export interface Component<T extends keyof typeof ComponentTypes> {
+export interface Component {
   id: string;
-  type: T;
   properties: BaseComponentProps;
 }
 
@@ -96,16 +95,8 @@ export interface TableProperties extends BaseComponentProps {
   };
 }
 
-// === COMPONENT DISCRIMINATED UNION === //
-export type ComponentMap = {
-  BUTTON: Button;
-  TABLE: Table<SalesColumns | PaymentsColumns>;
-};
-
-export type ComponentType = keyof ComponentMap;
-
 //=== BUTTON ===//
-export interface Button extends Component<'BUTTON'> {
+export interface Button extends Component {
   type: 'BUTTON';
   subMenu?: SubMenu;
   properties: BaseComponentProps & {
@@ -127,22 +118,33 @@ export interface SubMenu {
 }
 
 //=== TABLE ===//
-export interface Table<T> extends Component<'TABLE'> {
-  type: 'TABLE';
-  tableType: 'sales' | 'payments' | 'promotions';
-  columns: TableColumnConfig<T>[];
+export interface SalesTable extends Component {
+  type: 'SALES_TABLE';
+  columns: TableColumnConfig<SalesColumns>[];
   properties: TableProperties;
 }
 
-//=== ESPECIFIC TYPES ===//
-export type SalesTable = Table<SalesColumns>;
-export type PaymentsTable = Table<PaymentsColumns>;
-export type PromotionsTable = Table<PromotionsColumns>;
+export interface PaymentsTable extends Component {
+  type: 'PAYMENTS_TABLE';
+  columns: TableColumnConfig<PaymentsColumns>[];
+  properties: TableProperties;
+}
+
+export interface PromotionsTable extends Component {
+  type: 'PROMOTIONS_TABLE';
+  columns: TableColumnConfig<PaymentsColumns>[];
+  properties: TableProperties;
+}
 
 //=== CAROUSEL ===//
-export interface Carousel extends Component<'CAROUSEL'> {
+export interface Carousel extends Component {
   carouselType: 'images' | 'videos';
   files: string[];
+}
+
+export interface Logo extends Component {
+  type: 'LOGO';
+  imageUrl: string;
 }
 
 //=== LAYOUT ===//
@@ -153,15 +155,16 @@ export interface Layout {
   editorMenu: {
     position: Position;
   };
-  components: Record<
-    string,
-    | Button
-    | SalesTable
-    | PaymentsTable
-    | PromotionsTable
-    | Carousel
-    | Component<'LOGO'>
-  >;
+  components: Record<string, ComponentList>;
 }
+
+export type ComponentList =
+  | Button
+  | SalesTable
+  | PaymentsTable
+  | PromotionsTable
+  | Carousel
+  | Logo
+  | Component<'TOTALS_TABLE'>;
 
 export type Themes = (typeof ThemesList)[keyof typeof ThemesList];

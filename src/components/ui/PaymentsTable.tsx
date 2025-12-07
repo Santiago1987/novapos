@@ -2,10 +2,17 @@ import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 
-const PaymentsTable = () => {
+type Props = {
+  id: string;
+};
+
+const PaymentsTable = ({ id }: Props) => {
   const lang = useCustomerViewStore((state) => state.layout.lang);
   const payments = useSalesDataStore((state) => state.ticket.payments);
   const { t } = useTraductionsStore();
+  const {
+    layoutActions: { selectComponent },
+  } = useCustomerViewStore();
 
   const tableStyles = {
     tablebg: '#ffffff',
@@ -21,7 +28,10 @@ const PaymentsTable = () => {
   };
 
   return (
-    <div className="w-full h-full shadow-lg shadow-gray-400">
+    <div
+      className="w-full h-full shadow-lg shadow-gray-400"
+      onClick={() => selectComponent(id)}
+    >
       <div
         className="border w-full h-full rounded-lg overflow-y-auto"
         style={{ background: tableStyles.tablebg }}

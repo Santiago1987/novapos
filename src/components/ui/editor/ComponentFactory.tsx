@@ -1,40 +1,28 @@
-import type { ComponentUnion } from '@/types/ui.types';
-import ButtonComponent from '@/components/ui/editor/ButtonComponent';
-import type { ButtonProps } from '@/types/componentProps';
-import type { Langs } from '@/types/constTypes';
+import { ComponentTypes } from '@/types/constTypes';
+import SalesTable from '@/components/ui/SalesTable';
+import PaymentsTable from '@/components/ui/PaymentsTable';
+import TotalsTable from '@/components/ui//TotalsTable';
 
-interface Props extends ButtonProps {
-  component: ComponentUnion;
-  isSelected: boolean;
-  lang: keyof typeof Langs;
-  text?: string;
-  changeTextVisible?: boolean;
-  handleSelectComponent: (id: string, type: 'buttons' | 'tables') => void;
-  handleCopyComponent: (id: string, type: 'buttons' | 'tables') => void;
-  handleDeleteComponent: (id: string, type: 'buttons' | 'tables') => void;
-}
+type Props = {
+  type: keyof typeof ComponentTypes;
+  id: string;
+};
 
-const ComponentFactory = (props: Props) => {
-  const { component } = props;
-  if (component.type === 'BUTTON') {
-    const {
-      isSelected,
-      handleCopyComponent,
-      handleDeleteComponent,
-      handleSelectComponent,
-    } = props;
-    return (
-      <ButtonComponent
-        button={component}
-        isSelected={isSelected}
-        handleSelectComponent={handleSelectComponent}
-        handleCopyComponent={handleCopyComponent}
-        handleDeleteComponent={handleDeleteComponent}
-      />
-    );
-  }
+const ComponentFactory = ({ id, type }: Props) => {
+  const componentDiccionary = {
+    SALES_TABLE: <SalesTable id={id} />,
+    PAYMENTS_TABLE: <PaymentsTable id={id} />,
+    TOTALS_TABLE: <TotalsTable id={id} />,
+    PROMOTIONS_TABLE: <></>, // Placeholder for PromotionsTable component
+    BUTTON: <></>, // Placeholder for Button component
+    LABEL: <></>, // Placeholder for Label component
+    INPUT: <></>, // Placeholder for Input component
+    CAROUSEL: <></>, // Placeholder for Carousel component
+    LOGO: <></>, // Placeholder for Logo component
+    default: <></>,
+  };
 
-  return <></>;
+  return componentDiccionary[type] || componentDiccionary['default'];
 };
 
 export default ComponentFactory;

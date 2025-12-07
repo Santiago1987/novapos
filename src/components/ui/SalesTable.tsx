@@ -3,11 +3,18 @@ import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 import { useEffect, useRef } from 'react';
 
-const SalesTable = () => {
+type Props = {
+  id: string;
+};
+
+const SalesTable = ({ id }: Props) => {
   const { t } = useTraductionsStore();
   const lang = useCustomerViewStore((state) => state.layout.lang);
   const tickLns = useSalesDataStore((state) => state.ticket.lines);
   const selectedLine = useSalesDataStore((state) => state.status.selectedLine);
+  const {
+    layoutActions: { selectComponent },
+  } = useCustomerViewStore();
 
   const linesEntries = Object.entries(tickLns || {});
 
@@ -50,6 +57,7 @@ const SalesTable = () => {
   return (
     <div
       className={`top-${tableStyles.position.top} left-${tableStyles.position.left} w-${tableStyles.size.w} h-${tableStyles.size.h} shadow-lg shadow-gray-400`}
+      onClick={() => selectComponent(id)}
     >
       <div
         className="border w-full h-full rounded-lg overflow-y-auto"

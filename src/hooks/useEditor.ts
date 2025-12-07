@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { useLayoutStore } from '@/store/LayoutStore';
 import { v4 as uuidv4 } from 'uuid';
 import { useTraductionsStore } from '@/store/TraductionStore';
+import createNewComponent from '@/helpers/createNewComponent';
 
 type Props = {
   gridSize: number;
+  type: 'CustomerView' | 'SalesView';
 };
 
-const useEditor = ({ gridSize }: Props) => {
+const useEditor = ({ gridSize, type }: Props) => {
   //LAYOUT EDITOR
   const {
     layout,
@@ -20,33 +22,21 @@ const useEditor = ({ gridSize }: Props) => {
   //VARIABLES
   const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
-  const { removeTraduction, updateTraduction } = useTraductionsStore();
+  const { removeTraduction } = useTraductionsStore();
 
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
 
     // NEW BUTTON
-    if (active.id === 'new-button') {
+    if (active.id === 'new-button' && type === 'SalesView') {
       const { x, y } = active.data.current?.position || { x: 0, y: 0 };
-      const newID = uuidv4();
-      addComponent(newID, {
-        id: newID,
-        type: 'BUTTON',
-        properties: {
-          text: 'NewButton',
-          position: {
-            x: x - (x % gridSize),
-            y: y - (y % gridSize),
-          },
-          size: { width: '150px', height: '50px' },
-          backgroundColor: '#3b82f6',
-          textColor: '#ffffff',
-          fontSize: 'text-lg',
-          className: 'rounded-lg shadow-md shadow-gray-400/50',
-        },
+      createNewComponent({
+        position: { x, y },
+        gridSize,
+        layoutType: 'SalesView',
+        componentType: 'BUTTON',
       });
-      updateTraduction(newID, 'New Button', 'EN');
       return;
     }
 
@@ -138,8 +128,8 @@ const useEditor = ({ gridSize }: Props) => {
   };
 
   return {
-    colorPickerVisible,
     layout,
+    colorPickerVisible,
     selectedComponentId,
     handleDragEnd,
     handleSelectComponent,

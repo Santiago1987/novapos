@@ -2,12 +2,25 @@ import { devtools } from 'zustand/middleware';
 import type {
   CustomerViewStore,
   CustomerViewState,
-} from '@/types/customerView';
+} from '@/types/customerViewStore';
 import { create } from 'zustand';
 import { produce } from 'immer';
+import type { Layout } from '@/types/ui.types';
+
+const initialLayout: Layout = {
+  lang: 'EN',
+  size: { width: '1920px', height: '1080px' },
+  background: '#ffffff',
+  components: {},
+  editorMenu: {
+    position: { x: 0, y: 0 },
+  },
+};
 
 const initialVariables: CustomerViewState = {
-  lang: 'EN',
+  isEditing: false,
+  layout: initialLayout,
+  selectedComponentId: null,
   manifest: {
     version: 0,
     images: [],
@@ -21,12 +34,21 @@ const initialVariables: CustomerViewState = {
 export const useCustomerViewStore = create<CustomerViewStore>()(
   devtools((set) => ({
     ...initialVariables,
-    setLang(lang) {
-      set(
-        produce((state: CustomerViewState) => {
-          state.lang = lang;
-        })
-      );
+    layoutActions: {
+      setLang(lang) {
+        set(
+          produce((state: CustomerViewState) => {
+            state.layout.lang = lang;
+          })
+        );
+      },
+      selectComponent(id) {
+        set(
+          produce((state: CustomerViewState) => {
+            state.selectedComponentId = id;
+          })
+        );
+      },
     },
     setManifest(value) {
       set(

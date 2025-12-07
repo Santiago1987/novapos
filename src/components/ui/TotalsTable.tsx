@@ -2,10 +2,17 @@ import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 
-const TotalsTable = () => {
+type Props = {
+  id: string;
+};
+
+const TotalsTable = ({ id }: Props) => {
   const { t } = useTraductionsStore();
   const lang = useCustomerViewStore((state) => state.layout.lang);
   const data = useSalesDataStore((state) => state.ticket.header);
+  const {
+    layoutActions: { selectComponent },
+  } = useCustomerViewStore();
 
   const tableStyles = {
     position: {},
@@ -33,6 +40,7 @@ const TotalsTable = () => {
   return (
     <div
       className={`flex flex-col w-${tableStyles.size.w} h-${tableStyles.size.h} shadow-lg shadow-gray-400`}
+      onClick={() => selectComponent(id)}
     >
       <div
         className={`flex flex-row flex-1 items-center rounded-t-lg ${tableStyles.total.fontsize}`}

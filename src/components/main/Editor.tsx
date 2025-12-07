@@ -12,8 +12,13 @@ import EditorMenu from '@/components/ui/editor/EditorMenu';
 import useEditor from '@/hooks/useEditor';
 import ResizePreviewComponent from '@/components/ui/editor/ResizePreviewComponent';
 import { useLayoutStore } from '@/store/LayoutStore';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
 
-const Editor = () => {
+type Props = {
+  type: 'CustomerView' | 'SalesView';
+};
+
+const Editor = ({ type }: Props) => {
   const gridSize = 5;
   const { setNodeRef } = useDroppable({ id: 'editor' });
   const sensors = useSensors(
@@ -22,51 +27,44 @@ const Editor = () => {
     }),
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
   );
-  const isEditing = useLayoutStore((state) => state.isEditing);
+
+  const layout =
+    type === 'CustomerView'
+      ? useCustomerViewStore((state) => state.layout)
+      : useLayoutStore((state) => state.layout);
 
   const {
-    layout,
     selectedComponentId,
     handleDragEnd,
     handleSelectComponent,
     handleCopyComponent,
     handleDeleteComponent,
-  } = useEditor({ gridSize });
+  } = useEditor({ gridSize, type });
 
   const { background, components, lang } = layout;
   const snapToGrid = createSnapModifier(gridSize);
 
   return (
-    isEditing && (
-      <DndContext
-        onDragEnd={handleDragEnd}
-        sensors={sensors}
-        modifiers={[snapToGrid, restrictToWindowEdges]}
+    <DndContext
+      onDragEnd={handleDragEnd}
+      sensors={sensors}
+      modifiers={[snapToGrid, restrictToWindowEdges]}
+    >
+      <div
+        className={`w-screen h-screen relative`}
+        style={{
+          background,
+        }}
       >
-        <div
-          className={`w-screen h-screen relative`}
-          style={{
-            background,
-          }}
-        >
-          <div ref={setNodeRef}>
-            {Object.keys(components).map((idc) => (
-              <ComponentFactory
-                key={idc}
-                component={components[idc]}
-                lang={lang}
-                isSelected={selectedComponentId === idc}
-                handleSelectComponent={handleSelectComponent}
-                handleCopyComponent={handleCopyComponent}
-                handleDeleteComponent={handleDeleteComponent}
-              />
-            ))}
-          </div>
-          <EditorMenu lang={lang} />
-          <ResizePreviewComponent />
+        <div ref={setNodeRef}>
+          {Object.entries(components).map(([id, component]) => (
+            <ComponentFactory key={id} type={component.type} id={id} />
+          ))}
         </div>
-      </DndContext>
-    )
+        <EditorMenu lang={lang} />
+        <ResizePreviewComponent />
+      </div>
+    </DndContext>
   );
 };
 

@@ -21,7 +21,10 @@ export const PaymentsColumns = {
 
 export const ComponentTypes = {
   BUTTON: 'buttons',
-  TABLE: 'tables',
+  SALES_TABLE: 'sales_table',
+  PAYMENTS_TABLE: 'payments_table',
+  PROMOTIONS_TABLE: 'promotions_table',
+  TOTALS_TABLE: 'totals_table',
   LABEL: 'labels',
   INPUT: 'inputs',
   CAROUSEL: 'carousel',

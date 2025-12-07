@@ -29,6 +29,7 @@ export interface Actions {
     setLang: (lang: keyof typeof Langs) => void;
     editLayoutBackground: (background: string) => void;
     editSize: (width: string, height: string) => void;
+    selectComponent: (id: string | null) => void;
   };
   componentActions: {
     addComponent: (id: string, component: any) => void;
