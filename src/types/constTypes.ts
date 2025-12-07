@@ -24,10 +24,12 @@ export const ComponentTypes = {
   SALES_TABLE: 'sales_table',
   PAYMENTS_TABLE: 'payments_table',
   PROMOTIONS_TABLE: 'promotions_table',
-  TOTALS_TABLE: 'totals_table',
+  TOTALS_COMPONENT: 'totals_component',
   LABEL: 'labels',
   INPUT: 'inputs',
-  CAROUSEL: 'carousel',
+  CAROUSEL_IMAGES: 'carousel_images',
+  CAROUSEL_VIDEOS: 'carousel_videos',
+  OPEATOR: 'operator',
   LOGO: 'logo',
 } as const;
 
