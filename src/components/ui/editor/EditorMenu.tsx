@@ -1,5 +1,4 @@
 import { useLayoutStore } from '@/store/LayoutStore';
-import NewButton from '@/components/ui/editor/NewButton';
 import { useState } from 'react';
 import ColorPicker from '@/components/ui/editor/ColorPicker';
 import { useDraggable } from '@dnd-kit/core';
@@ -17,7 +16,7 @@ type Props = {
 
 const EditorMenu = ({ type }: Props) => {
   const { reset, layout } = useLayoutStore();
-  const [dragSart, setDragSart] = useState(false);
+  const [dragSart, setDragStart] = useState(false);
   const lang =
     type === 'CustomerView'
       ? useCustomerViewStore((state) => state.layout.lang)
@@ -43,7 +42,7 @@ const EditorMenu = ({ type }: Props) => {
   //---------------------------------------------------
 
   const handleIsDragging = (dragging: boolean) => {
-    setDragSart(dragging);
+    setDragStart(dragging);
   };
 
   return (

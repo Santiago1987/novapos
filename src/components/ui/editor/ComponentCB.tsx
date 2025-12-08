@@ -4,7 +4,9 @@ import { ComponentTypes } from '@/types/constTypes';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { keysOf } from '@/types/constTypes';
-import { ArrowDown, DragVariant } from '@/components/icons/SVGIcons';
+import { ArrowDown } from '@/components/icons/SVGIcons';
+import { useDraggable } from '@dnd-kit/core';
+import ComponentSelect from './ComponentSelect';
 
 type Components = keyof typeof ComponentTypes;
 
@@ -13,7 +15,7 @@ const ComponentCB = () => {
   const lang = useCustomerViewStore((state) => state.layout.lang);
 
   const componentList = Object.values(ComponentTypes);
-  const componentKyes = keysOf(ComponentTypes);
+  const componentKeys = keysOf(ComponentTypes);
 
   const [query, setQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +32,11 @@ const ComponentCB = () => {
       : componentList.filter((p) =>
           p.toLowerCase().includes(query.toLowerCase())
         );
+
+  const filteredKeys = filtered.map((value) => {
+    const index = componentList.indexOf(value);
+    return componentKeys[index];
+  });
 
   // Reset del índice cuando cambie el filtro
   useEffect(() => {
@@ -51,7 +58,7 @@ const ComponentCB = () => {
         );
       } else if (e.key === 'Enter' && filtered.length > 0) {
         e.preventDefault();
-        const cp = componentKyes[highlightedIndex];
+        const cp = componentKeys[highlightedIndex];
         setSelected(cp);
         setIsOpen(false);
         setQuery('');
@@ -81,22 +88,27 @@ const ComponentCB = () => {
   }, []);
 
   const handleSelect = (idx: number) => {
-    const cp = componentKyes[idx];
+    const cp = componentKeys[idx];
     setSelected(cp);
     setQuery('');
     setIsOpen(false);
     inputRef.current?.blur();
   };
-  console.log(isOpen);
+
+  const getDisplayValue = (key: keyof typeof ComponentTypes | null) => {
+    if (!key) return '';
+    const index = componentKeys.indexOf(key);
+    return componentList[index] || key; // Fallback a key si no encuentra
+  };
+
   return (
     <div className="w-11/12 mx-auto border-solid border-black border-2 rounded-lg shadow-lg shadow-gray-400/50">
       <div ref={dropdownRef} className="relative">
-        {/* Input + botón */}
         <div className="relative p-1">
           <input
             ref={inputRef}
             type="text"
-            value={selected ? selected : query}
+            value={selected ? getDisplayValue(selected) : query}
             onChange={(e) => {
               setQuery(e.target.value);
               setSelected(null);
@@ -122,8 +134,6 @@ const ComponentCB = () => {
             </div>
           </button>
         </div>
-
-        {/* Dropdown animado */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -133,30 +143,25 @@ const ComponentCB = () => {
               transition={{ duration: 0.15, ease: 'easeOut' }}
               className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5"
             >
-              <div className="flex flex-col max-h-64 overflow-y-auto overflow-x-hidden py-1">
+              <div className="flex flex-col max-h-64 overflow-y-auto overflow-x-hidden px-2 py-2 gap-1">
                 {filtered.length === 0 ? (
                   <div className="px-4 py-3 text-sm text-gray-500">
                     {t('noComponentsFound', lang)}
                   </div>
                 ) : (
-                  filtered.map((cp, index) => (
-                    <button
-                      key={cp}
-                      onClick={() => handleSelect(index)}
-                      className={`
-                        'w-full px-4 py-3 text-left text-sm transition-colors flex items-center justify-between'
-                        ${highlightedIndex === index ? 'bg-indigo-50 text-indigo-700' : 'text-gray-900 hover:bg-blue-400 hover:scale-110'}
-                      `}
-                    >
-                      <span className={'font-medium w-3/4'}>{cp}</span>
-
-                      <div className="w-1/4 flex justify-center items-center">
-                        <DragVariant
-                          style={{ width: '1.2em', height: '1.2em' }}
-                        />
-                      </div>
-                    </button>
-                  ))
+                  filtered.map((cp, index) => {
+                    const key = filteredKeys[index];
+                    const idx = componentKeys[index];
+                    return (
+                      <ComponentSelect
+                        key={key}
+                        idx={idx}
+                        index={index}
+                        cp={cp}
+                        handleSelect={handleSelect}
+                      />
+                    );
+                  })
                 )}
               </div>
             </motion.div>
