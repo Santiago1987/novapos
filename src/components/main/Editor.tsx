@@ -33,15 +33,9 @@ const Editor = ({ type }: Props) => {
       ? useCustomerViewStore((state) => state.layout)
       : useLayoutStore((state) => state.layout);
 
-  const {
-    selectedComponentId,
-    handleDragEnd,
-    handleSelectComponent,
-    handleCopyComponent,
-    handleDeleteComponent,
-  } = useEditor({ gridSize, type });
+  const { handleDragEnd } = useEditor({ gridSize, type });
 
-  const { background, components, lang } = layout;
+  const { background, components } = layout;
   const snapToGrid = createSnapModifier(gridSize);
 
   return (
@@ -61,7 +55,7 @@ const Editor = ({ type }: Props) => {
             <ComponentFactory key={id} type={component.type} id={id} />
           ))}
         </div>
-        <EditorMenu lang={lang} />
+        <EditorMenu type={type} />
         <ResizePreviewComponent />
       </div>
     </DndContext>

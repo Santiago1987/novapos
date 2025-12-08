@@ -25,7 +25,7 @@ const ComponentFactory = ({ id, type }: Props) => {
     CAROUSEL_IMAGES: <CarouselImages id={id} />,
     CAROUSEL_VIDEOS: <CarouselVideos id={id} />,
     LOGO: <Logo id={id} />,
-    OPEATOR: <OperatorComponent id={id} />,
+    OPERATOR: <OperatorComponent id={id} />,
     default: <></>,
   };
 

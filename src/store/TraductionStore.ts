@@ -78,6 +78,21 @@ const traductionsini: TranslationMap = {
     ES: 'Gracias por venir!',
     NLBE: 'Bedankt voor je komst!',
   },
+  componentList: {
+    EN: 'Component List',
+    ES: 'Lista de Componentes',
+    NLBE: 'Componentenlijst',
+  },
+  noComponentsFound: {
+    EN: 'No components found',
+    ES: 'No se encontraron componentes',
+    NLBE: 'Geen componenten gevonden',
+  },
+  searchComponent: {
+    EN: 'Search Component',
+    ES: 'Buscar Componente',
+    NLBE: 'Zoek Component',
+  },
 };
 
 export const useTraductionsStore = create<TraductionsStoreState>()(

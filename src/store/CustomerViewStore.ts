@@ -18,7 +18,7 @@ const initialLayout: Layout = {
 };
 
 const initialVariables: CustomerViewState = {
-  isEditing: false,
+  isEditing: true,
   layout: initialLayout,
   selectedComponentId: null,
   manifest: {
@@ -46,6 +46,13 @@ export const useCustomerViewStore = create<CustomerViewStore>()(
         set(
           produce((state: CustomerViewState) => {
             state.selectedComponentId = id;
+          })
+        );
+      },
+      editLayoutBackground(background) {
+        set(
+          produce((state: CustomerViewState) => {
+            state.layout.background = background;
           })
         );
       },

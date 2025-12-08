@@ -2,21 +2,26 @@ import { useLayoutStore } from '@/store/LayoutStore';
 import NewButton from '@/components/ui/editor/NewButton';
 import { useState } from 'react';
 import ColorPicker from '@/components/ui/editor/ColorPicker';
-import { DragVariant } from '@/components/icons/SVGIcons';
 import { useDraggable } from '@dnd-kit/core';
 import BodyBackgroundColorPicker from '@/components/ui/editor/BodyBackgroundColorPicker';
 import ResizeChangeComponent from '@/components/ui/editor/ResizeChangeComponent';
 import TextChangeComponent from '@/components/ui/editor/TextChangeComponent';
-import { Langs } from '@/types/constTypes';
 import { useTraductionsStore } from '@/store/TraductionStore';
+import EditorDragStars from '@/components/common/EditorDragStars';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import ComponentCB from './ComponentCB';
 
 type Props = {
-  lang: keyof typeof Langs;
+  type: 'CustomerView' | 'SalesView';
 };
 
-const EditorMenu = ({ lang }: Props) => {
+const EditorMenu = ({ type }: Props) => {
   const { reset, layout } = useLayoutStore();
   const [dragSart, setDragSart] = useState(false);
+  const lang =
+    type === 'CustomerView'
+      ? useCustomerViewStore((state) => state.layout.lang)
+      : useLayoutStore((state) => state.layout.lang);
 
   const { t } = useTraductionsStore();
 
@@ -53,8 +58,8 @@ const EditorMenu = ({ lang }: Props) => {
     >
       <div className="relative flex flex-col justify-center items-center w-full gap-2">
         <h1 className="p-1 text-2xl font-bold">{t('editorMenu', lang)}</h1>
-        <BodyBackgroundColorPicker />
-        <NewButton handleIsDragging={handleIsDragging} lang={lang} />
+        <BodyBackgroundColorPicker type={type} />
+        <ComponentCB />
         <TextChangeComponent />
         <ColorPicker />
         <ResizeChangeComponent />
@@ -66,54 +71,14 @@ const EditorMenu = ({ lang }: Props) => {
       >
         {t('resetLayout', lang)}
       </button>
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute top-1 right-1 hover:scale-120"
-      >
-        <DragVariant
-          height="25px"
-          width="25px"
-          cursor={isDragging ? 'grabbing' : 'grab'}
-        />
-      </div>
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute top-1 left-1 hover:scale-120"
-      >
-        <DragVariant
-          height="25px"
-          width="25px"
-          cursor={isDragging ? 'grabbing' : 'grab'}
-        />
-      </div>
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute bottom-1 left-1 hover:scale-120"
-      >
-        <DragVariant
-          cursor={isDragging ? 'grabbing' : 'grab'}
-          height="25px"
-          width="25px"
-        />
-      </div>
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute bottom-1 right-1 hover:scale-120"
-      >
-        <DragVariant
-          cursor={isDragging ? 'grabbing' : 'grab'}
-          height="25px"
-          width="25px"
-        />
-      </div>
+      <EditorDragStars
+        isDragging={isDragging}
+        listeners={listeners}
+        attributes={attributes}
+      />
     </div>
   );
 };
 
 export default EditorMenu;
-
-//test22
+/*<NewButton handleIsDragging={handleIsDragging} lang={lang} />*/

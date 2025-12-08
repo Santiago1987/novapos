@@ -3,9 +3,7 @@ import Editor from './Editor';
 import CustomerScreen from '../ui/customerView/CustomerScreen';
 
 const CustomerView = () => {
-  const isEditing = useCustomerViewStore((state) => ({
-    isEditing: state.isEditing,
-  }));
+  const isEditing = useCustomerViewStore((state) => state.isEditing);
 
   return <>{isEditing ? <Editor type="CustomerView" /> : <CustomerScreen />}</>;
 };

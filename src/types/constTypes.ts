@@ -20,17 +20,17 @@ export const PaymentsColumns = {
 } as const;
 
 export const ComponentTypes = {
-  BUTTON: 'buttons',
-  SALES_TABLE: 'sales_table',
-  PAYMENTS_TABLE: 'payments_table',
-  PROMOTIONS_TABLE: 'promotions_table',
-  TOTALS_COMPONENT: 'totals_component',
-  LABEL: 'labels',
-  INPUT: 'inputs',
-  CAROUSEL_IMAGES: 'carousel_images',
-  CAROUSEL_VIDEOS: 'carousel_videos',
-  OPEATOR: 'operator',
-  LOGO: 'logo',
+  BUTTON: 'BUTTON',
+  SALES_TABLE: 'SALES TABLE',
+  PAYMENTS_TABLE: 'PAYMENTS TABLE',
+  PROMOTIONS_TABLE: 'PROMOTIONS TABLE',
+  TOTALS_COMPONENT: 'TOTALS COMPONENT',
+  LABEL: 'LABEL',
+  INPUT: 'INPUT',
+  CAROUSEL_IMAGES: 'CAROUSEL IMAGES',
+  CAROUSEL_VIDEOS: 'CAROUSEL VIDEOS',
+  OPERATOR: 'OPERATOR',
+  LOGO: 'LOGO',
 } as const;
 
 export const Langs = {
@@ -39,3 +39,6 @@ export const Langs = {
   BE: 'BE',
   NLBE: 'NLBE',
 } as const;
+
+export const keysOf = <T extends object>(obj: T): (keyof T)[] =>
+  Object.keys(obj) as (keyof T)[];

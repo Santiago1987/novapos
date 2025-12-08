@@ -1,5 +1,5 @@
 import stellaVideo from '@/assets/stella.mp4';
-import pepsiVideo from '@/assets/pepsi.mp4';
+//import pepsiVideo from '@/assets/pepsi.mp4';
 import { useEffect, useRef, useState } from 'react';
 import { useSalesDataStore } from '@/store/SalesDataStore';
 import { useCustomerViewStore } from '@/store/CustomerViewStore';
@@ -9,7 +9,7 @@ type Props = {
 };
 
 const CarouselVideos = ({ id }: Props) => {
-  const videos = [stellaVideo, pepsiVideo];
+  const videos = [stellaVideo];
   const videoRef = useRef<HTMLVideoElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const {
