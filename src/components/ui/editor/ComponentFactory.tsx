@@ -7,6 +7,8 @@ import LabelComponent from '@/components/ui/LabelComponent';
 import OperatorComponent from '../customerView/OperatorComponent';
 import CarouselImages from '../customerView/CarouselImages';
 import CarouselVideos from '../customerView/CarouselVideos';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import CarousellPreview from '../customerView/CarousellPreview';
 
 type Props = {
   type: keyof typeof ComponentTypes;
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const ComponentFactory = ({ id, type }: Props) => {
+  const isEditing = useCustomerViewStore((state) => state.isEditing);
   const componentDiccionary = {
     SALES_TABLE: <SalesTable id={id} />,
     PAYMENTS_TABLE: <PaymentsTable id={id} />,
@@ -22,7 +25,11 @@ const ComponentFactory = ({ id, type }: Props) => {
     BUTTON: <></>, // Placeholder for Button component
     LABEL: <LabelComponent id={id} />, // Placeholder for Label component
     INPUT: <></>, // Placeholder for Input component
-    CAROUSEL_IMAGES: <CarouselImages id={id} />,
+    CAROUSEL_IMAGES: isEditing ? (
+      <CarousellPreview id={id} />
+    ) : (
+      <CarouselImages id={id} />
+    ),
     CAROUSEL_VIDEOS: <CarouselVideos id={id} />,
     LOGO: <Logo id={id} />,
     OPERATOR: <OperatorComponent id={id} />,

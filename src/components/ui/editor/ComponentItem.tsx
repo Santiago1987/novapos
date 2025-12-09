@@ -13,7 +13,7 @@ const ComponentItem = ({ idx, index, cp, handleSelect }: Props) => {
     id: idx,
     data: {
       component: idx,
-      //position: document.getElementById(idx)?.getBoundingClientRect(),
+      position: document.getElementById(idx)?.getBoundingClientRect(),
     },
   });
 
@@ -31,7 +31,7 @@ const ComponentItem = ({ idx, index, cp, handleSelect }: Props) => {
     <button
       id={idx}
       onClick={() => handleSelect(index)}
-      className={`w-11/12 px-4 py-3 text-left text-sm transition-colors flex items-center justify-between 
+      className={`w-11/12 px-4 py-3 text-left text-sm transition-colors flex 
         border-solid border-black border-1 rounded-lg shadow-lg shadow-gray-400/50'
         hover:scale-105 ${isDragging ? 'opacity-50' : ''}`}
       ref={setNodeRef}

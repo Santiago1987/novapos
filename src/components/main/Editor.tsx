@@ -50,11 +50,8 @@ const Editor = ({ type }: Props) => {
     handleDragEnd(event);
   };
 
-  // 2. Función para obtener el tipo de componente si es un ID de componente (o si viene en la data)
-  // Necesitas alguna forma de mapear el activeId (ej: 'BUTTON') a su tipo real
   const getActiveComponentType = (id: string | null) => {
-    // Por ejemplo, si los IDs de los ComponentItem son iguales a ComponentTypes (ej: 'BUTTON')
-    return id as keyof typeof ComponentTypes; // Asegúrate que ComponentTypes esté disponible o importado aquí
+    return id as keyof typeof ComponentTypes;
   };
 
   const activeComponentType = getActiveComponentType(activeId);

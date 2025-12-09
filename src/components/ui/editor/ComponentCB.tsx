@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { keysOf } from '@/types/constTypes';
 import { ArrowDown } from '@/components/icons/SVGIcons';
-import ComponentSelect from './ComponentItem';
+import ComponentItem from './ComponentItem';
 
 type Components = keyof typeof ComponentTypes;
 
@@ -137,7 +137,7 @@ const ComponentCB = () => {
               transition={{ duration: 0.15, ease: 'easeOut' }}
               className="absolute z-20 mt-2 w-full rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5"
             >
-              <div className="flex flex-col max-h-64 overflow-y-auto overflow-x-hidden py-2 gap-1 justify-center items-center">
+              <div className="flex flex-col max-h-64 overflow-auto items-center gap-1">
                 {filtered.length === 0 ? (
                   <div className="px-4 py-3 text-sm text-gray-500">
                     {t('noComponentsFound', lang)}
@@ -147,7 +147,7 @@ const ComponentCB = () => {
                     //const key = filteredKeys[index];
                     const idx = componentKeys[index];
                     return (
-                      <ComponentSelect
+                      <ComponentItem
                         key={idx}
                         idx={idx}
                         index={index}
