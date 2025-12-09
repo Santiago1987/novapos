@@ -27,7 +27,7 @@ const EditorMenu = ({ type }: Props) => {
   //EDITOR DRAGGING
   const { setNodeRef, transform, listeners, attributes, isDragging } =
     useDraggable({
-      id: 'editor-manu',
+      id: 'editor-menu',
     });
 
   const { x, y } = layout.editorMenu.position;

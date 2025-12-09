@@ -27,6 +27,7 @@ const useEditor = ({ gridSize, type }: Props) => {
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
+    console.log(event.active);
 
     // NEW BUTTON
     if (active.id === 'new-button' && type === 'SalesView') {
@@ -61,7 +62,7 @@ const useEditor = ({ gridSize, type }: Props) => {
     }
 
     //EDITO MENU POSITION
-    if (active.id === 'editor-manu') {
+    if (active.id === 'editor-menu') {
       if (!delta) return;
       const { x: EditorX, y: EditorY } = layout.editorMenu.position;
       const { x, y } = delta;

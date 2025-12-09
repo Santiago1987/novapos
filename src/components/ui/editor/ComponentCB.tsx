@@ -5,8 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { keysOf } from '@/types/constTypes';
 import { ArrowDown } from '@/components/icons/SVGIcons';
-import { useDraggable } from '@dnd-kit/core';
-import ComponentSelect from './ComponentSelect';
+import ComponentSelect from './ComponentItem';
 
 type Components = keyof typeof ComponentTypes;
 
@@ -32,11 +31,6 @@ const ComponentCB = () => {
       : componentList.filter((p) =>
           p.toLowerCase().includes(query.toLowerCase())
         );
-
-  const filteredKeys = filtered.map((value) => {
-    const index = componentList.indexOf(value);
-    return componentKeys[index];
-  });
 
   // Reset del índice cuando cambie el filtro
   useEffect(() => {
@@ -141,20 +135,20 @@ const ComponentCB = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.96 }}
               transition={{ duration: 0.15, ease: 'easeOut' }}
-              className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5"
+              className="absolute z-20 mt-2 w-full rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5"
             >
-              <div className="flex flex-col max-h-64 overflow-y-auto overflow-x-hidden px-2 py-2 gap-1">
+              <div className="flex flex-col max-h-64 overflow-y-auto overflow-x-hidden py-2 gap-1 justify-center items-center">
                 {filtered.length === 0 ? (
                   <div className="px-4 py-3 text-sm text-gray-500">
                     {t('noComponentsFound', lang)}
                   </div>
                 ) : (
                   filtered.map((cp, index) => {
-                    const key = filteredKeys[index];
+                    //const key = filteredKeys[index];
                     const idx = componentKeys[index];
                     return (
                       <ComponentSelect
-                        key={key}
+                        key={idx}
                         idx={idx}
                         index={index}
                         cp={cp}

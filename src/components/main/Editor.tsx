@@ -6,6 +6,9 @@ import {
   TouchSensor,
   PointerSensor,
   useSensors,
+  type DragStartEvent,
+  type DragEndEvent,
+  DragOverlay,
 } from '@dnd-kit/core';
 import ComponentFactory from '@/components/ui/editor/ComponentFactory';
 import EditorMenu from '@/components/ui/editor/EditorMenu';
@@ -13,12 +16,15 @@ import useEditor from '@/hooks/useEditor';
 import ResizePreviewComponent from '@/components/ui/editor/ResizePreviewComponent';
 import { useLayoutStore } from '@/store/LayoutStore';
 import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import { useState } from 'react';
+import type { ComponentTypes } from '@/types/constTypes';
 
 type Props = {
   type: 'CustomerView' | 'SalesView';
 };
 
 const Editor = ({ type }: Props) => {
+  const [activeId, setActiveId] = useState<string | null>(null);
   const gridSize = 5;
   const { setNodeRef } = useDroppable({ id: 'editor' });
   const sensors = useSensors(
@@ -35,12 +41,33 @@ const Editor = ({ type }: Props) => {
 
   const { handleDragEnd } = useEditor({ gridSize, type });
 
+  /**=========================================== */
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(String(event.active.id));
+  };
+  const handleEnd = (event: DragEndEvent) => {
+    setActiveId(null);
+    handleDragEnd(event);
+  };
+
+  // 2. Función para obtener el tipo de componente si es un ID de componente (o si viene en la data)
+  // Necesitas alguna forma de mapear el activeId (ej: 'BUTTON') a su tipo real
+  const getActiveComponentType = (id: string | null) => {
+    // Por ejemplo, si los IDs de los ComponentItem son iguales a ComponentTypes (ej: 'BUTTON')
+    return id as keyof typeof ComponentTypes; // Asegúrate que ComponentTypes esté disponible o importado aquí
+  };
+
+  const activeComponentType = getActiveComponentType(activeId);
+
+  /**=========================================== */
+
   const { background, components } = layout;
   const snapToGrid = createSnapModifier(gridSize);
 
   return (
     <DndContext
-      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+      onDragEnd={handleEnd}
       sensors={sensors}
       modifiers={[snapToGrid, restrictToWindowEdges]}
     >
@@ -54,10 +81,21 @@ const Editor = ({ type }: Props) => {
           {Object.entries(components).map(([id, component]) => (
             <ComponentFactory key={id} type={component.type} id={id} />
           ))}
+          <EditorMenu type={type} />
         </div>
-        <EditorMenu type={type} />
         <ResizePreviewComponent />
       </div>
+      <DragOverlay modifiers={[snapToGrid, restrictToWindowEdges]}>
+        {activeId && activeComponentType ? (
+          <button
+            className={`w-11/12 px-4 py-3 text-left text-sm transition-colors flex items-center justify-between 
+        border-solid border-black border-1 rounded-lg shadow-lg shadow-gray-400/50'
+        hover:scale-105`}
+          >
+            <span className={'font-medium w-3/4'}>{activeComponentType}</span>
+          </button>
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 };
