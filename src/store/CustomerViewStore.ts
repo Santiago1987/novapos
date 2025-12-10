@@ -57,6 +57,30 @@ export const useCustomerViewStore = create<CustomerViewStore>()(
         );
       },
     },
+    componentActions: {
+      addComponent(id, component) {
+        set(
+          produce((state: CustomerViewState) => {
+            state.layout.components[id] = component;
+          })
+        );
+      },
+      edditComponent(id, properties) {
+        set(
+          produce((state: CustomerViewState) => {
+            const component = state.layout.components[id];
+            if (!component) return;
+            state.layout.components[id] = {
+              ...component,
+              properties: {
+                ...component.properties,
+                ...properties,
+              },
+            };
+          })
+        );
+      },
+    },
     setManifest(value) {
       set(
         produce((state: CustomerViewState) => {

@@ -51,7 +51,7 @@ const EditorMenu = ({ type }: Props) => {
       ref={setNodeRef}
       style={style}
       className={`absolute top-2 left-2 flex flex-col justify-between items-center
-                    z-50 min-w-[200px] w-3/12 h-8/12 text-black 
+                    z-50 min-w-[300px] min-h-[600px] w-3/12 h-8/12 text-black 
                     bg-white rounded-2xl border-solid border-2
                     shadow-lg shadow-gray-400/50 ${dragSart ? 'opacity-50' : 'opacity-100'}`}
     >

@@ -27,7 +27,6 @@ const useEditor = ({ gridSize, type }: Props) => {
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
-    console.log(event.active);
 
     // NEW BUTTON
     if (active.id === 'new-button' && type === 'SalesView') {
@@ -40,6 +39,7 @@ const useEditor = ({ gridSize, type }: Props) => {
       });
       return;
     }
+    console.log('editor-menu', active);
 
     // POSITON OF A EXISTING BUTTON
     if (active.data.current?.type === 'button') {
@@ -71,6 +71,18 @@ const useEditor = ({ gridSize, type }: Props) => {
       const newY = (EditorY || 0) + y;
 
       modifyEditorPosition(newX, newY);
+      return;
+    }
+
+    if (active.id === 'CAROUSEL_IMAGES' && type === 'CustomerView') {
+      const { x, y } = active.data.current?.position || { x: 0, y: 0 };
+      createNewComponent({
+        position: { x, y },
+        gridSize,
+        layoutType: 'CustomerView',
+        componentType: 'CAROUSEL_IMAGES',
+      });
+      return;
     }
   };
 

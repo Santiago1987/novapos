@@ -1,12 +1,14 @@
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { useLayoutStore } from '@/store/LayoutStore';
 import { useTraductionsStore } from '@/store/TraductionStore';
 import { v4 as uuidv4 } from 'uuid';
+import type { ComponentTypes } from '@/types/constTypes';
 
 type Parameters = {
   position: { x: number; y: number };
   gridSize: number;
   layoutType: 'CustomerView' | 'SalesView';
-  componentType?: 'BUTTON';
+  componentType: keyof typeof ComponentTypes;
 };
 
 const createNewComponent = ({
@@ -15,9 +17,19 @@ const createNewComponent = ({
   layoutType,
   componentType,
 }: Parameters) => {
-  if (layoutType === 'SalesView') {
+  if (layoutType === 'CustomerView') {
     const salesEditorFuntions = {
       BUTTON: addNewButton,
+      SALES_TABLE: () => {},
+      PAYMENTS_TABLE: () => {},
+      PROMOTIONS_TABLE: () => {},
+      TOTALS_COMPONENT: () => {},
+      LABEL: () => {},
+      INPUT: () => {},
+      CAROUSEL_IMAGES: addNewCarouselImages,
+      CAROUSEL_VIDEOS: () => {},
+      OPERATOR: () => {},
+      LOGO: () => {},
     };
     if (!componentType) return;
     salesEditorFuntions[componentType](
@@ -53,4 +65,27 @@ const addNewButton = (position: { x: number; y: number }, gridSize: number) => {
   updateTraduction(newID, 'New Button', 'EN');
 };
 
+const addNewCarouselImages = (
+  position: { x: number; y: number },
+  gridSize: number
+) => {
+  const {
+    componentActions: { addComponent },
+  } = useCustomerViewStore();
+  const { x, y } = position || { x: 0, y: 0 };
+  const newID = uuidv4();
+  addComponent(newID, {
+    id: newID,
+    imgFiles: [],
+    type: 'CAROUSEL_IMAGES',
+    properties: {
+      position: {
+        x: x - (x % gridSize),
+        y: y - (y % gridSize),
+      },
+      size: { width: '500px', height: '500px' },
+      backgroundColor: '#E0D8D7',
+    },
+  });
+};
 export default createNewComponent;

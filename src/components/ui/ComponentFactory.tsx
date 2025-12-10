@@ -4,11 +4,11 @@ import PaymentsTable from '@/components/ui/PaymentsTable';
 import TotalsComponent from '@/components/ui/TotalsComponent';
 import Logo from '@/components/ui/customerView/Logo';
 import LabelComponent from '@/components/ui/LabelComponent';
-import OperatorComponent from '../customerView/OperatorComponent';
-import CarouselImages from '../customerView/CarouselImages';
-import CarouselVideos from '../customerView/CarouselVideos';
+import OperatorComponent from '@/components/ui/customerView/OperatorComponent';
+import CarouselImages from '@/components/ui/customerView/CarouselImages';
+import CarouselVideos from '@/components/ui/customerView/CarouselVideos';
 import { useCustomerViewStore } from '@/store/CustomerViewStore';
-import CarousellPreview from '../customerView/CarousellPreview';
+import CarousellPreview from '@/components/ui/editor/CarousellPreview';
 
 type Props = {
   type: keyof typeof ComponentTypes;

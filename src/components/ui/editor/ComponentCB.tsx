@@ -32,12 +32,12 @@ const ComponentCB = () => {
           p.toLowerCase().includes(query.toLowerCase())
         );
 
-  // Reset del índice cuando cambie el filtro
+  // index reset on query change
   useEffect(() => {
     setHighlightedIndex(0);
   }, [query]);
 
-  // Manejo de teclado
+  // keyword navigation
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -67,7 +67,7 @@ const ComponentCB = () => {
     return () => document.removeEventListener('keydown', handleKeydown);
   }, [isOpen, filtered, highlightedIndex]);
 
-  // Cerrar dropdown al hacer clic fuera
+  // Dropdown close on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -92,7 +92,7 @@ const ComponentCB = () => {
   const getDisplayValue = (key: keyof typeof ComponentTypes | null) => {
     if (!key) return '';
     const index = componentKeys.indexOf(key);
-    return componentList[index] || key; // Fallback a key si no encuentra
+    return componentList[index] || key;
   };
 
   return (

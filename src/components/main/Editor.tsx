@@ -10,7 +10,7 @@ import {
   type DragEndEvent,
   DragOverlay,
 } from '@dnd-kit/core';
-import ComponentFactory from '@/components/ui/editor/ComponentFactory';
+import ComponentFactory from '@/components/ui/ComponentFactory';
 import EditorMenu from '@/components/ui/editor/EditorMenu';
 import useEditor from '@/hooks/useEditor';
 import ResizePreviewComponent from '@/components/ui/editor/ResizePreviewComponent';
@@ -18,6 +18,7 @@ import { useLayoutStore } from '@/store/LayoutStore';
 import { useCustomerViewStore } from '@/store/CustomerViewStore';
 import { useState } from 'react';
 import type { ComponentTypes } from '@/types/constTypes';
+import { ComponentTypes as validcp } from '@/types/constTypes';
 
 type Props = {
   type: 'CustomerView' | 'SalesView';
@@ -49,8 +50,9 @@ const Editor = ({ type }: Props) => {
     setActiveId(null);
     handleDragEnd(event);
   };
-
+  const cpkeys = Object.keys(validcp);
   const getActiveComponentType = (id: string | null) => {
+    if (!id || !cpkeys.includes(id)) return null;
     return id as keyof typeof ComponentTypes;
   };
 
@@ -60,6 +62,7 @@ const Editor = ({ type }: Props) => {
 
   const { background, components } = layout;
   const snapToGrid = createSnapModifier(gridSize);
+  console.log('layout', layout);
 
   return (
     <DndContext
@@ -86,8 +89,8 @@ const Editor = ({ type }: Props) => {
         {activeId && activeComponentType ? (
           <button
             className={`w-11/12 px-4 py-3 text-left text-sm transition-colors flex items-center justify-between 
-        border-solid border-black border-1 rounded-lg shadow-lg shadow-gray-400/50'
-        hover:scale-105`}
+                        border-solid border-black border-1 rounded-lg shadow-lg shadow-gray-400/50'
+                        hover:scale-105`}
           >
             <span className={'font-medium w-3/4'}>{activeComponentType}</span>
           </button>
