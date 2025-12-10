@@ -15,7 +15,8 @@ type Props = {
 };
 
 const EditorMenu = ({ type }: Props) => {
-  const { reset, layout } = useLayoutStore();
+  const { reset, layout } =
+    type === 'CustomerView' ? useCustomerViewStore() : useLayoutStore();
   const [dragSart, setDragStart] = useState(false);
   const lang =
     type === 'CustomerView'
@@ -31,6 +32,7 @@ const EditorMenu = ({ type }: Props) => {
     });
 
   const { x, y } = layout.editorMenu.position;
+
   const style = {
     transform: transform
       ? `translate3d(${transform?.x}px, ${transform?.y}px, 0)`

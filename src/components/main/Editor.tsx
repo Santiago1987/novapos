@@ -62,8 +62,7 @@ const Editor = ({ type }: Props) => {
 
   const { background, components } = layout;
   const snapToGrid = createSnapModifier(gridSize);
-  console.log('layout', layout);
-
+  console.log(layout);
   return (
     <DndContext
       onDragStart={handleDragStart}

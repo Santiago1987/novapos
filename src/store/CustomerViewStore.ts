@@ -81,10 +81,26 @@ export const useCustomerViewStore = create<CustomerViewStore>()(
         );
       },
     },
+    editorActions: {
+      modifyEditorPosition(x, y) {
+        set(
+          produce((state: CustomerViewState) => {
+            state.layout.editorMenu.position = { x, y };
+          })
+        );
+      },
+    },
     setManifest(value) {
       set(
         produce((state: CustomerViewState) => {
           state.manifest = value;
+        })
+      );
+    },
+    reset() {
+      set(
+        produce((state: CustomerViewState) => {
+          state = initialVariables;
         })
       );
     },

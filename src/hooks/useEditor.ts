@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useLayoutStore } from '@/store/LayoutStore';
 import { v4 as uuidv4 } from 'uuid';
 import { useTraductionsStore } from '@/store/TraductionStore';
-import createNewComponent from '@/helpers/createNewComponent';
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+import useCVLayoutActions from './useCVLayoutActions';
 
 type Props = {
   gridSize: number;
@@ -12,21 +13,43 @@ type Props = {
 
 const useEditor = ({ gridSize, type }: Props) => {
   //LAYOUT EDITOR
-  const {
+  /*const {
     layout,
     componentActions: { addComponent, updateButton, deleteComponent },
     selectedComponentId,
     editorActions: { selectComponent, modifyEditorPosition },
-  } = useLayoutStore();
+  } = useLayoutStore();*/
+
+  const { changeEditorMenuPosition, createNewComponent } = useCVLayoutActions();
 
   //VARIABLES
-  const [colorPickerVisible, setColorPickerVisible] = useState(false);
+  //const [colorPickerVisible, setColorPickerVisible] = useState(false);
 
-  const { removeTraduction } = useTraductionsStore();
+  //const { removeTraduction } = useTraductionsStore();
 
   //DRAG END
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, delta } = event;
+    const { x, y } = active.data.current?.position || { x: 0, y: 0 };
+
+    if (type === 'CustomerView') {
+      if (active.id === 'CAROUSEL_IMAGES') {
+        createNewComponent({
+          position: { x, y },
+          gridSize,
+          componentType: 'CAROUSEL_IMAGES',
+        });
+        return;
+      }
+      if (active.id === 'SALES_TABLE') {
+        createNewComponent({
+          position: { x, y },
+          gridSize,
+          componentType: 'SALES_TABLE',
+        });
+        return;
+      }
+    }
 
     // NEW BUTTON
     if (active.id === 'new-button' && type === 'SalesView') {
@@ -34,15 +57,13 @@ const useEditor = ({ gridSize, type }: Props) => {
       createNewComponent({
         position: { x, y },
         gridSize,
-        layoutType: 'SalesView',
         componentType: 'BUTTON',
       });
       return;
     }
-    console.log('editor-menu', active);
 
     // POSITON OF A EXISTING BUTTON
-    if (active.data.current?.type === 'button') {
+    /*if (active.data.current?.type === 'button') {
       const component = layout.components[active.id];
       if (!component) return;
       if (!delta) return;
@@ -59,35 +80,20 @@ const useEditor = ({ gridSize, type }: Props) => {
         },
       });
       return;
-    }
+    }*/
 
     //EDITO MENU POSITION
     if (active.id === 'editor-menu') {
       if (!delta) return;
-      const { x: EditorX, y: EditorY } = layout.editorMenu.position;
       const { x, y } = delta;
 
-      const newX = (EditorX || 0) + x;
-      const newY = (EditorY || 0) + y;
-
-      modifyEditorPosition(newX, newY);
-      return;
-    }
-
-    if (active.id === 'CAROUSEL_IMAGES' && type === 'CustomerView') {
-      const { x, y } = active.data.current?.position || { x: 0, y: 0 };
-      createNewComponent({
-        position: { x, y },
-        gridSize,
-        layoutType: 'CustomerView',
-        componentType: 'CAROUSEL_IMAGES',
-      });
+      changeEditorMenuPosition(x, y);
       return;
     }
   };
 
   //SELECT COMPONENT
-  const handleSelectComponent = (id: string) => {
+  /*const handleSelectComponent = (id: string) => {
     setColorPickerVisible(false);
     if (selectedComponentId === id) {
       selectComponent(null);
@@ -138,18 +144,17 @@ const useEditor = ({ gridSize, type }: Props) => {
     if (type === 'background') {
       updateButton(selectedComponentId, { backgroundColor: color });
     }
-  };
+  };*/
 
   return {
-    layout,
-    colorPickerVisible,
-    selectedComponentId,
+    //colorPickerVisible,
+    //selectedComponentId,
     handleDragEnd,
-    handleSelectComponent,
-    handleCopyComponent,
-    handleDeleteComponent,
-    handleOnClickColorChange,
-    handleOnColorChange,
+    //handleSelectComponent,
+    //handleCopyComponent,
+    //handleDeleteComponent,
+    //handleOnClickColorChange,
+    //handleOnColorChange,
   };
 };
 

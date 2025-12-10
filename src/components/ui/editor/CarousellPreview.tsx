@@ -1,12 +1,27 @@
+import { useCustomerViewStore } from '@/store/CustomerViewStore';
+
 type Props = {
   id: string;
 };
 const CarousellPreview = ({ id }: Props) => {
+  const layout = useCustomerViewStore((state) => state.layout);
+  const component = layout.components[id];
+  if (!component) return null;
+
+  const { properties } = component;
+  const { position, size } = properties;
+
+  console.log(size);
   return (
     <>
       <div
-        className="absolute top-5 left-5 w-50 h-50 rounded-2xl border-solid border-2 
-        shadow-lg shadow-gray-400/50"
+        className={`absolute rounded-2xl border-dashed border-2 shadow-lg shadow-gray-400/50`}
+        style={{
+          left: position.x,
+          top: position.y,
+          width: size.width,
+          height: size.height,
+        }}
       ></div>
     </>
   );

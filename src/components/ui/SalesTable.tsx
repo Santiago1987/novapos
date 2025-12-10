@@ -47,15 +47,15 @@ const SalesTable = ({ id }: Props) => {
     >
       <div
         className="border w-full h-full rounded-lg overflow-y-auto"
-        style={{ background: rows.backgroundColor || '#ffffff' }}
+        style={{ background: rows?.backgroundColor || '#ffffff' }}
       >
         <table className="w-full border-collapse border-0 table-fixed">
           <thead>
             <tr
-              className={`sticky top-0 z-10 h-15 w-full font-bold ${header.fontSize || 'text-2xl'}`}
+              className={`sticky top-0 z-10 h-15 w-full font-bold ${header?.fontSize || 'text-2xl'}`}
               style={{
-                color: header.textColor || '#ffffff',
-                background: header.backgroundColor || '#351c75',
+                color: header?.textColor || '#ffffff',
+                background: header?.backgroundColor || '#351c75',
               }}
             >
               <th className="p-1 w-2/10 visible">{t('quantity', lang)}</th>
@@ -77,14 +77,14 @@ const SalesTable = ({ id }: Props) => {
                 <tr
                   key={id}
                   ref={isSelectedRow ? lastRowRef : null}
-                  className={`border-b border-gray-200 h-15 font-bold ${rows.fontSize || 'text-2xl'}`}
+                  className={`border-b border-gray-200 h-15 font-bold ${rows?.fontSize || 'text-2xl'}`}
                   style={
                     isSelectedRow
                       ? {
                           background:
                             salesTableComponent.selectedRowColor || '#6fa8dc',
                         }
-                      : { background: rows.backgroundColor || '#ffffff' }
+                      : { background: rows?.backgroundColor || '#ffffff' }
                   }
                 >
                   <td className="p-1 text-end w-2/10">{ln.Count}</td>

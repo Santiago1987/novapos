@@ -25,6 +25,7 @@ export interface SWFileResponse extends CVFileManifest {
 
 export interface Actions {
   setManifest: (value: CVFileManifest) => void;
+  reset: () => void;
   layoutActions: {
     setLang: (lang: keyof typeof Langs) => void;
     editLayoutBackground: (background: string) => void;
@@ -38,5 +39,8 @@ export interface Actions {
       properties: Partial<Component<any>['properties']>
     ) => void;
     deleteComponent: (id: string) => void;
+  };
+  editorActions: {
+    modifyEditorPosition: (x: number, y: number) => void;
   };
 }
